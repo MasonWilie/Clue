@@ -1,0 +1,10 @@
+L, Library, Card
+S, Study, Card
+D, Dining Room, Card
+H, Hall, Card
+B, Ballroom, Card
+R, billiard Room, Card
+K, Kitchen, Card
+O, Lounge, Card
+X, Closet, Other
+W, Walkway, Other
