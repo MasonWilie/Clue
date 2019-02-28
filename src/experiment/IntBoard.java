@@ -32,6 +32,10 @@ public class IntBoard {
 		return targets;
 	}
 	
+	public BoardCell getCell(int row, int column) {
+		return grid[row][column];
+	}
+	
 	
 	
 }

@@ -1,6 +1,17 @@
 package experiment;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+
+import java.util.Set;
+
+import org.junit.Before;
+import org.junit.Test;
+
 public class IntBoardTests {
+	IntBoard board;
+	
 	@Before
     public void beforeAll() {
        board = new IntBoard();  // constructor should call calcAdjacencies() so you can test them
