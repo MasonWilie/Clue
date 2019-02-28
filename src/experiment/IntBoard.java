@@ -17,7 +17,19 @@ public class IntBoard {
 	}
 	
 	private void calcAdjacencies() {
-		
+		for (int i = 0; i < grid.length; i++) {
+			for (int j = 0; j < grid.length; j++) {
+				if (i == 0 && j == 0) {
+					targets.add(grid[i+1][j]);
+					targets.add(grid[i][j+1]);
+				} else if (i == grid.length-1 && j == grid.length
+				targets.add(grid[i+1][j]);
+				targets.add(grid[i+1][j]);
+				targets.add(grid[i+1][j]);
+				targets.add(grid[i+1][j]);
+				adjacencies.put(grid[i][j], )
+			}
+		}
 	}
 	
 	public Set<BoardCell> getAdjList(BoardCell cell){
