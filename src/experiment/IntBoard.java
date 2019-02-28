@@ -21,11 +21,15 @@ public class IntBoard {
 	}
 	
 	public Set<BoardCell> getAdjList(BoardCell cell){
-		return adjacencies[cell];
+		return adjacencies.get(cell);
 	}
 	
 	public void calcTargets(BoardCell startCell, int pathLength) {
 		
+	}
+	
+	public Set<BoardCell> getTargets(){
+		return targets;
 	}
 	
 	
