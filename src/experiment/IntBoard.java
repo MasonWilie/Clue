@@ -31,38 +31,38 @@ public class IntBoard {
 	}
 	
 	private void calcAdjacencies() {
-		targets = new HashSet<BoardCell>();
+		HashSet<BoardCell> adjacenciesSet = new HashSet<BoardCell>();
 		for (int i = 0; i < BOARD_WIDTH; i++) {
 			for (int j = 0; j < BOARD_HEIGHT; j++) {
 				if (i == 0 && j == 0) {
-					targets.add(grid[i+1][j]);
-					targets.add(grid[i][j+1]);
+					adjacenciesSet.add(grid[i+1][j]);
+					adjacenciesSet.add(grid[i][j+1]);
 				} else if (i == BOARD_WIDTH-1 && j == BOARD_HEIGHT-1) {
-					targets.add(grid[i-1][j]);
-					targets.add(grid[i][j-1]);
+					adjacenciesSet.add(grid[i-1][j]);
+					adjacenciesSet.add(grid[i][j-1]);
 				} else if (i == BOARD_WIDTH-1) {
-					targets.add(grid[i-1][j]);
-					targets.add(grid[i][j+1]);
-					targets.add(grid[i][j-1]);
+					adjacenciesSet.add(grid[i-1][j]);
+					adjacenciesSet.add(grid[i][j+1]);
+					adjacenciesSet.add(grid[i][j-1]);
 				} else if (j == BOARD_HEIGHT-1) {
-					targets.add(grid[i][j-1]);
-					targets.add(grid[i+1][j]);
-					targets.add(grid[i-1][j]);
+					adjacenciesSet.add(grid[i][j-1]);
+					adjacenciesSet.add(grid[i+1][j]);
+					adjacenciesSet.add(grid[i-1][j]);
 				} else if (i == 0) {
-					targets.add(grid[i+1][j]);
-					targets.add(grid[i][j+1]);
-					targets.add(grid[i][j-1]);
+					adjacenciesSet.add(grid[i+1][j]);
+					adjacenciesSet.add(grid[i][j+1]);
+					adjacenciesSet.add(grid[i][j-1]);
 				} else if (j == 0) {
-					targets.add(grid[i][j+1]);
-					targets.add(grid[i+1][j]);
-					targets.add(grid[i-1][j]);
+					adjacenciesSet.add(grid[i][j+1]);
+					adjacenciesSet.add(grid[i+1][j]);
+					adjacenciesSet.add(grid[i-1][j]);
 				} else {
-					targets.add(grid[i+1][j]);
-					targets.add(grid[i-1][j]);
-					targets.add(grid[i][j+1]);
-					targets.add(grid[i][j-1]);
+					adjacenciesSet.add(grid[i+1][j]);
+					adjacenciesSet.add(grid[i-1][j]);
+					adjacenciesSet.add(grid[i][j+1]);
+					adjacenciesSet.add(grid[i][j-1]);
 				}
-				adjacencies.put(grid[i][j], targets);
+				adjacencies.put(grid[i][j], adjacenciesSet);
 			}
 		}
 	}
@@ -72,7 +72,7 @@ public class IntBoard {
 	}
 	
 	public void calcTargets(BoardCell startCell, int pathLength) {
-		targets = new HashSet<BoardCell>;
+		targets = new HashSet<BoardCell>();
 	}
 	
 	public HashSet<BoardCell> getTargets(){
