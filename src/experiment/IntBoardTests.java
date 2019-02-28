@@ -39,7 +39,7 @@ public class IntBoardTests {
 		assertTrue(testList.contains(board.getCell(1, 4)));
 		assertTrue(testList.contains(board.getCell(2, 3)));
 		assertTrue(testList.contains(board.getCell(0, 3)));
-		assertTrue(testList.contains(board.getCell(0, 4)));
+		assertTrue(testList.contains(board.getCell(1, 2)));
 		assertEquals(2, testList.size());
 	}
 	
