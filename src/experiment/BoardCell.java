@@ -1,6 +1,11 @@
 package experiment;
 
-/* Represents one cell in the game board grid.
+/**
+ * BoardCell Class:
+ * Represents one cell of the game board
+ * 
+ * @author Hunter Rich
+ * @author Mason Wilie
  * 
  */
 public class BoardCell {
