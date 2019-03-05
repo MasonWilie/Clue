@@ -30,12 +30,16 @@ public class Board {
 	
 	Board(){
 		super();
-		boardConfigFile = "Board_Layout.csv";
-		roomConfigFile = "ClueRooms.txt";
+	}
+
+	public void setConfigFiles(String newBoardConfig, String newRoomConfig) {
+		boardConfigFile = newBoardConfig;
+		roomConfigFile = newRoomConfig;
 	}
 	
-	public Board getInstance() {
-		return this;
+	public static Board getInstance() {
+		
+		return new Board();
 	}
 	
 	public void initialize() {}
@@ -51,8 +55,13 @@ public class Board {
 			
 			List<String> stringElements = Arrays.asList(currentLine.split(","));
 			initial = stringElements.get(0).charAt(0);
+			description = stringElements.get(1);
 			
+			while(description.charAt(0) == ' ') {
+				description = description.substring(1, description.length()-1);
+			}
 			
+			legend.put(initial, description);
 			
 		}
 		
