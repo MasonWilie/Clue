@@ -21,6 +21,10 @@ public class BoardCell {
 		return row;
 	}
 
+	public DoorDirection getDirection() {
+		return direction;
+	}
+
 	public void setRow(int row) {
 		this.row = row;
 	}
