@@ -98,7 +98,7 @@ public class Board {
 			HashSet<BoardCell> tempTargets = new HashSet<BoardCell>();
 			tempTargets.addAll(targets);
 			for (BoardCell cell: targets) {
-				tempTargets.addAll(getAdjList(cell));
+				tempTargets.addAll(adjMatrix.get(cell));
 			}
 			targets.addAll(tempTargets);
 		}
