@@ -14,10 +14,9 @@ import experiment.BoardCell;
 
 public class Board {
 	private int numRows, numColumns;
+	
 	public static final int MAX_BOARD_SIZE = 50;
-	
-	private int BOARD_WIDTH, BOARD_HEIGHT;
-	
+		
 	private BoardCell[][] board;
 	
 	private HashMap<Character, String> legend; 
@@ -36,6 +35,14 @@ public class Board {
 	
 	public Board getInstance() {
 		return this;
+	}
+	
+	public int getNumRows() {
+		return numRows;
+	}
+
+	public int getNumColumns() {
+		return numColumns;
 	}
 	
 	public void initialize() {}
@@ -68,19 +75,19 @@ public class Board {
 		HashSet<BoardCell> adjacenciesSet;
 		
 		// Calculates the adjacencies and adds them to a map with the cell as the key, takes into account boundary conditions
-		for (int i = 0; i < BOARD_WIDTH; i++) {
-			for (int j = 0; j < BOARD_HEIGHT; j++) {
+		for (int i = 0; i < numColumns; i++) {
+			for (int j = 0; j < numRows; j++) {
 				adjacenciesSet = new HashSet<BoardCell>();
 				if (i != 0) { // Left of board
 					adjacenciesSet.add(board[i-1][j]);
 				}
-				if (i != BOARD_WIDTH - 1) { // Right of board
+				if (i != numColumns - 1) { // Right of board
 					adjacenciesSet.add(board[i+1][j]);
 				}
 				if (j != 0) { // Top of board
 					adjacenciesSet.add(board[i][j-1]);
 				}
-				if (j != BOARD_HEIGHT - 1) { // Bottom of board
+				if (j != numRows - 1) { // Bottom of board
 					adjacenciesSet.add(board[i][j+1]);
 				}
 				adjMatrix.put(board[i][j], adjacenciesSet);

@@ -17,6 +17,30 @@ public class BoardCell {
 	private char initial;
 	DoorDirection direction;
 	
+	public int getRow() { //dont know if need getters/setters for some of these
+		return row;
+	}
+
+	public void setRow(int row) {
+		this.row = row;
+	}
+
+	public int getColumn() {
+		return column;
+	}
+
+	public void setColumn(int column) {
+		this.column = column;
+	}
+
+	public char getInitial() {
+		return initial;
+	}
+
+	public void setInitial(char initial) {
+		this.initial = initial;
+	}
+
 	public BoardCell(int setRow, int setColumn) {
 		row = setRow;
 		column = setColumn;
