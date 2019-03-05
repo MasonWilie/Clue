@@ -49,6 +49,10 @@ public class Board {
 		return numColumns;
 	}
 	
+	public int[] getCellAt(int row, int col) {
+		return board[row,col]; // fix this
+	}
+	
 	public void initialize() {}
 	
 	public void loadRoomConfig() throws IOException {

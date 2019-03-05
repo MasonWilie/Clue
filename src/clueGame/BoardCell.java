@@ -21,7 +21,7 @@ public class BoardCell {
 		return row;
 	}
 
-	public DoorDirection getDirection() {
+	public DoorDirection getDoorDirection() {
 		return direction;
 	}
 
