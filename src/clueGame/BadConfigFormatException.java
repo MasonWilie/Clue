@@ -1,15 +1,32 @@
 package clueGame;
 
-public class BadConfigFormatException extends Exception {
+/**
+ * BadConfigFormatExeption Class:
+ * Exception that is thrown when the room or board config files are not
+ * formatted correctly.
+ * 
+ * @author Hunter Rich
+ * @author Mason Wilie
+ * 
+ */
 
+public class BadConfigFormatException extends RuntimeException {
+
+	private String message;
+
+	
 	public BadConfigFormatException() {
 		super();
-		// TODO Auto-generated constructor stub
+		message = "Error with format of configuration file\n";
+	}
+	
+	public BadConfigFormatException(String newMessage) {
+		message = newMessage;
 	}
 	
 	
 	public String toString() {
-		return "Invalid file format";
+		return message;
 	}
 	
 }

@@ -11,6 +11,7 @@ import static org.junit.Assert.*;
 import java.util.Map;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -18,7 +19,7 @@ import clueGame.Board;
 import clueGame.BoardCell;
 import clueGame.DoorDirection;
 
-public class CTest_FileInitTests2 {
+public class OurTests {
 	// Constants that I will use to test whether the file was loaded correctly
 	public static final int LEGEND_SIZE = 10;
 	public static final int NUM_ROWS = 25;
@@ -42,6 +43,13 @@ public class CTest_FileInitTests2 {
 		// Get the map of initial => room 
 		Map<Character, String> legend = board.getLegend();
 		// Ensure we read the correct number of rooms
+		
+		for (Character name: legend.keySet()) {
+			System.out.println(name + ": " + legend.get(name));
+		}
+		
+		
+		
 		assertEquals(LEGEND_SIZE, legend.size());
 		// To ensure data is correctly loaded, test retrieving a few rooms 
 		// from the hash, including the first and last in the file and a few others

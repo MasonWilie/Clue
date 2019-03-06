@@ -1,7 +1,7 @@
 package clueGame;
 
-import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -9,6 +9,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Scanner;
 
 import clueGame.BoardCell;
 
@@ -40,7 +41,10 @@ public class Board {
 	
 	private static Board theInstance = new Board();
 	// constructor is private to ensure only one can be created
-	private Board() {}
+	private Board() {
+		legend = new HashMap<Character, String>();
+		adjMatrix = new HashMap<BoardCell, HashSet<BoardCell>>();
+	}
 	// this method returns the only Board
 	public static Board getInstance() {
 		return theInstance;
@@ -64,11 +68,11 @@ public class Board {
 		return board[row][col]; // fix this
 	}
 	
-	public void initialize(){
+	public void initialize() throws BadConfigFormatException{
 		
-		legend = new HashMap<Character, String>();
-		adjMatrix = new HashMap<BoardCell, HashSet<BoardCell>>();
 		
+		legend = new HashMap<Character, String>(); // Resets the legend
+		adjMatrix = new HashMap<BoardCell, HashSet<BoardCell>>(); // Resets the adjacencies
 		
 		try {
 			loadRoomConfig();
@@ -82,25 +86,42 @@ public class Board {
 	
 	
 	// Loads the initial and description of rooms from the room config file
-	public void loadRoomConfig() throws IOException {
+	public void loadRoomConfig() throws FileNotFoundException, BadConfigFormatException {
 		File roomsFile = new File(roomConfigFile);
-		BufferedReader in = new BufferedReader(new FileReader(roomsFile));
+		Scanner in = new Scanner(new FileReader(roomsFile));
 		
 		String currentLine;
-		while ((currentLine = in.readLine()) != null) {
+		int lineCounter = 0;
+		while (in.hasNextLine()) {
+			currentLine = in.nextLine();
 			Character initial;
-			String description;
+			String description, roomType;
 			
 			List<String> stringElements = Arrays.asList(currentLine.split(","));
+			
+			if (stringElements.size() != 3) {
+				throw new BadConfigFormatException("Too many elements in line " + lineCounter
+						+ ". Format should follow Initial, Description, Card");
+			}
+			
 			initial = stringElements.get(0).charAt(0);
 			description = stringElements.get(1);
+			roomType = stringElements.get(2);
 			
 			while(description.charAt(0) == ' ') {
 				description = description.substring(1, description.length());
 			}
 			
-			legend.put(initial, description);
+			while(roomType.charAt(0) == ' ') {
+				roomType = roomType.substring(1, roomType.length());
+			}
 			
+			if (!roomType.equals("Card") && !roomType.equals("Other")) {
+				throw new BadConfigFormatException("Room type on line " + lineCounter + " not equal to Card or Other. Value recieved: " + roomType);
+			}
+			
+			legend.put(initial, description);
+			lineCounter++;
 		}
 		
 		
@@ -108,14 +129,15 @@ public class Board {
 	
 	
 	// Loads the configuration of the baord from the board csv file
-	public void loadBoardConfig() throws IOException {
+	public void loadBoardConfig() throws FileNotFoundException, BadConfigFormatException {
 		File boardFile = new File(boardConfigFile);
-		BufferedReader in = new BufferedReader(new FileReader(boardFile));
+		Scanner in = new Scanner(new FileReader(boardFile));
 		
 		String nextLine;
 		numRows = 0;
 		ArrayList<String[]> grid = new ArrayList<String[]>();
-		while((nextLine = in.readLine()) != null) {
+		while(in.hasNextLine()) {
+			nextLine = in.nextLine();
 			String[] currentRow = nextLine.split(",");
 			if (currentRow.length != 0) {
 				grid.add(currentRow);
@@ -129,6 +151,9 @@ public class Board {
 		board = new BoardCell[numRows][numColumns];
 		
 		for (int i = 0; i < grid.size(); i++) {
+			if (grid.get(i).length != numColumns) {
+				throw new BadConfigFormatException("Row " + (i + 1) + " has a different number of columns");
+			}
 			for (int j = 0; j < grid.get(i).length; j++) {
 				BoardCell cell = new BoardCell(i, j);
 				if (grid.get(i)[j].length() == 2) {
@@ -154,7 +179,15 @@ public class Board {
 				}else {
 					cell.setDoorDirection(DoorDirection.NONE);
 				}
-				cell.setInitial(grid.get(i)[j].charAt(0));;
+				
+				char initial = grid.get(i)[j].charAt(0);
+				
+				if (legend.containsKey(initial)) {
+					cell.setInitial(initial);
+				}else {
+					throw new BadConfigFormatException("Initial " + initial + ", at location (" + i + ", " + j + ")  not contained in legend");
+				}
+				
 				
 				
 				
