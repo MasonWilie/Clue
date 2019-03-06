@@ -12,6 +12,17 @@ import java.util.List;
 
 import clueGame.BoardCell;
 
+/**
+ * Board class:
+ * Initializes the game board for the clue game by populating it with cells, calculating
+ * the adjacencies for each cell, and allowing the user to receive the possible targets
+ * for a certain move.
+ * 
+ * @author Hunter Rich
+ * @author Mason Wilie
+ * 
+ */
+
 public class Board {
 	private int numRows, numColumns;
 	
@@ -27,20 +38,19 @@ public class Board {
 	private String boardConfigFile;
 	private String roomConfigFile;
 	
-	Board(){
-		super();
-		
+	private static Board theInstance = new Board();
+	// constructor is private to ensure only one can be created
+	private Board() {}
+	// this method returns the only Board
+	public static Board getInstance() {
+		return theInstance;
 	}
 
 	public void setConfigFiles(String newBoardConfig, String newRoomConfig) {
-		boardConfigFile = newBoardConfig;
-		roomConfigFile = newRoomConfig;
+		boardConfigFile = "data\\" + newBoardConfig;
+		roomConfigFile = "data\\" + newRoomConfig;
 	}
 	
-	public static Board getInstance() {
-		
-		return new Board();
-	}
 	
 	public int getNumRows() {
 		return numRows;
@@ -63,7 +73,6 @@ public class Board {
 		try {
 			loadRoomConfig();
 			loadBoardConfig();
-			
 			calcAdjacencies();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -71,6 +80,8 @@ public class Board {
 		}
 	}
 	
+	
+	// Loads the initial and description of rooms from the room config file
 	public void loadRoomConfig() throws IOException {
 		File roomsFile = new File(roomConfigFile);
 		BufferedReader in = new BufferedReader(new FileReader(roomsFile));
@@ -95,6 +106,8 @@ public class Board {
 		
 	}
 	
+	
+	// Loads the configuration of the baord from the board csv file
 	public void loadBoardConfig() throws IOException {
 		File boardFile = new File(boardConfigFile);
 		BufferedReader in = new BufferedReader(new FileReader(boardFile));
@@ -104,7 +117,10 @@ public class Board {
 		ArrayList<String[]> grid = new ArrayList<String[]>();
 		while((nextLine = in.readLine()) != null) {
 			String[] currentRow = nextLine.split(",");
-			grid.add(currentRow);
+			if (currentRow.length != 0) {
+				grid.add(currentRow);
+			}
+			
 		}
 		
 		numRows = grid.size();
@@ -148,6 +164,8 @@ public class Board {
 		
 	}
 	
+	
+	// Calculates the adjacent cells next to each cell and stores it into a map
 	private void calcAdjacencies() {
 		HashSet<BoardCell> adjacenciesSet;
 		
@@ -173,6 +191,8 @@ public class Board {
 	}
 	
 	
+	
+	// Calculates the reachable cells starting at startCell and having pathLength tiles to move
 	public void calcTargets(BoardCell startCell, int pathLength) {
 		targets = new HashSet<BoardCell>();
 		
