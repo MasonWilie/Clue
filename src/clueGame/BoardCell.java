@@ -68,11 +68,11 @@ public class BoardCell {
 	}
 	
 	public boolean isDoorway() {
-		if (direction == DoorDirection.NONE) {
-			return false;
-		} else {
-			return true;
-		}
+		return !(direction.equals(DoorDirection.NONE));
+	}
+	
+	public void setDoorDirection(DoorDirection newDirection) {
+		direction = newDirection;
 	}
 	
 }

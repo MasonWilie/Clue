@@ -1,0 +1,135 @@
+commit d8038de01cb22c3784bd7f161750e0f91f56935d
+Author: Mason Wilie <masonwilie@gmail.com>
+Date:   Mon Mar 4 14:54:21 2019 -0700
+
+    C12A-2 Done
+
+commit 6171363f719484ceefc414956384566f66b54e10
+Author: Hunter Rich <hrich@mymail.mines.edu>
+Date:   Thu Feb 28 12:15:24 2019 -0700
+
+    Fixed IntBoardTests to not try to access locations outside of the board
+
+commit ff362d23878c199896af45e8594c1610766c6bfb
+Author: Hunter Rich <hrich@mymail.mines.edu>
+Date:   Thu Feb 28 12:09:35 2019 -0700
+
+    Fixed calcAdjacencies to not use the targets set and use a temp set
+    instead
+
+commit 5b3546bc6f4a5902c81783327b75f8f3e86b6efc
+Author: Hunter Rich <hrich@mymail.mines.edu>
+Date:   Thu Feb 28 12:02:57 2019 -0700
+
+    Finished making calcAdjacencies
+
+commit d824e9e873ee2203028a8e84658ef4aed8212eae
+Merge: 9bb5f55 6d2b1b0
+Author: Hunter Rich <hrich@mymail.mines.edu>
+Date:   Thu Feb 28 11:52:58 2019 -0700
+
+    Merge branch 'master' of https://github.com/MasonWilie/Clue
+
+commit 9bb5f55e9c7f5e83fbb1293d32c6f67fe759bfe9
+Author: Hunter Rich <hrich@mymail.mines.edu>
+Date:   Thu Feb 28 11:52:18 2019 -0700
+
+    Started making calcAdjacencies
+
+commit 6d2b1b09f4aea77e21b7e1592efd24ab3c37d86f
+Author: Mason Wilie <masonwilie@gmail.com>
+Date:   Thu Feb 28 11:51:03 2019 -0700
+
+    Constructor Created
+
+commit ee50b0c3033cb36272101f3a4ae9012febb7f048
+Author: Mason Wilie <masonwilie@gmail.com>
+Date:   Thu Feb 28 11:34:47 2019 -0700
+
+    Moved IntBoardTests to tests package
+
+commit 43734dd985bcda6408bd9005c115c4ac1a90b34a
+Merge: a861195 9b17bc1
+Author: Mason Wilie <masonwilie@gmail.com>
+Date:   Thu Feb 28 11:32:42 2019 -0700
+
+    Merge branch 'master' of https://github.com/MasonWilie/Clue
+
+commit a86119554ee6cf4ed1dd8fc19408a7a940a5bf7b
+Author: Mason Wilie <masonwilie@gmail.com>
+Date:   Thu Feb 28 11:32:27 2019 -0700
+
+    Added JUnit stuff
+
+commit 9b17bc105289d7102082b5b7bcf1160bba94a539
+Author: Hunter Rich <hrich@mymail.mines.edu>
+Date:   Thu Feb 28 11:32:02 2019 -0700
+
+    Finished IntBoardTests
+
+commit 339c5d5767200db7d2a5eae5b1c2d6129ab3c6c9
+Author: Hunter Rich <hrich@mymail.mines.edu>
+Date:   Thu Feb 28 11:21:28 2019 -0700
+
+    Started IntBoardTests class
+
+commit f798fcb2a1e3955c0fa6ae994e26f7d4c27c45d8
+Merge: 132e722 250bb9e
+Author: Brennan Guthals <bcguthals@mymail.mines.edu>
+Date:   Thu Feb 28 11:20:51 2019 -0700
+
+    Merge branch 'master' of https://github.com/MasonWilie/Clue
+
+commit 132e722cf10d346c0dc4826adf29119204392ccf
+Author: Hunter Rich <hrich@mymail.mines.edu>
+Date:   Thu Feb 28 11:19:20 2019 -0700
+
+    Started IntBoardTests class
+
+commit 250bb9e56f9d0075a7e0e60ec570e5c64bba95f0
+Author: Mason Wilie <masonwilie@gmail.com>
+Date:   Thu Feb 28 11:18:00 2019 -0700
+
+    IntBoard layed out
+
+commit 9929550e674a13e3a3ebdf30e00a27a2c9396e98
+Author: Mason Wilie <masonwilie@gmail.com>
+Date:   Thu Feb 28 11:11:23 2019 -0700
+
+    BoardCell and IntBoard classes added
+
+commit 22374712224ccbf53127a1a1c3724dfe18ea1bd7
+Author: Mason Wilie <masonwilie@gmail.com>
+Date:   Tue Feb 26 12:13:32 2019 -0700
+
+    README added
+
+commit 8d8ae917d2f11d7fab6bad5082cd24e124d67e49
+Author: Mason Wilie <masonwilie@gmail.com>
+Date:   Tue Feb 26 12:09:45 2019 -0700
+
+    XLSX file added
+
+commit 2ad83f51b2b145b70a45f8ce63758141ad3915f1
+Author: Mason Wilie <masonwilie@gmail.com>
+Date:   Tue Feb 26 12:07:07 2019 -0700
+
+    Layout Complete
+
+commit e685dc4b17cb14bc8b604646a42c263403fc9e62
+Author: Mason Wilie <masonwilie@gmail.com>
+Date:   Tue Feb 26 11:39:49 2019 -0700
+
+    Layout CSV file added
+
+commit 9765428f9f487ffb834a0062bf8c33dadb189c56
+Author: Mason Wilie <masonwilie@gmail.com>
+Date:   Tue Feb 26 11:27:48 2019 -0700
+
+    Initial, project created
+
+commit fcad557567cdd8a3e61f3bb134aa5c3841eef0b9
+Author: Mason Wilie <masonwilie@gmail.com>
+Date:   Tue Feb 26 11:23:48 2019 -0700
+
+    Initial commit
