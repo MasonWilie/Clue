@@ -1,0 +1,30 @@
+Authors:
+Hunter Rich
+Mason Wilie
+
+How we selected our tests:
+
+	testRooms
+		- Tested the legend size to make sure all of the entries loaded in
+		- Tested the first entry in the list of rooms (Library)
+		- Tested the last entry in the list of rooms (Walkway)
+		- Tested some others in the list, just for comfirmation
+	
+	
+	FourDoorDirections
+		- Tested a door in the Library, which has a right facing door
+		- Tested a door in the Dining Room, which has a down facing door
+		- Tested a door in the Hall, which has a left facing door
+		- Tested a door in the Billiard Room, which has an up facing door
+		- Tested a cell next to a door, to make sure that being next to a door doesn't give a false positive
+		- Tested a cell that is in the very corner, to make sure that doesn't effect anything
+		
+	
+	testRoomInitials
+		- Tested all 4 corners
+		- Testing a door cell
+		- Testing a walkway
+		- Testing different rooms
+		
+
+	
