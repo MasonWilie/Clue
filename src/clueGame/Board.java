@@ -55,17 +55,7 @@ public class Board {
 		roomConfigFile = "data\\" + newRoomConfig;
 	}
 	
-	public int getNumRows() {
-		return numRows;
-	}
 
-	public int getNumColumns() {
-		return numColumns;
-	}
-	
-	public BoardCell getCellAt(int row, int col) {
-		return board[row][col]; // fix this
-	}
 	
 	public void initialize() throws BadConfigFormatException{
 		
@@ -196,32 +186,61 @@ public class Board {
 	
 	// Calculates the adjacent cells next to each cell and stores it into a map
 	private void calcAdjacencies() {
-		HashSet<BoardCell> adjacenciesSet;
-		
-		// Calculates the adjacencies and adds them to a map with the cell as the key, takes into account boundary conditions
-		for (int i = 0; i < numColumns - 1; i++) {
-			for (int j = 0; j < numRows - 1; j++) {
-				adjacenciesSet = new HashSet<BoardCell>();
-				if (i != 0) { // Left of board
-					adjacenciesSet.add(board[i-1][j]);
+		HashSet<BoardCell> adjacenciesSet = new HashSet<BoardCell>();
+
+		for (BoardCell[] row : board) {
+			for (BoardCell cell : row) {
+				BoardCell tempCell;
+				if (cell.isWalkway()) {
+					if (cell.getRow() != (numRows - 1)) {
+						tempCell = getCellAt(cell.getRow() + 1, cell.getColumn());
+						if (tempCell.isWalkway() || tempCell.isDoorway()) {
+							adjacenciesSet.add(tempCell);
+						}
+					}if(cell.getRow() != 0) {
+						tempCell = getCellAt(cell.getRow() - 1, cell.getColumn());
+						if (tempCell.isWalkway() || tempCell.isDoorway()) {
+							adjacenciesSet.add(tempCell);
+						}
+					}if (cell.getColumn() != (numColumns - 1)) {
+						tempCell = getCellAt(cell.getRow(), cell.getColumn() + 1);
+						if (tempCell.isWalkway() || tempCell.isDoorway()) {
+							adjacenciesSet.add(tempCell);
+						}
+					}if (cell.getColumn() != 0) {
+						tempCell = getCellAt(cell.getRow(), cell.getColumn() - 1);
+						if (tempCell.isWalkway() || tempCell.isDoorway()) {
+							adjacenciesSet.add(tempCell);
+						}
+					}
+					
+				}else if (cell.isDoorway()) {
+					switch(cell.getDoorDirection()) {
+					case UP:
+						adjacenciesSet.add(getCellAt(cell.getRow() + 1, cell.getColumn()));
+						break;
+					case DOWN:
+						adjacenciesSet.add(getCellAt(cell.getRow() - 1, cell.getColumn()));
+						break;
+					case LEFT:
+						adjacenciesSet.add(getCellAt(cell.getRow(), cell.getColumn() - 1));
+						break;
+					case RIGHT:
+						adjacenciesSet.add(getCellAt(cell.getRow() + 1, cell.getColumn() + 1));
+						break;
+					default:
+						break;
+					}
+				}else {
+					adjacenciesSet = new HashSet<BoardCell>();
 				}
-				if (j != numColumns - 1) { // Right of board
-					adjacenciesSet.add(board[i][j + 1]);
-				}
-				if (j != 0) { // Top of board
-					adjacenciesSet.add(board[i][j-1]);
-				}
-				if (i != numRows - 1) { // Bottom of board
-					adjacenciesSet.add(board[i+1][j]);
-				}
-				adjMatrix.put(board[i][j], adjacenciesSet);
+				adjMatrix.put(cell, adjacenciesSet);
+				
 			}
 		}
 	}
 	
-	public HashSet<BoardCell> getAdjList(int x, int y) {
-		return new HashSet<BoardCell>();
-	}
+
 	
 	// Calculates the reachable cells starting at startCell and having pathLength tiles to move
 	public void calcTargets(int x, int y, int pathLength) {
@@ -247,5 +266,21 @@ public class Board {
 	
 	public HashMap<Character, String> getLegend(){
 		return legend;
+	}
+	
+	public HashSet<BoardCell> getAdjList(int x, int y) {
+		return new HashSet<BoardCell>();
+	}
+	
+	public int getNumRows() {
+		return numRows;
+	}
+
+	public int getNumColumns() {
+		return numColumns;
+	}
+	
+	public BoardCell getCellAt(int row, int col) {
+		return board[row][col]; // fix this
 	}
 }
