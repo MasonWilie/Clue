@@ -55,7 +55,6 @@ public class Board {
 		roomConfigFile = "data\\" + newRoomConfig;
 	}
 	
-	
 	public int getNumRows() {
 		return numRows;
 	}
@@ -83,7 +82,6 @@ public class Board {
 			e.printStackTrace();
 		}
 	}
-	
 	
 	// Loads the initial and description of rooms from the room config file
 	public void loadRoomConfig() throws FileNotFoundException, BadConfigFormatException {
@@ -126,7 +124,6 @@ public class Board {
 		
 		
 	}
-	
 	
 	// Loads the configuration of the baord from the board csv file
 	public void loadBoardConfig() throws FileNotFoundException, BadConfigFormatException {
@@ -197,7 +194,6 @@ public class Board {
 		
 	}
 	
-	
 	// Calculates the adjacent cells next to each cell and stores it into a map
 	private void calcAdjacencies() {
 		HashSet<BoardCell> adjacenciesSet;
@@ -223,24 +219,30 @@ public class Board {
 		}
 	}
 	
-	
+	public HashSet<BoardCell> getAdjList(int x, int y) {
+		return new HashSet<BoardCell>();
+	}
 	
 	// Calculates the reachable cells starting at startCell and having pathLength tiles to move
-	public void calcTargets(BoardCell startCell, int pathLength) {
+	public void calcTargets(int x, int y, int pathLength) {
 		targets = new HashSet<BoardCell>();
 		
-		targets.add(startCell);
+//		targets.add(startCell);
+//		
+//		for (int i = 0; i < pathLength; i++) {
+//			HashSet<BoardCell> tempTargets = new HashSet<BoardCell>();
+//			tempTargets.addAll(targets);
+//			for (BoardCell cell: targets) {
+//				tempTargets.addAll(adjMatrix.get(cell));
+//			}
+//			targets.addAll(tempTargets);
+//		}
+//		targets.remove(startCell);
 		
-		for (int i = 0; i < pathLength; i++) {
-			HashSet<BoardCell> tempTargets = new HashSet<BoardCell>();
-			tempTargets.addAll(targets);
-			for (BoardCell cell: targets) {
-				tempTargets.addAll(adjMatrix.get(cell));
-			}
-			targets.addAll(tempTargets);
-		}
-		targets.remove(startCell);
-		
+	}
+	
+	public HashSet<BoardCell> getTargets(){
+		return targets;
 	}
 	
 	public HashMap<Character, String> getLegend(){
