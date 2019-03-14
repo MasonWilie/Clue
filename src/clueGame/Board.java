@@ -111,11 +111,11 @@ public class Board {
 			legend.put(initial, description);
 			lineCounter++;
 		}
-		
+		in.close();
 		
 	}
 	
-	// Loads the configuration of the baord from the board csv file
+	// Loads the configuration of the board from the board csv file
 	public void loadBoardConfig() throws FileNotFoundException, BadConfigFormatException {
 		File boardFile = new File(boardConfigFile);
 		Scanner in = new Scanner(new FileReader(boardFile));
@@ -131,17 +131,18 @@ public class Board {
 			}
 			
 		}
+		in.close();
 		
 		numRows = grid.size();
 		numColumns = grid.get(0).length;
 		
 		board = new BoardCell[numRows][numColumns];
 		
-		for (int i = 0; i < grid.size(); i++) {
+		for (int i = 0; i < numRows; i++) {
 			if (grid.get(i).length != numColumns) {
 				throw new BadConfigFormatException("Row " + (i + 1) + " has a different number of columns");
 			}
-			for (int j = 0; j < grid.get(i).length; j++) {
+			for (int j = 0; j < numColumns; j++) {
 				BoardCell cell = new BoardCell(i, j);
 				if (grid.get(i)[j].length() == 2) {
 					char direction = grid.get(i)[j].charAt(1);
@@ -186,56 +187,60 @@ public class Board {
 	
 	// Calculates the adjacent cells next to each cell and stores it into a map
 	private void calcAdjacencies() {
-		HashSet<BoardCell> adjacenciesSet = new HashSet<BoardCell>();
-
+		adjMatrix = new HashMap<BoardCell, HashSet<BoardCell>>();
+		
+		
 		for (BoardCell[] row : board) {
 			for (BoardCell cell : row) {
+				HashSet<BoardCell> adjacenciesSet = new HashSet<BoardCell>();
 				BoardCell tempCell;
 				if (cell.isWalkway()) {
-					if (cell.getRow() != (numRows - 1)) {
+					if (cell.getRow() != (numRows - 1)) {// If the cell is not at the very bottom
 						tempCell = getCellAt(cell.getRow() + 1, cell.getColumn());
-						if (tempCell.isWalkway() || tempCell.isDoorway()) {
+						if (tempCell.isWalkway() || 
+								(tempCell.isDoorway() && tempCell.getDoorDirection() == DoorDirection.UP)) {
 							adjacenciesSet.add(tempCell);
 						}
 					}if(cell.getRow() != 0) {
 						tempCell = getCellAt(cell.getRow() - 1, cell.getColumn());
-						if (tempCell.isWalkway() || tempCell.isDoorway()) {
+						if (tempCell.isWalkway() || 
+								(tempCell.isDoorway() && tempCell.getDoorDirection() == DoorDirection.DOWN)) {
 							adjacenciesSet.add(tempCell);
 						}
 					}if (cell.getColumn() != (numColumns - 1)) {
 						tempCell = getCellAt(cell.getRow(), cell.getColumn() + 1);
-						if (tempCell.isWalkway() || tempCell.isDoorway()) {
+						if (tempCell.isWalkway() || 
+								(tempCell.isDoorway() && tempCell.getDoorDirection() == DoorDirection.LEFT)) {
 							adjacenciesSet.add(tempCell);
 						}
 					}if (cell.getColumn() != 0) {
 						tempCell = getCellAt(cell.getRow(), cell.getColumn() - 1);
-						if (tempCell.isWalkway() || tempCell.isDoorway()) {
+						if (tempCell.isWalkway() || 
+								(tempCell.isDoorway() && tempCell.getDoorDirection() == DoorDirection.RIGHT)) {
 							adjacenciesSet.add(tempCell);
 						}
 					}
 					
 				}else if (cell.isDoorway()) {
+					
 					switch(cell.getDoorDirection()) {
 					case UP:
-						adjacenciesSet.add(getCellAt(cell.getRow() + 1, cell.getColumn()));
+						adjacenciesSet.add(getCellAt(cell.getRow() - 1, cell.getColumn()));
 						break;
 					case DOWN:
-						adjacenciesSet.add(getCellAt(cell.getRow() - 1, cell.getColumn()));
+						adjacenciesSet.add(getCellAt(cell.getRow() + 1, cell.getColumn()));
 						break;
 					case LEFT:
 						adjacenciesSet.add(getCellAt(cell.getRow(), cell.getColumn() - 1));
 						break;
 					case RIGHT:
-						adjacenciesSet.add(getCellAt(cell.getRow() + 1, cell.getColumn() + 1));
+						adjacenciesSet.add(getCellAt(cell.getRow(), cell.getColumn() + 1));
 						break;
 					default:
 						break;
 					}
-				}else {
-					adjacenciesSet = new HashSet<BoardCell>();
 				}
 				adjMatrix.put(cell, adjacenciesSet);
-				
 			}
 		}
 	}
@@ -243,20 +248,42 @@ public class Board {
 
 	
 	// Calculates the reachable cells starting at startCell and having pathLength tiles to move
-	public void calcTargets(int x, int y, int pathLength) {
+	public void calcTargets(int row, int col, int pathLength) {
 		targets = new HashSet<BoardCell>();
+		BoardCell startCell = getCellAt(row, col);
 		
-//		targets.add(startCell);
-//		
-//		for (int i = 0; i < pathLength; i++) {
-//			HashSet<BoardCell> tempTargets = new HashSet<BoardCell>();
-//			tempTargets.addAll(targets);
-//			for (BoardCell cell: targets) {
-//				tempTargets.addAll(adjMatrix.get(cell));
-//			}
-//			targets.addAll(tempTargets);
-//		}
-//		targets.remove(startCell);
+		
+		HashSet<BoardCell> adjacentCells = adjMatrix.get(startCell);
+		for (BoardCell cell : adjacentCells) {
+			if (cell != startCell) {
+				cellTargets(cell, startCell, pathLength - 1, startCell);
+			}
+			
+		}
+		
+		if (targets.contains(startCell)) {
+			targets.remove(startCell);
+		}
+		
+		
+	}
+	
+	private void cellTargets(BoardCell newCell, BoardCell oldCell, int steps, BoardCell startCell){
+		
+		if (steps == 0 || newCell.isDoorway()) {
+			targets.add(newCell);
+			return;
+		}else {
+			HashSet<BoardCell> adjacentCells = adjMatrix.get(newCell);
+			for (BoardCell cell : adjacentCells) {
+				if (cell != oldCell && cell != newCell && cell != startCell) {
+					cellTargets(cell, newCell, steps - 1, startCell);
+				}
+				
+			}
+		}
+		
+		return;
 		
 	}
 	
@@ -268,8 +295,8 @@ public class Board {
 		return legend;
 	}
 	
-	public HashSet<BoardCell> getAdjList(int x, int y) {
-		return new HashSet<BoardCell>();
+	public HashSet<BoardCell> getAdjList(int row, int col) {
+		return adjMatrix.get(getCellAt(row, col));
 	}
 	
 	public int getNumRows() {
@@ -281,6 +308,6 @@ public class Board {
 	}
 	
 	public BoardCell getCellAt(int row, int col) {
-		return board[row][col]; // fix this
+		return board[row][col];
 	}
 }
