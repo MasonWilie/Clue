@@ -27,7 +27,7 @@ public class CTest_BoardAdjTargetTests2 {
 		// Board is singleton, get the only instance
 		board = Board.getInstance();
 		// set the file names to use my config files
-		board.setConfigFiles("CTest_ClueLayout.csv", "CTest_ClueLegend.txt");		
+		board.setConfigFiles("Board_Layout.csv", "ClueRooms.txt");		
 		// Initialize will load BOTH config files 
 		board.initialize();
 	}
@@ -75,7 +75,7 @@ public class CTest_BoardAdjTargetTests2 {
 		//TEST DOORWAY DOWN
 		testList = board.getAdjList(7, 16);
 		assertEquals(1, testList.size());
-		assertTrue(testList.contains(board.getCellAt(8, 15)));
+		assertTrue(testList.contains(board.getCellAt(8, 16)));
 		//TEST DOORWAY UP
 		testList = board.getAdjList(10, 17);
 		assertEquals(1, testList.size());
@@ -200,20 +200,22 @@ public class CTest_BoardAdjTargetTests2 {
 	public void testTargetsTwoSteps() {
 		board.calcTargets(10, 1, 2);
 		Set<BoardCell> targets= board.getTargets();
-		assertEquals(5, targets.size());
+		assertEquals(6, targets.size());
 		assertTrue(targets.contains(board.getCellAt(9, 0)));
 		assertTrue(targets.contains(board.getCellAt(11, 2)));
 		assertTrue(targets.contains(board.getCellAt(11, 0)));
 		assertTrue(targets.contains(board.getCellAt(9, 2)));
 		assertTrue(targets.contains(board.getCellAt(12, 1)));
+		assertTrue(targets.contains(board.getCellAt(10, 3)));
 		
 		board.calcTargets(17, 13, 2);
 		targets= board.getTargets();
-		assertEquals(4, targets.size());
+		assertEquals(5, targets.size());
 		assertTrue(targets.contains(board.getCellAt(17, 15)));
 		assertTrue(targets.contains(board.getCellAt(18, 14)));	
 		assertTrue(targets.contains(board.getCellAt(16, 14)));
 		assertTrue(targets.contains(board.getCellAt(16, 12)));
+		assertTrue(targets.contains(board.getCellAt(15, 13)));
 	}
 	
 	// Tests of just walkways, 4 steps
@@ -229,7 +231,7 @@ public class CTest_BoardAdjTargetTests2 {
 		assertTrue(targets.contains(board.getCellAt(23, 1)));
 		
 		board.calcTargets(0, 20, 4);
-		Set<BoardCell> targets= board.getTargets();
+		targets = board.getTargets();
 		assertEquals(4, targets.size());
 		assertTrue(targets.contains(board.getCellAt(1, 19)));
 		assertTrue(targets.contains(board.getCellAt(2, 20)));
@@ -239,14 +241,15 @@ public class CTest_BoardAdjTargetTests2 {
 		// Includes a path that doesn't have enough length plus one door
 		board.calcTargets(9, 0, 4);
 		targets= board.getTargets();
-		assertEquals(7, targets.size());
+		assertEquals(8, targets.size());
 		assertTrue(targets.contains(board.getCellAt(9, 4)));
 		assertTrue(targets.contains(board.getCellAt(9, 2)));
 		assertTrue(targets.contains(board.getCellAt(10, 3)));
 		assertTrue(targets.contains(board.getCellAt(10, 1)));
 		assertTrue(targets.contains(board.getCellAt(11, 2)));
 		assertTrue(targets.contains(board.getCellAt(12, 1)));	
-		assertTrue(targets.contains(board.getCellAt(8, 2)));	
+		assertTrue(targets.contains(board.getCellAt(8, 2)));
+		assertTrue(targets.contains(board.getCellAt(11, 0)));	
 	}	
 	
 	// Tests of just walkways plus one door, 6 steps
@@ -260,11 +263,11 @@ public class CTest_BoardAdjTargetTests2 {
 		assertTrue(targets.contains(board.getCellAt(18, 17)));
 		assertTrue(targets.contains(board.getCellAt(20, 17)));	
 		assertTrue(targets.contains(board.getCellAt(22, 17)));	
-		assertTrue(targets.contains(board.getCellAt(24, 17)));	
 		assertTrue(targets.contains(board.getCellAt(19, 18)));	
 		assertTrue(targets.contains(board.getCellAt(21, 18)));	
 		assertTrue(targets.contains(board.getCellAt(23, 18)));	
 		assertTrue(targets.contains(board.getCellAt(22, 19)));
+		assertTrue(targets.contains(board.getCellAt(22, 17)));
 		
 	}	
 	
@@ -295,7 +298,7 @@ public class CTest_BoardAdjTargetTests2 {
 	{
 		board.calcTargets(11, 24, 3);
 		Set<BoardCell> targets= board.getTargets();
-		assertEquals(12, targets.size());
+		assertEquals(6, targets.size());
 		//up and then left
 		assertTrue(targets.contains(board.getCellAt(10, 22)));
 		//up left down
