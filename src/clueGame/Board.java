@@ -70,7 +70,6 @@ public class Board {
 			loadBoardConfig();
 			calcAdjacencies();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -80,14 +79,13 @@ public class Board {
 		File roomsFile = new File(roomConfigFile);
 		Scanner in = new Scanner(new FileReader(roomsFile));
 		
-		String currentLine;
+		
 		int lineCounter = 0;
 		while (in.hasNextLine()) {
-			currentLine = in.nextLine();
 			Character initial;
 			String description, roomType;
 			
-			List<String> stringElements = Arrays.asList(currentLine.split(","));
+			List<String> stringElements = Arrays.asList(in.nextLine().split(","));
 			
 			if (stringElements.size() != 3) {
 				in.close();
@@ -108,6 +106,7 @@ public class Board {
 			}
 			
 			if (!roomType.equals("Card") && !roomType.equals("Other")) {
+				in.close();
 				throw new BadConfigFormatException("Room type on line " + lineCounter + " not equal to Card or Other. Value recieved: " + roomType);
 			}
 			
