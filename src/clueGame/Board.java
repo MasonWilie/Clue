@@ -195,31 +195,31 @@ public class Board {
 		for (BoardCell[] row : board) {
 			for (BoardCell cell : row) {
 				Set<BoardCell> adjacenciesSet = new HashSet<BoardCell>();
-				BoardCell tempCell;
+				BoardCell adjacentCell;
 				if (cell.isWalkway()) {
 					if (cell.getRow() != (numRows - 1)) {// If the cell is not at the very bottom
-						tempCell = getCellAt(cell.getRow() + 1, cell.getColumn());
-						if (tempCell.isWalkway() || 
-								(tempCell.isDoorway() && tempCell.getDoorDirection() == DoorDirection.UP)) {
-							adjacenciesSet.add(tempCell);
+						adjacentCell = getCellAt(cell.getRow() + 1, cell.getColumn());
+						if (adjacentCell.isWalkway() || 
+								(adjacentCell.isDoorway() && adjacentCell.getDoorDirection() == DoorDirection.UP)) {
+							adjacenciesSet.add(adjacentCell);
 						}
 					}if(cell.getRow() != 0) {
-						tempCell = getCellAt(cell.getRow() - 1, cell.getColumn());
-						if (tempCell.isWalkway() || 
-								(tempCell.isDoorway() && tempCell.getDoorDirection() == DoorDirection.DOWN)) {
-							adjacenciesSet.add(tempCell);
+						adjacentCell = getCellAt(cell.getRow() - 1, cell.getColumn());
+						if (adjacentCell.isWalkway() || 
+								(adjacentCell.isDoorway() && adjacentCell.getDoorDirection() == DoorDirection.DOWN)) {
+							adjacenciesSet.add(adjacentCell);
 						}
 					}if (cell.getColumn() != (numColumns - 1)) {
-						tempCell = getCellAt(cell.getRow(), cell.getColumn() + 1);
-						if (tempCell.isWalkway() || 
-								(tempCell.isDoorway() && tempCell.getDoorDirection() == DoorDirection.LEFT)) {
-							adjacenciesSet.add(tempCell);
+						adjacentCell = getCellAt(cell.getRow(), cell.getColumn() + 1);
+						if (adjacentCell.isWalkway() || 
+								(adjacentCell.isDoorway() && adjacentCell.getDoorDirection() == DoorDirection.LEFT)) {
+							adjacenciesSet.add(adjacentCell);
 						}
 					}if (cell.getColumn() != 0) {
-						tempCell = getCellAt(cell.getRow(), cell.getColumn() - 1);
-						if (tempCell.isWalkway() || 
-								(tempCell.isDoorway() && tempCell.getDoorDirection() == DoorDirection.RIGHT)) {
-							adjacenciesSet.add(tempCell);
+						adjacentCell = getCellAt(cell.getRow(), cell.getColumn() - 1);
+						if (adjacentCell.isWalkway() || 
+								(adjacentCell.isDoorway() && adjacentCell.getDoorDirection() == DoorDirection.RIGHT)) {
+							adjacenciesSet.add(adjacentCell);
 						}
 					}
 					
