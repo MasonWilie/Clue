@@ -9,7 +9,9 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
+import java.util.Set;
 
 import clueGame.BoardCell;
 
@@ -31,10 +33,10 @@ public class Board {
 		
 	private BoardCell[][] board;
 	
-	private HashMap<Character, String> legend; 
-	private HashMap<BoardCell, HashSet<BoardCell>> adjMatrix;
+	private Map<Character, String> legend; 
+	private Map<BoardCell, Set<BoardCell>> adjMatrix;
 	
-	private HashSet<BoardCell> targets;
+	private Set<BoardCell> targets;
 	
 	private String boardConfigFile;
 	private String roomConfigFile;
@@ -43,7 +45,7 @@ public class Board {
 	// constructor is private to ensure only one can be created
 	private Board() {
 		legend = new HashMap<Character, String>();
-		adjMatrix = new HashMap<BoardCell, HashSet<BoardCell>>();
+		adjMatrix = new HashMap<BoardCell, Set<BoardCell>>();
 	}
 	// this method returns the only Board
 	public static Board getInstance() {
@@ -61,7 +63,7 @@ public class Board {
 		
 		
 		legend = new HashMap<Character, String>(); // Resets the legend
-		adjMatrix = new HashMap<BoardCell, HashSet<BoardCell>>(); // Resets the adjacencies
+		adjMatrix = new HashMap<BoardCell, Set<BoardCell>>(); // Resets the adjacencies
 		
 		try {
 			loadRoomConfig();
@@ -88,6 +90,7 @@ public class Board {
 			List<String> stringElements = Arrays.asList(currentLine.split(","));
 			
 			if (stringElements.size() != 3) {
+				in.close();
 				throw new BadConfigFormatException("Too many elements in line " + lineCounter
 						+ ". Format should follow Initial, Description, Card");
 			}
@@ -187,12 +190,12 @@ public class Board {
 	
 	// Calculates the adjacent cells next to each cell and stores it into a map
 	private void calcAdjacencies() {
-		adjMatrix = new HashMap<BoardCell, HashSet<BoardCell>>();
+		adjMatrix = new HashMap<BoardCell, Set<BoardCell>>();
 		
 		
 		for (BoardCell[] row : board) {
 			for (BoardCell cell : row) {
-				HashSet<BoardCell> adjacenciesSet = new HashSet<BoardCell>();
+				Set<BoardCell> adjacenciesSet = new HashSet<BoardCell>();
 				BoardCell tempCell;
 				if (cell.isWalkway()) {
 					if (cell.getRow() != (numRows - 1)) {// If the cell is not at the very bottom
@@ -253,7 +256,7 @@ public class Board {
 		BoardCell startCell = getCellAt(row, col);
 		
 		
-		HashSet<BoardCell> adjacentCells = adjMatrix.get(startCell);
+		Set<BoardCell> adjacentCells = adjMatrix.get(startCell);
 		for (BoardCell cell : adjacentCells) {
 			if (cell != startCell) {
 				cellTargets(cell, startCell, pathLength - 1, startCell);
@@ -274,7 +277,7 @@ public class Board {
 			targets.add(newCell);
 			return;
 		}else {
-			HashSet<BoardCell> adjacentCells = adjMatrix.get(newCell);
+			Set<BoardCell> adjacentCells = adjMatrix.get(newCell);
 			for (BoardCell cell : adjacentCells) {
 				if (cell != oldCell && cell != newCell && cell != startCell) {
 					cellTargets(cell, newCell, steps - 1, startCell);
@@ -287,15 +290,15 @@ public class Board {
 		
 	}
 	
-	public HashSet<BoardCell> getTargets(){
+	public Set<BoardCell> getTargets(){
 		return targets;
 	}
 	
-	public HashMap<Character, String> getLegend(){
+	public Map<Character, String> getLegend(){
 		return legend;
 	}
 	
-	public HashSet<BoardCell> getAdjList(int row, int col) {
+	public Set<BoardCell> getAdjList(int row, int col) {
 		return adjMatrix.get(getCellAt(row, col));
 	}
 	
