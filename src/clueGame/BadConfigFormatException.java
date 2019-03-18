@@ -10,7 +10,7 @@ package clueGame;
  * 
  */
 
-public class BadConfigFormatException extends Exception {
+public class BadConfigFormatException extends RuntimeException {
 
 	private String message;
 
