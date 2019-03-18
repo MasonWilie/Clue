@@ -193,60 +193,67 @@ public class Board {
 	private void calcAdjacencies() {
 		adjMatrix = new HashMap<>();
 		
-		
 		for (BoardCell[] row : board) {
 			for (BoardCell cell : row) {
 				Set<BoardCell> adjacenciesSet = new HashSet<>();
-				BoardCell adjacentCell;
 				if (cell.isWalkway()) {
-					if (cell.getRow() != (numRows - 1)) {// If the cell is not at the very bottom
-						adjacentCell = getCellAt(cell.getRow() + 1, cell.getColumn());
-						if (adjacentCell.isWalkway() || 
-								(adjacentCell.isDoorway() && adjacentCell.getDoorDirection() == DoorDirection.UP)) {
-							adjacenciesSet.add(adjacentCell);
-						}
-					}if(cell.getRow() != 0) {
-						adjacentCell = getCellAt(cell.getRow() - 1, cell.getColumn());
-						if (adjacentCell.isWalkway() || 
-								(adjacentCell.isDoorway() && adjacentCell.getDoorDirection() == DoorDirection.DOWN)) {
-							adjacenciesSet.add(adjacentCell);
-						}
-					}if (cell.getColumn() != (numColumns - 1)) {
-						adjacentCell = getCellAt(cell.getRow(), cell.getColumn() + 1);
-						if (adjacentCell.isWalkway() || 
-								(adjacentCell.isDoorway() && adjacentCell.getDoorDirection() == DoorDirection.LEFT)) {
-							adjacenciesSet.add(adjacentCell);
-						}
-					}if (cell.getColumn() != 0) {
-						adjacentCell = getCellAt(cell.getRow(), cell.getColumn() - 1);
-						if (adjacentCell.isWalkway() || 
-								(adjacentCell.isDoorway() && adjacentCell.getDoorDirection() == DoorDirection.RIGHT)) {
-							adjacenciesSet.add(adjacentCell);
-						}
-					}
-					
+					adjacenciesSet = calcAdjWalkway(cell);
 				}else if (cell.isDoorway()) {
-					
-					switch(cell.getDoorDirection()) {
-					case UP:
-						adjacenciesSet.add(getCellAt(cell.getRow() - 1, cell.getColumn()));
-						break;
-					case DOWN:
-						adjacenciesSet.add(getCellAt(cell.getRow() + 1, cell.getColumn()));
-						break;
-					case LEFT:
-						adjacenciesSet.add(getCellAt(cell.getRow(), cell.getColumn() - 1));
-						break;
-					case RIGHT:
-						adjacenciesSet.add(getCellAt(cell.getRow(), cell.getColumn() + 1));
-						break;
-					default:
-						break;
-					}
+					adjacenciesSet = calcAdjDoorway(cell);
 				}
 				adjMatrix.put(cell, adjacenciesSet);
 			}
 		}
+	}
+	
+	private Set<BoardCell> calcAdjWalkway(BoardCell cell){
+		Set<BoardCell> adjSet = new HashSet<>();
+		
+		BoardCell adjacentCell;
+		if (cell.getRow() != (numRows - 1)) {// If the cell is not at the very bottom
+			adjacentCell = getCellAt(cell.getRow() + 1, cell.getColumn());
+			if (adjacentCell.isWalkway() || (adjacentCell.isDoorway() && adjacentCell.getDoorDirection() == DoorDirection.UP)) {
+				adjSet.add(adjacentCell);
+			}
+		}if(cell.getRow() != 0) {
+			adjacentCell = getCellAt(cell.getRow() - 1, cell.getColumn());
+			if (adjacentCell.isWalkway() || (adjacentCell.isDoorway() && adjacentCell.getDoorDirection() == DoorDirection.DOWN)) {
+				adjSet.add(adjacentCell);
+			}
+		}if (cell.getColumn() != (numColumns - 1)) {
+			adjacentCell = getCellAt(cell.getRow(), cell.getColumn() + 1);
+			if (adjacentCell.isWalkway() || (adjacentCell.isDoorway() && adjacentCell.getDoorDirection() == DoorDirection.LEFT)) {
+				adjSet.add(adjacentCell);
+			}
+		}if (cell.getColumn() != 0) {
+			adjacentCell = getCellAt(cell.getRow(), cell.getColumn() - 1);
+			if (adjacentCell.isWalkway() || (adjacentCell.isDoorway() && adjacentCell.getDoorDirection() == DoorDirection.RIGHT)) {
+				adjSet.add(adjacentCell);
+			}
+		}
+		return adjSet;
+	}
+	
+	
+	private Set<BoardCell> calcAdjDoorway(BoardCell cell){
+		Set<BoardCell> adjSet = new HashSet<>();
+		switch(cell.getDoorDirection()) {	
+		case UP:
+			adjSet.add(getCellAt(cell.getRow() - 1, cell.getColumn()));
+			break;
+		case DOWN:
+			adjSet.add(getCellAt(cell.getRow() + 1, cell.getColumn()));
+			break;
+		case LEFT:
+			adjSet.add(getCellAt(cell.getRow(), cell.getColumn() - 1));
+			break;
+		case RIGHT:
+			adjSet.add(getCellAt(cell.getRow(), cell.getColumn() + 1));
+			break;
+		default:
+			break;
+		}
+		return adjSet;
 	}
 	
 
