@@ -10,18 +10,17 @@ package clueGame;
  * 
  */
 
-public class BadConfigFormatException extends RuntimeException {
+public class BadConfigFormatException extends Exception {
 
 	private String message;
 
 	
 	public BadConfigFormatException() {
-		super();
-		message = "Error with format of configuration file\n";
+		super("Error with format of configuration file\n");
 	}
 	
 	public BadConfigFormatException(String newMessage) {
-		message = newMessage;
+		super(newMessage);
 	}
 	
 	
