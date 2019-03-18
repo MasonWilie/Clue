@@ -55,13 +55,6 @@ public class BoardCell {
 	}
 	
 	public boolean isRoom() throws FileNotFoundException {
-		//check the first char in each row of ClueRooms.txt
-		FileReader reader = new FileReader("ClueRooms.txt");
-		Scanner in = new Scanner(reader);
-		while (in.hasNextLine()) {
-			String line = in.nextLine();
-			initial = line.charAt(0);
-		}
 		return initial != 'W';
 	}
 	
