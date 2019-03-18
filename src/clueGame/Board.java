@@ -27,7 +27,8 @@ import clueGame.BoardCell;
  */
 
 public class Board {
-	private int numRows, numColumns;
+	private int numRows;
+	private int numColumns;
 	
 	public static final int MAX_BOARD_SIZE = 50;
 		
@@ -44,8 +45,8 @@ public class Board {
 	private static Board theInstance = new Board();
 	// constructor is private to ensure only one can be created
 	private Board() {
-		legend = new HashMap<Character, String>();
-		adjMatrix = new HashMap<BoardCell, Set<BoardCell>>();
+		legend = new HashMap<>();
+		adjMatrix = new HashMap<>();
 	}
 	// this method returns the only Board
 	public static Board getInstance() {
@@ -62,8 +63,8 @@ public class Board {
 	public void initialize() throws BadConfigFormatException{
 		
 		
-		legend = new HashMap<Character, String>(); // Resets the legend
-		adjMatrix = new HashMap<BoardCell, Set<BoardCell>>(); // Resets the adjacencies
+		legend = new HashMap<>(); // Resets the legend
+		adjMatrix = new HashMap<>(); // Resets the adjacencies
 		
 		try {
 			loadRoomConfig();
@@ -83,7 +84,8 @@ public class Board {
 		int lineCounter = 0;
 		while (in.hasNextLine()) {
 			Character initial;
-			String description, roomType;
+			String description;
+			String roomType;
 			
 			List<String> stringElements = Arrays.asList(in.nextLine().split(","));
 			
@@ -124,7 +126,7 @@ public class Board {
 		
 		String nextLine;
 		numRows = 0;
-		ArrayList<String[]> grid = new ArrayList<String[]>();
+		ArrayList<String[]> grid = new ArrayList<>();
 		while(in.hasNextLine()) {
 			nextLine = in.nextLine();
 			String[] currentRow = nextLine.split(",");
@@ -189,12 +191,12 @@ public class Board {
 	
 	// Calculates the adjacent cells next to each cell and stores it into a map
 	private void calcAdjacencies() {
-		adjMatrix = new HashMap<BoardCell, Set<BoardCell>>();
+		adjMatrix = new HashMap<>();
 		
 		
 		for (BoardCell[] row : board) {
 			for (BoardCell cell : row) {
-				Set<BoardCell> adjacenciesSet = new HashSet<BoardCell>();
+				Set<BoardCell> adjacenciesSet = new HashSet<>();
 				BoardCell adjacentCell;
 				if (cell.isWalkway()) {
 					if (cell.getRow() != (numRows - 1)) {// If the cell is not at the very bottom
@@ -251,7 +253,7 @@ public class Board {
 	
 	// Calculates the reachable cells starting at startCell and having pathLength tiles to move
 	public void calcTargets(int row, int col, int pathLength) {
-		targets = new HashSet<BoardCell>();
+		targets = new HashSet<>();
 		BoardCell startCell = getCellAt(row, col);
 		
 		
@@ -274,7 +276,6 @@ public class Board {
 		
 		if (steps == 0 || newCell.isDoorway()) {
 			targets.add(newCell);
-			return;
 		}else {
 			Set<BoardCell> adjacentCells = adjMatrix.get(newCell);
 			for (BoardCell cell : adjacentCells) {
@@ -284,8 +285,6 @@ public class Board {
 				
 			}
 		}
-		
-		return;
 		
 	}
 	
