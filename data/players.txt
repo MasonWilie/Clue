@@ -1,0 +1,4 @@
+John h 1 1 red
+Cindy h 4 6 blue
+Robo23 c 9 9 yellow
+mark c 10 3 green
