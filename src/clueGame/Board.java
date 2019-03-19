@@ -41,6 +41,9 @@ public class Board {
 	
 	private String boardConfigFile;
 	private String roomConfigFile;
+	private String peopleConfigFile;
+	
+	private ArrayList<Player> people;
 	
 	private static Board theInstance = new Board();
 	// constructor is private to ensure only one can be created
@@ -48,17 +51,21 @@ public class Board {
 		legend = new HashMap<>();
 		adjMatrix = new HashMap<>();
 	}
+
 	// this method returns the only Board
 	public static Board getInstance() {
 		return theInstance;
 	}
 
 	public void setConfigFiles(String newBoardConfig, String newRoomConfig) {
+		setConfigFiles(newBoardConfig, newRoomConfig, null);
+	}
+
+	public void setConfigFiles(String newBoardConfig, String newRoomConfig, String newPeopleConfig) {
 		boardConfigFile = "data\\" + newBoardConfig;
 		roomConfigFile = "data\\" + newRoomConfig;
+		peopleConfigFile = "data\\" + newPeopleConfig;
 	}
-	
-
 	
 	public void initialize() throws BadConfigFormatException{
 		
@@ -69,6 +76,7 @@ public class Board {
 		try {
 			loadRoomConfig();
 			loadBoardConfig();
+			loadPeopleConfig();
 			calcAdjacencies();
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -256,9 +264,7 @@ public class Board {
 		}
 		return adjSet;
 	}
-	
-
-	
+		
 	// Calculates the reachable cells starting at startCell and having pathLength tiles to move
 	public void calcTargets(int row, int col, int pathLength) {
 		targets = new HashSet<>();
@@ -319,4 +325,15 @@ public class Board {
 	public BoardCell getCellAt(int row, int col) {
 		return board[row][col];
 	}
+
+	public void loadPeopleConfig() throws BadConfigFormatException{
+		people = new ArrayList<>();
+	}
+	
+	public ArrayList<Player> getPeople(){
+		return people;
+	}
+
+
+
 }

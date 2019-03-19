@@ -11,7 +11,6 @@ import static org.junit.Assert.*;
 import java.util.Map;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -34,7 +33,7 @@ public class OurTests {
 		// Board is singleton, get the only instance
 		board = Board.getInstance();
 		// set the file names to use my config files
-		board.setConfigFiles("Board_Layout.csv", "ClueRooms.txt");		
+		board.setConfigFiles("Board_Layout.csv", "ClueRooms.txt", null);		
 		// Initialize will load BOTH config files 
 		board.initialize();
 	}

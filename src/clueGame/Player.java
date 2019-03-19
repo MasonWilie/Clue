@@ -13,8 +13,8 @@ public class Player {
 		return null;
 	}
 	
+	
 	// For tests only
-
 	public int getRow() {
 		return row;
 	}
