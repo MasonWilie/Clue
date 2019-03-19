@@ -148,8 +148,9 @@ public class Board {
 			}
 			for (int j = 0; j < numColumns; j++) {
 				BoardCell cell = new BoardCell(i, j);
-				if (grid.get(i)[j].length() == 2) {
-					char direction = grid.get(i)[j].charAt(1);
+				String tile = grid.get(i)[j];
+				if (tile.length() == 2) {
+					char direction = tile.charAt(1);
 
 					switch(direction) {
 					case 'U':
@@ -172,7 +173,7 @@ public class Board {
 					cell.setDoorDirection(DoorDirection.NONE);
 				}
 				
-				char initial = grid.get(i)[j].charAt(0);
+				char initial = tile.charAt(0);
 				
 				if (legend.containsKey(initial)) {
 					cell.setInitial(initial);
