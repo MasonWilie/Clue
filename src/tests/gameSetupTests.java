@@ -39,6 +39,7 @@ public class gameSetupTests {
 		assertTrue(person instanceof HumanPlayer);
 		assertEquals(1, person.getRow());
 		assertEquals(10, person.getColumn());
+		System.out.println(person.getColor());
 		assertEquals(Color.RED, person.getColor());
 		
 		person = people.get(2);

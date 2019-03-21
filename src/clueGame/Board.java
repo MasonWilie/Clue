@@ -12,6 +12,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.Set;
+import java.awt.Color;
+import java.lang.reflect.Field;
+
 
 import clueGame.BoardCell;
 
@@ -55,6 +58,18 @@ public class Board {
 	// this method returns the only Board
 	public static Board getInstance() {
 		return theInstance;
+	}
+	
+	public Color convertColor(String strColor) {
+		Color color; 
+		try {     
+			// We can use reflection to convert the string to a color
+			Field field = Class.forName("java.awt.Color").getField(strColor.trim());
+			color = (Color)field.get(null); 
+		} catch (Exception e) {  
+			color = null; // Not defined
+		}
+		return color;
 	}
 
 	public void setConfigFiles(String newBoardConfig, String newRoomConfig) {
@@ -326,8 +341,48 @@ public class Board {
 		return board[row][col];
 	}
 
-	public void loadPeopleConfig() throws BadConfigFormatException{
+	public void loadPeopleConfig() throws FileNotFoundException, BadConfigFormatException{
+		
+		/*File boardFile = new File(boardConfigFile);
+		Scanner in = new Scanner(new FileReader(boardFile));
+		
+		String nextLine;
+		numRows = 0;
+		ArrayList<String[]> grid = new ArrayList<>();
+		while(in.hasNextLine()) {
+			nextLine = in.nextLine();
+			String[] currentRow = nextLine.split(",");
+			if (currentRow.length != 0) {
+				grid.add(currentRow);
+			}
+			
+		}
+		in.close();*/
+		
+		File playerFile = new File(peopleConfigFile);
+		Scanner in = new Scanner(new FileReader(playerFile));
+		
+		String nextLine;
+		int thisRow = 0;
 		people = new ArrayList<>();
+		while(in.hasNextLine()) {
+			nextLine = in.nextLine();
+			String[] currentRow = nextLine.split(" ");
+			if (currentRow[1].equals("h")) {
+				people.add(new HumanPlayer());
+			} else if (currentRow[1].equals("c")) {
+				people.add(new ComputerPlayer());
+			} else {
+				people.add(new Player());
+			}
+			people.get(thisRow).setPlayerName(currentRow[0]);
+			people.get(thisRow).setRow(Integer.parseInt(currentRow[2]));
+			people.get(thisRow).setColumn(Integer.parseInt(currentRow[3]));
+			people.get(thisRow).setColor(convertColor(currentRow[4]));
+			System.out.println(people.get(thisRow).getColor());
+			thisRow++;
+		}
+		in.close();
 	}
 	
 	public ArrayList<Player> getPeople(){
