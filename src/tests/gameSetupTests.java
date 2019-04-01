@@ -6,12 +6,10 @@ import static org.junit.Assert.assertTrue;
 import java.awt.Color;
 import java.util.ArrayList;
 
-import javax.smartcardio.Card;
-
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-
+import clueGame.Card;
 import clueGame.Board;
 import clueGame.CardType;
 import clueGame.ComputerPlayer;

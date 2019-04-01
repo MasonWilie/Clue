@@ -92,6 +92,7 @@ public class Board {
 			loadRoomConfig();
 			loadBoardConfig();
 			loadPeopleConfig();
+			loadDeckConfig();
 			calcAdjacencies();
 		} catch (IOException e) {
 			e.printStackTrace();
