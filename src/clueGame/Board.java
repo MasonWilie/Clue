@@ -10,6 +10,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.Scanner;
 import java.util.Set;
 import java.awt.Color;
@@ -421,8 +422,58 @@ public class Board {
 		in.close();
 	}
 	
-	public void pickWinningCards() {
+	private void pickWinningCards() {
+		List<Card> personDeck = new ArrayList<>();
+		List<Card> roomDeck = new ArrayList<>();
+		List<Card> weaponDeck = new ArrayList<>();
 		
+		for (Card card : deck) {
+			if (card.getType() == CardType.PERSON) {
+				personDeck.add(card);
+			}else if (card.getType() == CardType.ROOM) {
+				roomDeck.add(card);
+			}else {
+				weaponDeck.add(card);
+			}
+		}
+		
+		deck = new ArrayList<>();
+		
+		Random rand = new Random();
+		
+		int wPersonIndex = rand.nextInt(personDeck.size());
+		int wRoomIndex = rand.nextInt(roomDeck.size());
+		int wWeaponIndex = rand.nextInt(weaponDeck.size());
+		
+		winningPerson = personDeck.get(wPersonIndex);
+		winningRoom = roomDeck.get(wRoomIndex);
+		winningWeapon = weaponDeck.get(wWeaponIndex);
+		
+		personDeck.remove(wPersonIndex);
+		roomDeck.remove(wRoomIndex);
+		weaponDeck.remove(wWeaponIndex);
+		
+		deck.addAll(personDeck);
+		deck.addAll(weaponDeck);
+		deck.addAll(roomDeck);
+		
+		shuffleDeck();
+		
+		
+	}
+	
+	private void shuffleDeck() {
+		Random rand = new Random();
+		
+		for (int i = 0; i < 10; i++) { // Shuffles the deck 10 times
+			ArrayList<Card> tempDeck = new ArrayList<>();
+			while(!deck.isEmpty()) {
+				int index = rand.nextInt(deck.size());
+				tempDeck.add(deck.get(index));
+				deck.remove(index);
+			}
+			deck = tempDeck;
+		}
 	}
 
 
