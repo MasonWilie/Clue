@@ -400,4 +400,17 @@ public class Board {
 		return deck;
 	}
 
+	//made this
+	public void dealCards() {
+		int peopleIter = 0;
+		while (deck.size() > 0) {
+			people.get(peopleIter).addToHand(deck.get(deck.size()-1));
+			deck.remove(deck.size()-1);
+			if (peopleIter+1 > people.size()-1) {
+				peopleIter = 0;
+			} else {
+				peopleIter++;
+			}
+		}
+	}
 }

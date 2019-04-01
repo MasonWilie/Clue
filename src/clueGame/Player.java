@@ -2,18 +2,24 @@ package clueGame;
 
 //import com.sun.prism.paint.Color;
 import java.awt.Color;
+import java.util.ArrayList;
 
 public class Player {
 	private String playerName;
 	private int row;
 	private int column;
 	private Color color;
+	//added this
+	private ArrayList<Card> playerHand;
 	
 
 	public Card disproveSuggestion(Solution suggestion) {
 		return null;
 	}
 	
+	public void addToHand(Card aCard) {
+		playerHand.add(aCard);
+	}
 	
 	// For tests only
 	public int getRow() {

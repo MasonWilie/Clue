@@ -93,7 +93,10 @@ public class gameSetupTests {
 		assertTrue(cards.contains(chosenWeapon));
 		assertTrue(cards.contains(chosenPerson));
 
-		
 	}
 	
+	@Test
+	public void testDealingCards() {
+		assertEquals(0, cards.size());
+	}
 }
