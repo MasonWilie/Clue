@@ -45,8 +45,10 @@ public class Board {
 	private String boardConfigFile;
 	private String roomConfigFile;
 	private String peopleConfigFile;
+	private String cardConfigFile;
 	
 	private ArrayList<Player> people;
+	private ArrayList<Card> deck;
 	
 	private static Board theInstance = new Board();
 	// constructor is private to ensure only one can be created
@@ -72,14 +74,12 @@ public class Board {
 		return color;
 	}
 
-	public void setConfigFiles(String newBoardConfig, String newRoomConfig) {
-		setConfigFiles(newBoardConfig, newRoomConfig, null);
-	}
 
-	public void setConfigFiles(String newBoardConfig, String newRoomConfig, String newPeopleConfig) {
+	public void setConfigFiles(String newBoardConfig, String newRoomConfig, String newPeopleConfig, String newCardConfig) {
 		boardConfigFile = "data/" + newBoardConfig;
 		roomConfigFile = "data/" + newRoomConfig;
 		peopleConfigFile = "data/" + newPeopleConfig;
+		cardConfigFile = "data/" + newCardConfig;
 	}
 	
 	public void initialize() throws BadConfigFormatException{
@@ -389,7 +389,13 @@ public class Board {
 	public ArrayList<Player> getPeople(){
 		return people;
 	}
+	
+	public void loadDeckConfig() {
+		deck = new ArrayList<Card>();
+	}
 
-
+	public ArrayList<Card> getDeck(){
+		return deck;
+	}
 
 }
