@@ -12,6 +12,14 @@ public class Player {
 	//added this
 	private ArrayList<Card> playerHand;
 	
+	public int getHandSize() {
+		return playerHand.size();
+	}
+	
+	public ArrayList<Card> getHand(){
+		return playerHand;
+	}
+	
 
 	public Card disproveSuggestion(Solution suggestion) {
 		return null;
