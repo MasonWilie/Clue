@@ -47,6 +47,10 @@ public class Board {
 	private String peopleConfigFile;
 	private String cardConfigFile;
 	
+	private Card winningPerson;
+	private Card winningWeapon;
+	private Card winningRoom;
+	
 	private ArrayList<Player> people;
 	private ArrayList<Card> deck;
 	
@@ -93,6 +97,7 @@ public class Board {
 			loadBoardConfig();
 			loadPeopleConfig();
 			loadDeckConfig();
+			pickWinningCards();
 			calcAdjacencies();
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -414,6 +419,10 @@ public class Board {
 		}
 		
 		in.close();
+	}
+	
+	public void pickWinningCards() {
+		
 	}
 
 
