@@ -430,7 +430,7 @@ public class Board {
 		return deck;
 	}
 
-	//made this
+	//made this. initialize should run this
 	public void dealCards() {
 		int peopleIter = 0;
 		while (deck.size() > 0) {

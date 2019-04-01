@@ -113,6 +113,38 @@ public class gameSetupTests {
 	
 	@Test
 	public void testDealingCards() {
-		assertEquals(0, cards.size());
+		ArrayList<Card> deck = board.getDeck();
+		ArrayList<Player> people = board.getPeople();
+		assertEquals(0, deck.size());
+		
+		boolean closeNumCards = true;
+		
+		for (int i = 0; i < people.size()-1; i++) {
+			//2 or 3 or smth
+			if (abs(people.get(i).getHandSize() - people.get(i+1).getHandSize()) < 2) {
+			} else {
+				closeNumCards = false;
+				break;
+			}
+		}
+		assertTrue(closeNumCards);
+		
+		String testCard1 = "Fran";
+		String testCard2 = "WetNoodle";
+		String testCard3 = "Library";
+		int numTestCards = 3;
+		int occurrenceOfCard = 0;
+		
+		for (int a = 0; a < numTestCards; a++) {
+			for (int i = 0; i < people.size(); i++) {
+				for (int j = 0; j < people.get(i).getHandSize(); j++) {
+					if (people.get(i).getHand().get(j) == "Fran") {
+						occurrenceOfCard++;
+					}
+				}
+			}
+			assertEquals(1, occurrenceOfCard);
+			occurrenceOfCard = 0;
+		}
 	}
 }
