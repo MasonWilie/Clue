@@ -344,21 +344,6 @@ public class Board {
 
 	public void loadPeopleConfig() throws FileNotFoundException, BadConfigFormatException{
 		
-		/*File boardFile = new File(boardConfigFile);
-		Scanner in = new Scanner(new FileReader(boardFile));
-		
-		String nextLine;
-		numRows = 0;
-		ArrayList<String[]> grid = new ArrayList<>();
-		while(in.hasNextLine()) {
-			nextLine = in.nextLine();
-			String[] currentRow = nextLine.split(",");
-			if (currentRow.length != 0) {
-				grid.add(currentRow);
-			}
-			
-		}
-		in.close();*/
 		
 		File playerFile = new File(peopleConfigFile);
 		Scanner in = new Scanner(new FileReader(playerFile));
@@ -391,8 +376,44 @@ public class Board {
 		return people;
 	}
 	
-	public void loadDeckConfig() {
+	public void loadDeckConfig() throws FileNotFoundException, BadConfigFormatException{
 		deck = new ArrayList<Card>();
+		
+		File playerFile = new File(cardConfigFile);
+		Scanner in = new Scanner(new FileReader(playerFile));
+		
+		if (in.hasNextLine()) {
+			String[] names = in.nextLine().split(" ");
+			for (String name : names) {
+				deck.add(new Card(name, CardType.PERSON));
+			}
+		}else {
+			in.close();
+			throw new BadConfigFormatException("Missing lines in card config file");
+		}
+		
+		if (in.hasNextLine()) {
+			String[] weapons = in.nextLine().split(" ");
+			for(String weapon:weapons) {
+				deck.add(new Card(weapon, CardType.WEAPON));
+			}
+		}else {
+			in.close();
+			throw new BadConfigFormatException("Missing lines in card config file");
+		}
+		
+		if (in.hasNextLine()) {
+			in.close();
+			throw new BadConfigFormatException("Too many lines in card config file");
+		}
+		
+		for(char initial : legend.keySet()) {
+			if (initial != 'X' && initial != 'W') {
+				deck.add(new Card(legend.get(initial), CardType.ROOM));
+			}
+		}
+		
+		in.close();
 	}
 
 
