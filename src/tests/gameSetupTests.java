@@ -24,7 +24,7 @@ public class gameSetupTests {
 		// Board is singleton, get the only instance
 		board = Board.getInstance();
 		// set the file names to use my config files
-		board.setConfigFiles("CTest_ClueLayout.csv", "CTest_ClueLegend.txt", "players.txt", "cards.txt");		
+		board.setConfigFiles("Board_Layout.csv", "ClueRooms.txt", "players.txt", "cards.txt");		
 		// Initialize will load BOTH config files 
 		board.initialize();
 	}
@@ -63,7 +63,7 @@ public class gameSetupTests {
 	public void testLoadDeckCards() {
 		ArrayList<Card> cards = board.getDeck();
 		
-		assertEquals(21, cards.size());
+		assertEquals(23, cards.size());
 		
 		int numPeople = 0;
 		int numWeapons = 0;
@@ -89,9 +89,25 @@ public class gameSetupTests {
 		String chosenWeapon = "Bazooka";
 		String chosenPerson = "Fran";
 		
-		assertTrue(cards.contains(chosenRoom));
-		assertTrue(cards.contains(chosenWeapon));
-		assertTrue(cards.contains(chosenPerson));
+		boolean roomFound=false;
+		boolean weaponFound=false;
+		boolean personFound=false;
+		
+		for(Card card : cards) {
+			if (chosenRoom.equals(card.getName())) {
+				roomFound=true;
+			}else if (chosenWeapon.equals(card.getName())) {
+				weaponFound=true;
+			}else if (chosenPerson.equals(card.getName())) {
+				personFound=true;
+			}
+			
+			
+		}
+		
+		assertTrue(personFound);
+		assertTrue(weaponFound);
+		assertTrue(roomFound);
 
 		
 	}
