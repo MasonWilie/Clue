@@ -9,6 +9,10 @@ public class Card {
 		this.type = type;
 	}
 	
+	public String getName() {
+		return cardName;
+	}
+	
 	public boolean equals() {
 		return true;
 	}
