@@ -390,6 +390,8 @@ public class Board {
 		return people;
 	}
 
-
+	public void loadCardsConfig() throws FileNotFoundException, BadConfigFormatException{
+		
+	}
 
 }
