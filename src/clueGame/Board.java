@@ -77,9 +77,9 @@ public class Board {
 	}
 
 	public void setConfigFiles(String newBoardConfig, String newRoomConfig, String newPeopleConfig) {
-		boardConfigFile = "data\\" + newBoardConfig;
-		roomConfigFile = "data\\" + newRoomConfig;
-		peopleConfigFile = "data\\" + newPeopleConfig;
+		boardConfigFile = "data/" + newBoardConfig;
+		roomConfigFile = "data/" + newRoomConfig;
+		peopleConfigFile = "data/" + newPeopleConfig;
 	}
 	
 	public void initialize() throws BadConfigFormatException{
