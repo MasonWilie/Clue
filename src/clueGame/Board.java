@@ -378,6 +378,7 @@ public class Board {
 			people.get(thisRow).setPlayerName(currentRow[0]);
 			people.get(thisRow).setRow(Integer.parseInt(currentRow[2]));
 			people.get(thisRow).setColumn(Integer.parseInt(currentRow[3]));
+			System.out.println(currentRow[4]);
 			people.get(thisRow).setColor(convertColor(currentRow[4]));
 			System.out.println(people.get(thisRow).getColor());
 			thisRow++;

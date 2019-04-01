@@ -56,7 +56,6 @@ public class gameSetupTests {
 		assertEquals(2, person.getColumn());
 		assertEquals(Color.BLACK, person.getColor());
 		
-		
 	}
 	
 	
