@@ -1,5 +1,6 @@
 package clueGame;
 
+import java.util.ArrayList;
 import java.util.Set;
 
 /**
@@ -12,6 +13,7 @@ import java.util.Set;
  */
 
 public class ComputerPlayer extends Player{
+	
 	public BoardCell pickLocation(Set<BoardCell> targets) {
 		return null;
 	}
@@ -23,4 +25,14 @@ public class ComputerPlayer extends Player{
 	public void createSuggestion() {
 		
 	}
+	
+	
+	
+	public BoardCell chooseTarget(ArrayList<BoardCell> targets) {
+		return new BoardCell(-1, -1);
+	}
+	
+	
+	
+	
 }
