@@ -1,364 +1,409 @@
-commit d8038de01cb22c3784bd7f161750e0f91f56935d
-Author: Mason Wilie <masonwilie@gmail.com>
-Date:   Mon Mar 4 14:54:21 2019 -0700
-
-    C12A-2 Done
-
-commit 6171363f719484ceefc414956384566f66b54e10
+commit 3e1a5bd3960aa4546ab730751b3b0cf935e39597
+Merge: 8aeb036 98483d6
 Author: Hunter Rich <hrich@mymail.mines.edu>
-Date:   Thu Feb 28 12:15:24 2019 -0700
-
-    Fixed IntBoardTests to not try to access locations outside of the board
-
-commit ff362d23878c199896af45e8594c1610766c6bfb
-Author: Hunter Rich <hrich@mymail.mines.edu>
-Date:   Thu Feb 28 12:09:35 2019 -0700
-
-    Fixed calcAdjacencies to not use the targets set and use a temp set
-    instead
-
-commit 5b3546bc6f4a5902c81783327b75f8f3e86b6efc
-Author: Hunter Rich <hrich@mymail.mines.edu>
-Date:   Thu Feb 28 12:02:57 2019 -0700
-
-    Finished making calcAdjacencies
-
-commit d824e9e873ee2203028a8e84658ef4aed8212eae
-Merge: 9bb5f55 6d2b1b0
-Author: Hunter Rich <hrich@mymail.mines.edu>
-Date:   Thu Feb 28 11:52:58 2019 -0700
+Date:   Mon Apr 1 18:30:38 2019 -0600
 
     Merge branch 'master' of https://github.com/MasonWilie/Clue
 
-commit 9bb5f55e9c7f5e83fbb1293d32c6f67fe759bfe9
+commit 8aeb036dc3c1099870417de3c7d4a481e9cfc322
 Author: Hunter Rich <hrich@mymail.mines.edu>
-Date:   Thu Feb 28 11:52:18 2019 -0700
+Date:   Mon Apr 1 18:30:21 2019 -0600
 
-    Started making calcAdjacencies
+    Comments added for GameSetupTests
 
-commit 6d2b1b09f4aea77e21b7e1592efd24ab3c37d86f
+commit 98483d6c00535e6ed217280fdcb0e66b00a9db07
 Author: Mason Wilie <masonwilie@gmail.com>
-Date:   Thu Feb 28 11:51:03 2019 -0700
+Date:   Mon Apr 1 18:30:09 2019 -0600
 
-    Constructor Created
+    missing comments added
 
-commit ee50b0c3033cb36272101f3a4ae9012febb7f048
+commit 09d1d954d1e9f6c113389cef740f669b48cbaf18
 Author: Mason Wilie <masonwilie@gmail.com>
-Date:   Thu Feb 28 11:34:47 2019 -0700
+Date:   Mon Apr 1 18:29:53 2019 -0600
 
-    Moved IntBoardTests to tests package
+    Missing comments added
 
-commit 43734dd985bcda6408bd9005c115c4ac1a90b34a
-Merge: a861195 9b17bc1
+commit 1552b0b774d5d50d5ba9224942e6892d23d0b848
 Author: Mason Wilie <masonwilie@gmail.com>
-Date:   Thu Feb 28 11:32:42 2019 -0700
+Date:   Mon Apr 1 18:15:09 2019 -0600
 
-    Merge branch 'master' of https://github.com/MasonWilie/Clue
+    All tests pass for gameSetupTests and previous
 
-commit a86119554ee6cf4ed1dd8fc19408a7a940a5bf7b
+commit 60a771d0abe5a09e3bd65d9529baffb0f0caa081
 Author: Mason Wilie <masonwilie@gmail.com>
-Date:   Thu Feb 28 11:32:27 2019 -0700
+Date:   Mon Apr 1 18:10:01 2019 -0600
 
-    Added JUnit stuff
+    testDealingCards all tests fail
 
-commit 9b17bc105289d7102082b5b7bcf1160bba94a539
-Author: Hunter Rich <hrich@mymail.mines.edu>
-Date:   Thu Feb 28 11:32:02 2019 -0700
-
-    Finished IntBoardTests
-
-commit 339c5d5767200db7d2a5eae5b1c2d6129ab3c6c9
-Author: Hunter Rich <hrich@mymail.mines.edu>
-Date:   Thu Feb 28 11:21:28 2019 -0700
-
-    Started IntBoardTests class
-
-commit f798fcb2a1e3955c0fa6ae994e26f7d4c27c45d8
-Merge: 132e722 250bb9e
-Author: Brennan Guthals <bcguthals@mymail.mines.edu>
-Date:   Thu Feb 28 11:20:51 2019 -0700
-
-    Merge branch 'master' of https://github.com/MasonWilie/Clue
-
-commit 132e722cf10d346c0dc4826adf29119204392ccf
-Author: Hunter Rich <hrich@mymail.mines.edu>
-Date:   Thu Feb 28 11:19:20 2019 -0700
-
-    Started IntBoardTests class
-
-commit 250bb9e56f9d0075a7e0e60ec570e5c64bba95f0
+commit ae5dec7da52718ab44cfa5e27a4b2685a605588e
+Merge: 7c28349 c0a2744
 Author: Mason Wilie <masonwilie@gmail.com>
-Date:   Thu Feb 28 11:18:00 2019 -0700
-
-    IntBoard layed out
-
-commit 9929550e674a13e3a3ebdf30e00a27a2c9396e98
-Author: Mason Wilie <masonwilie@gmail.com>
-Date:   Thu Feb 28 11:11:23 2019 -0700
-
-    BoardCell and IntBoard classes added
-
-commit 22374712224ccbf53127a1a1c3724dfe18ea1bd7
-Author: Mason Wilie <masonwilie@gmail.com>
-Date:   Tue Feb 26 12:13:32 2019 -0700
-
-    README added
-
-commit 8d8ae917d2f11d7fab6bad5082cd24e124d67e49
-Author: Mason Wilie <masonwilie@gmail.com>
-Date:   Tue Feb 26 12:09:45 2019 -0700
-
-    XLSX file added
-
-commit 2ad83f51b2b145b70a45f8ce63758141ad3915f1
-Author: Mason Wilie <masonwilie@gmail.com>
-Date:   Tue Feb 26 12:07:07 2019 -0700
-
-    Layout Complete
-
-commit e685dc4b17cb14bc8b604646a42c263403fc9e62
-Author: Mason Wilie <masonwilie@gmail.com>
-Date:   Tue Feb 26 11:39:49 2019 -0700
-
-    Layout CSV file added
-
-commit 9765428f9f487ffb834a0062bf8c33dadb189c56
-Author: Mason Wilie <masonwilie@gmail.com>
-Date:   Tue Feb 26 11:27:48 2019 -0700
-
-    Initial, project created
-
-commit fcad557567cdd8a3e61f3bb134aa5c3841eef0b9
-Author: Mason Wilie <masonwilie@gmail.com>
-Date:   Tue Feb 26 11:23:48 2019 -0700
-
-    Initial commit
-commit 17e59b95af357d1f9ae5c9219cf95d2d24e25300
-Author: Mason Wilie <masonwilie@gmail.com>
-Date:   Wed Mar 6 14:16:58 2019 -0700
-
-    OurTests added
-
-commit 043e74b3516f000c5e313f5937620198d7920602
-Author: Mason Wilie <masonwilie@gmail.com>
-Date:   Wed Mar 6 14:16:45 2019 -0700
-
-    13A-1 Done
-
-commit d6615cdec0a3a08fc4aa2ba1b7f12c5da5ad95df
-Author: Mason Wilie <masonwilie@gmail.com>
-Date:   Tue Mar 5 20:43:29 2019 -0700
-
-    loadBoardConfig completed,
-    initialize completed,
-    all tests in given testfile passed
-
-commit fec2f4fb3a2af1d4d9fecfe4c1f14bc0d65631e7
-Author: Hunter Rich <hrich@mymail.mines.edu>
-Date:   Tue Mar 5 12:14:31 2019 -0700
-
-    made some more changes to getCellAt method
-
-commit c81c7f6137a5985e546d40bb475d78aac1b5194e
-Author: Hunter Rich <hrich@mymail.mines.edu>
-Date:   Tue Mar 5 12:08:21 2019 -0700
-
-    ...
-
-commit b7d678fc9ea913c4b504d71b4a91d539be43c164
-Merge: 62f848a d272865
-Author: Hunter Rich <hrich@mymail.mines.edu>
-Date:   Tue Mar 5 12:06:15 2019 -0700
-
-    Merge branch 'master' of https://github.com/MasonWilie/Clue
-
-commit 62f848ad7d0ccc053d4b1c103013c25c5579a6c7
-Author: Hunter Rich <hrich@mymail.mines.edu>
-Date:   Tue Mar 5 12:05:32 2019 -0700
-
-    got rid of BOARD_HEIGHT and BOARD_WIDTH for row and cols variables
-
-commit d2728659d6235479c68ef9c0e27e583a277c12c7
-Author: Mason Wilie <masonwilie@gmail.com>
-Date:   Tue Mar 5 12:04:43 2019 -0700
-
-    loadRoomConfig completed
-
-commit 76a33bbd8e989e6039f52c24574cb3b80cc52dcd
-Author: Mason Wilie <masonwilie@gmail.com>
-Date:   Tue Mar 5 11:50:54 2019 -0700
-
-    DoorDirection Fixed, Board Game getAdj changed to using the map
-
-commit 3ba1e51c05e16c729e83a5e6eb9e819fde155593
-Merge: 5a21914 8f4cb0f
-Author: Mason Wilie <masonwilie@gmail.com>
-Date:   Tue Mar 5 11:48:35 2019 -0700
+Date:   Mon Apr 1 18:02:39 2019 -0600
 
     Merge branch 'master' of https://github.com/MasonWilie/Clue.git
+
+commit 7c2834983eb784ae01c75e531d019d94d1980634
+Author: Mason Wilie <masonwilie@gmail.com>
+Date:   Mon Apr 1 18:02:32 2019 -0600
+
+    .
+
+commit c0a2744699e987b546ada24dc1619de2b4dadcc4
+Author: Hunter Rich <hrich@mymail.mines.edu>
+Date:   Mon Apr 1 18:01:58 2019 -0600
+
+    Fixed testDealingCards test
+
+commit e535478a11bc02bec049ea6cf5592097b4089202
+Merge: c0c804a 4d97cc9
+Author: Hunter Rich <hrich@mymail.mines.edu>
+Date:   Mon Apr 1 17:58:29 2019 -0600
+
+    Merge branch 'master' of https://github.com/MasonWilie/Clue
     
     Conflicts:
-            src/clueGame/DoorDirection.java
+            src/tests/gameSetupTests.java
 
-commit 5a21914fb73307edfa9c035123f674f5ae52b47b
+commit c0c804a1ce26f272a00eb5cbedabe79200e9c7b7
+Author: Hunter Rich <hrich@mymail.mines.edu>
+Date:   Mon Apr 1 17:57:32 2019 -0600
+
+    Wrote test for dealing cards
+
+commit 4d97cc909b8da3f897e092e476d2d17513f292a9
 Author: Mason Wilie <masonwilie@gmail.com>
-Date:   Tue Mar 5 11:48:04 2019 -0700
+Date:   Mon Apr 1 17:57:01 2019 -0600
 
-    DoorDirection enum completed, Board started
+    Changed numbers on testLoadDeckCards function to reflect that cards have
+    been taken from the deck for the winning cards.
 
-commit 8f4cb0f0b8a2c515a391cbd9dda5190759d2e35d
-Author: Hunter Rich <hrich@mymail.mines.edu>
-Date:   Tue Mar 5 11:46:30 2019 -0700
-
-    added isWalkway(), isRoom(), isDoorway() methods to BoardCell
-
-commit 21d7304f7a455dd5c1ff3af4939cbc45a32a6a5d
+commit e8cb4a8956a296a9c82b368abab8bc72c1ad6588
 Author: Mason Wilie <masonwilie@gmail.com>
-Date:   Tue Mar 5 11:22:47 2019 -0700
+Date:   Mon Apr 1 17:54:26 2019 -0600
 
-    Board class and DoorDirection enum type added
+    Created methods for picking winning card and shuffeling
 
-commit 1cc89817a41ba5105cf2d30327f402398e2db06d
-Author: Hunter Rich <hrich@mymail.mines.edu>
-Date:   Tue Mar 5 11:19:31 2019 -0700
-
-    downloaded files for C13A-1 Clue Board Part I (Clue Pair)
-
-commit d8038de01cb22c3784bd7f161750e0f91f56935d
+commit 1a8ccaf7393a2395c9139f816f34bfcfd98fa675
 Author: Mason Wilie <masonwilie@gmail.com>
-Date:   Mon Mar 4 14:54:21 2019 -0700
+Date:   Mon Apr 1 17:54:08 2019 -0600
 
-    C12A-2 Done
+    Added getHand and getHandSize methods
 
-commit 6171363f719484ceefc414956384566f66b54e10
+commit 1ae15946b83fdffbc1193bceef8bfc9fd02e7c26
+Merge: 84cecd8 a00cbd5
 Author: Hunter Rich <hrich@mymail.mines.edu>
-Date:   Thu Feb 28 12:15:24 2019 -0700
-
-    Fixed IntBoardTests to not try to access locations outside of the board
-
-commit ff362d23878c199896af45e8594c1610766c6bfb
-Author: Hunter Rich <hrich@mymail.mines.edu>
-Date:   Thu Feb 28 12:09:35 2019 -0700
-
-    Fixed calcAdjacencies to not use the targets set and use a temp set
-    instead
-
-commit 5b3546bc6f4a5902c81783327b75f8f3e86b6efc
-Author: Hunter Rich <hrich@mymail.mines.edu>
-Date:   Thu Feb 28 12:02:57 2019 -0700
-
-    Finished making calcAdjacencies
-
-commit d824e9e873ee2203028a8e84658ef4aed8212eae
-Merge: 9bb5f55 6d2b1b0
-Author: Hunter Rich <hrich@mymail.mines.edu>
-Date:   Thu Feb 28 11:52:58 2019 -0700
+Date:   Mon Apr 1 17:35:17 2019 -0600
 
     Merge branch 'master' of https://github.com/MasonWilie/Clue
 
-commit 9bb5f55e9c7f5e83fbb1293d32c6f67fe759bfe9
+commit 84cecd85a89bdf18fa2bfb886c24013e2938dfc8
 Author: Hunter Rich <hrich@mymail.mines.edu>
-Date:   Thu Feb 28 11:52:18 2019 -0700
+Date:   Mon Apr 1 17:34:37 2019 -0600
 
-    Started making calcAdjacencies
+    Wrote deal cards method
 
-commit 6d2b1b09f4aea77e21b7e1592efd24ab3c37d86f
+commit a00cbd5e72394b0a0ebf36240becfec86bbe6ad3
 Author: Mason Wilie <masonwilie@gmail.com>
-Date:   Thu Feb 28 11:51:03 2019 -0700
+Date:   Mon Apr 1 17:32:40 2019 -0600
 
-    Constructor Created
+    Added pickWinningCards method
 
-commit ee50b0c3033cb36272101f3a4ae9012febb7f048
+commit 862a6e250ba9e2e61f6e714d7b0462e1d68a39ee
 Author: Mason Wilie <masonwilie@gmail.com>
-Date:   Thu Feb 28 11:34:47 2019 -0700
+Date:   Mon Apr 1 17:26:49 2019 -0600
 
-    Moved IntBoardTests to tests package
+    Filled in the loadDeckConfig class to make the test for it pass
 
-commit 43734dd985bcda6408bd9005c115c4ac1a90b34a
-Merge: a861195 9b17bc1
+commit bf21cc31a3c843a66a45d11b104b285536db2f9c
 Author: Mason Wilie <masonwilie@gmail.com>
-Date:   Thu Feb 28 11:32:42 2019 -0700
+Date:   Mon Apr 1 17:26:28 2019 -0600
+
+    Added getName() function
+
+commit ff2a7a530b2c872523ac4b852b010fb9ded82cb0
+Author: Mason Wilie <masonwilie@gmail.com>
+Date:   Mon Apr 1 17:26:09 2019 -0600
+
+    Changed How Card Was Comfirmed in Deck
+    
+    Changed from using .contains method of the ArrayList to using a for loop
+    to iterate through.
+
+commit 475e47ee8cea8908c7221e544df11f3f4719ea51
+Author: Hunter Rich <hrich@mymail.mines.edu>
+Date:   Mon Apr 1 16:56:22 2019 -0600
+
+    Failing Tests
+
+commit 5847efcd6cfd12d936cbec69258493f5dcb58e11
+Merge: 74781c8 1b2ad91
+Author: Hunter Rich <hrich@mymail.mines.edu>
+Date:   Mon Apr 1 16:53:41 2019 -0600
+
+    Merge branch 'master' of https://github.com/MasonWilie/Clue
+    
+    # Conflicts:
+    #       src/clueGame/Board.java
+    #       src/tests/gameSetupTests.java
+
+commit 74781c898e025ed5a13a449128af926f3b03ac67
+Author: Hunter Rich <hrich@mymail.mines.edu>
+Date:   Mon Apr 1 16:50:07 2019 -0600
+
+    Created testLoadDeckCards test
+
+commit 1b2ad91f8c34389fdebef7fb0463331b8aad553e
+Author: Mason Wilie <masonwilie@gmail.com>
+Date:   Mon Apr 1 16:46:17 2019 -0600
+
+    Added "cards.txt" to initialize function call
+
+commit 10b2d04e5ff2bbec11ac25370daeb69b1d4ed7b7
+Author: Mason Wilie <masonwilie@gmail.com>
+Date:   Mon Apr 1 16:44:58 2019 -0600
+
+    Created method loadDeckConfig and getDeck. Added appropriate member
+    variables
+
+commit 5703003995a6809951c41c82bf8fcbf6205a6f9a
+Author: Mason Wilie <masonwilie@gmail.com>
+Date:   Mon Apr 1 16:44:14 2019 -0600
+
+    Added getter for type, added costructor
+
+commit 3060a722850ca8a32fad29dbec594f57b0d2a454
+Author: Mason Wilie <masonwilie@gmail.com>
+Date:   Mon Apr 1 16:21:21 2019 -0600
+
+    Fixed FileNotFound error
+
+commit f6c2bb8f5e2ad524349dde9a63c46b4fadb2ecdf
+Author: Hunter Rich <hrich@mymail.mines.edu>
+Date:   Mon Apr 1 16:17:21 2019 -0600
+
+    testPeople test passed
+
+commit 98f19116b08432a546f15a13f09caf1124f49594
+Author: Hunter Rich <hrich@mymail.mines.edu>
+Date:   Mon Apr 1 16:06:41 2019 -0600
+
+    Try re-pushing loadPeopleConfig()
+
+commit a61ddbedc1f94606f6099d7867393d3bd91d2e71
+Author: Mason Wilie <masonwilie@gmail.com>
+Date:   Sun Mar 31 14:37:01 2019 -0600
+
+    Fixed color import error
+
+commit 1543b5f3959bf675dbae0ee16056d157ab2d7674
+Author: Mason Wilie <masonwilie@gmail.com>
+Date:   Sun Mar 31 14:32:29 2019 -0600
+
+    .
+
+commit 97d3c9b46f3162640b128687be0aceb96458acb7
+Author: Hunter Rich <hrich@mymail.mines.edu>
+Date:   Thu Mar 21 12:15:35 2019 -0600
+
+    Started making the Player test pass, not done
+
+commit b53a9b222f85f49cb398f46abf42d8fe0731b1f8
+Author: Hunter Rich <hrich@mymail.mines.edu>
+Date:   Thu Mar 21 11:29:03 2019 -0600
+
+    Test loading people fails successfully
+
+commit 717ad22ec93a62232c4ea9ff3738d0df0729781e
+Author: Mason Wilie <masonwilie@gmail.com>
+Date:   Tue Mar 19 12:11:59 2019 -0600
+
+    Failing Tests Created for Loading Players in From File
+
+commit 4bc6f68d2850c3b870c0dc871f36742fa0dda7a5
+Author: Mason Wilie <masonwilie@gmail.com>
+Date:   Tue Mar 19 11:43:45 2019 -0600
+
+    player settings file added
+
+commit 0a899a7c970ca8649865e24e51a905d0054077d8
+Author: Mason Wilie <masonwilie@gmail.com>
+Date:   Tue Mar 19 11:43:36 2019 -0600
+
+    Getters and setters created
+
+commit 50a7a5c927c091b801bca9e86521ce34c4c1f6c8
+Author: Mason Wilie <masonwilie@gmail.com>
+Date:   Tue Mar 19 11:37:11 2019 -0600
+
+    Added picklocation, makeAccusation, and createSuggestion functions
+
+commit 212d6369fd86879a89ac38ac4bf0a996808fb618
+Author: Mason Wilie <masonwilie@gmail.com>
+Date:   Tue Mar 19 11:35:34 2019 -0600
+
+    ComputerPlayer class added
+
+commit 3165c5439d57a0a20aeee863834d1bd843cc06e9
+Author: Mason Wilie <masonwilie@gmail.com>
+Date:   Tue Mar 19 11:35:22 2019 -0600
+
+    Human player class added
+
+commit 68fcec71417872223f1d98eeb28b6644dd0eba7b
+Author: Hunter Rich <hrich@mymail.mines.edu>
+Date:   Tue Mar 19 11:33:44 2019 -0600
+
+    Added Card and CardType Classes
+
+commit fdcc9298120e8c024971ee8824fdc5747b3c2200
+Merge: 0369c97 66d6ac4
+Author: Hunter Rich <hrich@mymail.mines.edu>
+Date:   Tue Mar 19 11:32:41 2019 -0600
 
     Merge branch 'master' of https://github.com/MasonWilie/Clue
 
-commit a86119554ee6cf4ed1dd8fc19408a7a940a5bf7b
+commit 66d6ac4d7fb8f995a840c8b15431a543df55104f
 Author: Mason Wilie <masonwilie@gmail.com>
-Date:   Thu Feb 28 11:32:27 2019 -0700
+Date:   Tue Mar 19 11:32:20 2019 -0600
 
-    Added JUnit stuff
+    Added Solution class
 
-commit 9b17bc105289d7102082b5b7bcf1160bba94a539
+commit 9c13c6444a1579bf51a171eb53637f7449670a20
+Author: Mason Wilie <masonwilie@gmail.com>
+Date:   Tue Mar 19 11:32:07 2019 -0600
+
+    Changed member variables to private
+
+commit 0369c97ab2fc538239e8b853dd09e7092b8cc2c1
 Author: Hunter Rich <hrich@mymail.mines.edu>
-Date:   Thu Feb 28 11:32:02 2019 -0700
+Date:   Tue Mar 19 11:31:33 2019 -0600
 
-    Finished IntBoardTests
+    Created Card and CardType Classes
 
-commit 339c5d5767200db7d2a5eae5b1c2d6129ab3c6c9
-Author: Hunter Rich <hrich@mymail.mines.edu>
-Date:   Thu Feb 28 11:21:28 2019 -0700
-
-    Started IntBoardTests class
-
-commit f798fcb2a1e3955c0fa6ae994e26f7d4c27c45d8
-Merge: 132e722 250bb9e
-Author: Brennan Guthals <bcguthals@mymail.mines.edu>
-Date:   Thu Feb 28 11:20:51 2019 -0700
-
-    Merge branch 'master' of https://github.com/MasonWilie/Clue
-
-commit 132e722cf10d346c0dc4826adf29119204392ccf
-Author: Hunter Rich <hrich@mymail.mines.edu>
-Date:   Thu Feb 28 11:19:20 2019 -0700
-
-    Started IntBoardTests class
-
-commit 250bb9e56f9d0075a7e0e60ec570e5c64bba95f0
+commit 08c08362d44400c8f31c0142a5dc9fcbc78e2278
 Author: Mason Wilie <masonwilie@gmail.com>
-Date:   Thu Feb 28 11:18:00 2019 -0700
+Date:   Tue Mar 19 11:30:24 2019 -0600
 
-    IntBoard layed out
+    Shell of Player Class Created
+    
+    Added playerName, row, column, and color member variables. Added
+    disproveSuggestion public member function.
 
-commit 9929550e674a13e3a3ebdf30e00a27a2c9396e98
+commit 751e7cdbccc80deb5f5178cc3f6c73e974900689
 Author: Mason Wilie <masonwilie@gmail.com>
-Date:   Thu Feb 28 11:11:23 2019 -0700
+Date:   Tue Mar 19 11:27:06 2019 -0600
 
-    BoardCell and IntBoard classes added
+    Created gameSetupTests Class
 
-commit 22374712224ccbf53127a1a1c3724dfe18ea1bd7
+commit 6c90344e45edf9463647e44acfe75b813c26fa5b
 Author: Mason Wilie <masonwilie@gmail.com>
-Date:   Tue Feb 26 12:13:32 2019 -0700
+Date:   Tue Mar 19 11:26:42 2019 -0600
 
-    README added
+    Created Player Class
 
-commit 8d8ae917d2f11d7fab6bad5082cd24e124d67e49
+commit 521227c56734a4c820e8824d740e5f1c1d302fba
+Author: Hunter Rich <masonwilie@gmail.com>
+Date:   Mon Mar 18 18:01:47 2019 -0600
+
+    In loadBoarConfig, created Intermediate Variable Tile to Reduce Complex
+    
+    Created an intermediate variable 'tile', which represents the current
+    tile of the csv file that you are dealing with in order to increase
+    readability and reduce complexity of the function.
+
+commit 2f235feaad8f81ef69596375c10a251a8d682d8e
+Author: Hunter Rich <>
+Date:   Mon Mar 18 17:54:43 2019 -0600
+
+    Reduced Cognative Complexity of calcAdjacencies Function
+    
+    Reduced the cognative complexity of calcAdjacencies Function by
+    seperating the adjacencies calculations for doorways and walkways into
+    two different functions, calcAdjDoorway and calcAdjWalkway respectively.
+
+commit 9bb4deb422feaaecf6e91c5c1c4d7dd85e2da3ce
 Author: Mason Wilie <masonwilie@gmail.com>
-Date:   Tue Feb 26 12:09:45 2019 -0700
+Date:   Mon Mar 18 17:30:36 2019 -0600
 
-    XLSX file added
+    Changed Redundant Redeclaration of Contents of Maps and Sets
+    
+    Changed initializations of sets and maps from redeclairing what the sets
+    and maps contained, to just using empty diamonds. For example, the code
+    "var = HashSet<int, int>();
 
-commit 2ad83f51b2b145b70a45f8ce63758141ad3915f1
+commit 644d6dc337f12116ad574b1cc2ab1c3e1e200ac9
 Author: Mason Wilie <masonwilie@gmail.com>
-Date:   Tue Feb 26 12:07:07 2019 -0700
+Date:   Mon Mar 18 17:16:23 2019 -0600
 
-    Layout Complete
+    Changed Variable tempCell to More Descriptive adjacentCell
+    
+    In the function calcAdjacencies(), I changed the name of the variable
+    tempCell to adjacentCell. This variable name is much more descriptive of
+    what the actual cell represents.
 
-commit e685dc4b17cb14bc8b604646a42c263403fc9e62
+commit 2f4cef108e08b0be574b3c4d6ee5d7276b8e82d5
 Author: Mason Wilie <masonwilie@gmail.com>
-Date:   Tue Feb 26 11:39:49 2019 -0700
+Date:   Mon Mar 18 17:11:48 2019 -0600
 
-    Layout CSV file added
+    Got Rid of Unnecessary Variable in loadRoomConfig Main Loop, currentLine
+    
+    The currentLine variable was being used as an intermediate variable that
+    holds the line that is read from the file, before it is being split up
+    into its components using the split() function. Instead of having this
+    variable, I changed it to just .split the next line as soon as it is
+    read in.
 
-commit 9765428f9f487ffb834a0062bf8c33dadb189c56
+commit 6620babc50cc0eab83f9215477b1d93fd8b6be3c
 Author: Mason Wilie <masonwilie@gmail.com>
-Date:   Tue Feb 26 11:27:48 2019 -0700
+Date:   Mon Mar 18 17:02:25 2019 -0600
 
-    Initial, project created
+    Got Rid of Unnecessary Room File Check for isRoom() Function
+    
+    Deleted a portion of the code in the function isRoom(), which returns
+    true if the BoardCell is a room. It was previously checking to make sure
+    the initial was in the file ClueRooms.txt and then returning if the
+    initial was not "W". The file check is useless because we are not always
+    using the file "ClueRooms.txt", and the initial the BoardCell gets comes
+    from whatever file we are using, so it is a redundant check.
 
-commit fcad557567cdd8a3e61f3bb134aa5c3841eef0b9
+commit 274b2628f1048fa8e75d234ceb4f886cd5b0ac9f
 Author: Mason Wilie <masonwilie@gmail.com>
-Date:   Tue Feb 26 11:23:48 2019 -0700
+Date:   Mon Mar 18 16:53:39 2019 -0600
 
-    Initial commit
+    Changed Variable Def from HashSet or HashMap to Set or Map Respectively
+    
+    I went through and changed the variables that were previously defined as
+    HashSet or HashMap to being defined as just a Set or Map, then
+    initializing them as HashSet or HashMap. For example, the line
+    "HashSet<BoardCell> var = new HashSet<BoardCell>();" would be changed to
+    "Set<BoardCell> var = new HashSet<BoardCell)();"
+
+commit 5f7cf78af25937bb1be026177c5e344c85bef039
+Author: Mason Wilie <masonwilie@gmail.com>
+Date:   Mon Mar 18 16:43:25 2019 -0600
+
+    Changed back to RuntimeException
+    
+    Changed the class that BadConfigFormatException from extending Exception
+    to back to extending RuntimeException.
+
+commit 5e3dddd0733b44680dd9ad2e1e9ca357ae7216a5
+Author: Mason Wilie <masonwilie@gmail.com>
+Date:   Mon Mar 18 16:41:56 2019 -0600
+
+    Fixed BadCongifFormatException Message Error, Fixed to extend Exception
+    
+    Prior to this commit, the error message for the exception was not being
+    placed into the the super constructor, so it was being constructed
+    wrong. I also changed it from extending RuntimeException to just
+    Exception.
+
+commit 9e7e2675a6bc5e401b2e0469ee78ae500c8bd3b6
+Author: Mason Wilie <masonwilie@gmail.com>
+Date:   Wed Mar 13 18:43:14 2019 -0600
+
+    all done
+
 commit 27020c5c0b72b041e6e1297c1725e5b9ce4b2968
 Author: Mason Wilie <masonwilie@gmail.com>
 Date:   Wed Mar 13 18:35:15 2019 -0600
