@@ -28,7 +28,7 @@ public class ComputerPlayer extends Player{
 	
 	
 	
-	public BoardCell chooseTarget(ArrayList<BoardCell> targets) {
+	public BoardCell chooseTarget(Set<BoardCell> targets) {
 		return new BoardCell(-1, -1);
 	}
 	

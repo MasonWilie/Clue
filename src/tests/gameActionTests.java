@@ -42,7 +42,7 @@ public class gameActionTests {
 		
 		//run through choosing many different targets and making sure they are in the list of targets
 		for (int i = 0; i < 20; i++) {
-			BoardCell aTarget = cPlayer.chooseLocation();
+			BoardCell aTarget = cPlayer.chooseTarget(theTargets);
 			assertTrue(theTargets.contains(aTarget));
 		}
 		
