@@ -34,7 +34,7 @@ public class gameActionTests {
 	public void testTargetSelection() {
 		ComputerPlayer cPlayer = new ComputerPlayer();
 		cPlayer.setRow(5);
-		cPlayer.setRow(6);
+		cPlayer.setColumn(6);
 		int currentRow = cPlayer.getRow();
 		int currentCol = cPlayer.getColumn();
 		board.calcTargets(currentRow, currentCol, 3);
@@ -47,8 +47,6 @@ public class gameActionTests {
 		}
 		
 		
-		
-		
 		// Testing by doorways
 		cPlayer.setRow(3);
 		cPlayer.setColumn(7);
@@ -57,6 +55,7 @@ public class gameActionTests {
 		currentCol = cPlayer.getColumn();
 		
 		board.calcTargets(currentRow, currentCol, 6);
+		theTargets = board.getTargets();
 		
 		for (int i = 0; i < 20; i++) {
 			BoardCell aTarget = cPlayer.chooseTarget(theTargets);
