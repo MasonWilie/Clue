@@ -139,16 +139,16 @@ public class gameSetupTests {
 		for (int a = 0; a < numTestCards; a++) {
 			for (int i = 0; i < people.size(); i++) {
 				for (int j = 0; j < people.get(i).getHandSize(); j++) {
-					if (people.get(i).getHand().get(j).getName() == "Fran" && a == 0) {
+					if (people.get(i).getHand().get(j).getName().equals(testCard1) && a == 0) {
 						occurrenceOfCard++;
-					} else if (people.get(i).getHand().get(j).getName() == "WetNoodle" && a == 1) {
+					} else if (people.get(i).getHand().get(j).getName().equals(testCard2) && a == 1) {
 						occurrenceOfCard++;
-					} else if (people.get(i).getHand().get(j).getName() == "Library" && a == 2) {
+					} else if (people.get(i).getHand().get(j).getName().equals(testCard3) && a == 2) {
 						occurrenceOfCard++;
 					}
 				}
 			}
-			assertEquals(1, occurrenceOfCard);
+			assertTrue(occurrenceOfCard <= 1);
 			occurrenceOfCard = 0;
 		}
 	}
