@@ -25,7 +25,7 @@ import clueGame.Player;
  * 
  */
 
-public class GameSetupTests {
+public class gameSetupTests {
 
 	private static Board board;
 	@BeforeClass
