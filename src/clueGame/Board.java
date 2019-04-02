@@ -475,6 +475,14 @@ public class Board {
 
 	}
 
+	public Solution getSolution() {
+		return solution;
+	}
+
+	public void setSolution(Solution solution) {
+		this.solution = solution;
+	}
+
 	private void shuffleDeck() {
 		Random rand = new Random();
 
