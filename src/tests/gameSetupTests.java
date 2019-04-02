@@ -140,7 +140,11 @@ public class gameSetupTests {
 		for (int a = 0; a < numTestCards; a++) {
 			for (int i = 0; i < people.size(); i++) {
 				for (int j = 0; j < people.get(i).getHandSize(); j++) {
-					if (people.get(i).getHand().get(j) == "Fran") {
+					if (people.get(i).getHand().get(j).getName() == "Fran" && a == 0) {
+						occurrenceOfCard++;
+					} else if (people.get(i).getHand().get(j).getName() == "WetNoodle" && a == 1) {
+						occurrenceOfCard++;
+					} else if (people.get(i).getHand().get(j).getName() == "Library" && a == 2) {
 						occurrenceOfCard++;
 					}
 				}
