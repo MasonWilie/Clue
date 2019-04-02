@@ -19,7 +19,9 @@ public class Player {
 	private int row;
 	private int column;
 	private Color color;
-	//added this
+	
+	private BoardCell target;
+	
 	private ArrayList<Card> playerHand;
 	
 	public Player() {
