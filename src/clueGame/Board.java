@@ -48,9 +48,8 @@ public class Board {
 	private String peopleConfigFile;
 	private String cardConfigFile;
 	
-	private Card winningPerson;
-	private Card winningWeapon;
-	private Card winningRoom;
+	private Solution solution;
+	
 	
 	private ArrayList<Player> people;
 	private ArrayList<Card> deck;
@@ -350,6 +349,8 @@ public class Board {
 		return board[row][col];
 	}
 
+	
+	// Loads game players into the game from the players text file
 	public void loadPeopleConfig() throws FileNotFoundException, BadConfigFormatException{
 		
 		
@@ -361,75 +362,78 @@ public class Board {
 		people = new ArrayList<>();
 		while(in.hasNextLine()) {
 			nextLine = in.nextLine();
-			String[] currentRow = nextLine.split(" ");
-			if (currentRow[1].equals("h")) {
+			String[] currentRow = nextLine.split(" "); // Divides each line into its components
+			if (currentRow[1].equals("h")) { // If it is a human player, use the HumanPlayer class
 				people.add(new HumanPlayer());
-			} else if (currentRow[1].equals("c")) {
+			} else if (currentRow[1].equals("c")) { //If it is not a human palayer, it is a computer
 				people.add(new ComputerPlayer());
 			} else {
 				people.add(new Player());
 			}
-			people.get(thisRow).setPlayerName(currentRow[0]);
-			people.get(thisRow).setRow(Integer.parseInt(currentRow[2]));
-			people.get(thisRow).setColumn(Integer.parseInt(currentRow[3]));
-			System.out.println(currentRow[4]);
-			people.get(thisRow).setColor(convertColor(currentRow[4]));
-			System.out.println(people.get(thisRow).getColor());
+			people.get(thisRow).setPlayerName(currentRow[0]); // Setting name
+			people.get(thisRow).setRow(Integer.parseInt(currentRow[2])); // Setting row
+			people.get(thisRow).setColumn(Integer.parseInt(currentRow[3])); // Setting column
+			people.get(thisRow).setColor(convertColor(currentRow[4])); // Setting color
 			thisRow++;
 		}
-		in.close();
+		in.close(); // Closing file that we were reading from
 	}
 	
+	// Returns all the poeple in the game
 	public ArrayList<Player> getPeople(){
 		return people;
 	}
 	
+	// Loads the cards from the card file.
 	public void loadDeckConfig() throws FileNotFoundException, BadConfigFormatException{
 		originalDeck = new ArrayList<Card>();
 		
 		File playerFile = new File(cardConfigFile);
 		Scanner in = new Scanner(new FileReader(playerFile));
 		
+		// Getting the first line, which represents the people cards, and making cards out of them
 		if (in.hasNextLine()) {
 			String[] names = in.nextLine().split(" ");
 			for (String name : names) {
 				originalDeck.add(new Card(name, CardType.PERSON));
 			}
-		}else {
+		}else { // If there was no first line, bad format
 			in.close();
 			throw new BadConfigFormatException("Missing lines in card config file");
 		}
 		
-		if (in.hasNextLine()) {
+		if (in.hasNextLine()) { // Getting the second line, which represents the weapons
 			String[] weapons = in.nextLine().split(" ");
 			for(String weapon:weapons) {
 				originalDeck.add(new Card(weapon, CardType.WEAPON));
 			}
-		}else {
+		}else { // no second line, bad format
 			in.close();
 			throw new BadConfigFormatException("Missing lines in card config file");
 		}
 		
-		if (in.hasNextLine()) {
+		if (in.hasNextLine()) { // if there is a third line, bad format
 			in.close();
 			throw new BadConfigFormatException("Too many lines in card config file");
 		}
 		
-		for(char initial : legend.keySet()) {
-			if (initial != 'X' && initial != 'W') {
+		for(char initial : legend.keySet()) { // Iterating through the legend and making room cards out of each room
+			if (initial != 'X' && initial != 'W') { // If it is not a walkway or the closet
 				originalDeck.add(new Card(legend.get(initial), CardType.ROOM));
 			}
 		}
 		
-		deck = originalDeck;
+		deck = originalDeck; // Setting the deck that will be played with, while keeping the original one that was read in
 		in.close();
 	}
 	
+	// Picks the 3 winning cards (person, weapon, room), and removes them from the play deck
 	private void pickWinningCards() {
 		List<Card> personDeck = new ArrayList<>();
 		List<Card> roomDeck = new ArrayList<>();
 		List<Card> weaponDeck = new ArrayList<>();
 		
+		// Seperating the cards into their respective decks based on type
 		for (Card card : deck) {
 			if (card.getType() == CardType.PERSON) {
 				personDeck.add(card);
@@ -444,23 +448,29 @@ public class Board {
 		
 		Random rand = new Random();
 		
+		// Picking random indexes based on the size of those decks
 		int wPersonIndex = rand.nextInt(personDeck.size());
 		int wRoomIndex = rand.nextInt(roomDeck.size());
 		int wWeaponIndex = rand.nextInt(weaponDeck.size());
 		
-		winningPerson = personDeck.get(wPersonIndex);
-		winningRoom = roomDeck.get(wRoomIndex);
-		winningWeapon = weaponDeck.get(wWeaponIndex);
+		// Picking the winning cards
+		Card winningPerson = personDeck.get(wPersonIndex);
+		Card winningRoom = roomDeck.get(wRoomIndex);
+		Card winningWeapon = weaponDeck.get(wWeaponIndex);
 		
+		solution = new Solution(winningPerson, winningRoom, winningWeapon);
+		
+		// removing the winning cards from the deck
 		personDeck.remove(wPersonIndex);
 		roomDeck.remove(wRoomIndex);
 		weaponDeck.remove(wWeaponIndex);
 		
+		// Placing all the cards back into the deck, without the winning cards
 		deck.addAll(personDeck);
 		deck.addAll(weaponDeck);
 		deck.addAll(roomDeck);
 		
-		shuffleDeck();
+		shuffleDeck(); // Shuffeling the deck
 		
 		
 	}
@@ -471,20 +481,20 @@ public class Board {
 		for (int i = 0; i < 10; i++) { // Shuffles the deck 10 times
 			ArrayList<Card> tempDeck = new ArrayList<>();
 			while(!deck.isEmpty()) {
-				int index = rand.nextInt(deck.size());
-				tempDeck.add(deck.get(index));
-				deck.remove(index);
+				int index = rand.nextInt(deck.size()); // Pick a random index from the deck
+				tempDeck.add(deck.get(index)); // Place it in the temp deck
+				deck.remove(index); // Remove it from the deck
 			}
-			deck = tempDeck;
+			deck = tempDeck; // set the deck back to equal the temp deck
 		}
 	}
 
-
+	// Returns the deck
 	public ArrayList<Card> getDeck(){
 		return deck;
 	}
 
-	//made this. initialize should run this
+	// Deals the cards to the players
 	public void dealCards() {
 		int peopleIter = 0;
 		while (deck.size() > 0) {
@@ -498,6 +508,8 @@ public class Board {
 		}
 	}
 	
+	
+	// Returns the original deck
 	public ArrayList<Card> getOriginalDeck(){
 		return originalDeck;
 	}

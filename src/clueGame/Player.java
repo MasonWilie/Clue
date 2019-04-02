@@ -1,5 +1,15 @@
 package clueGame;
 
+/**
+ * Player Class:
+ * Parent for the HumanPlayer and ComputerPlayer class, holds information and methods used by each of the
+ * players throughout the game.
+ * 
+ * @author Hunter Rich
+ * @author Mason Wilie
+ * 
+ */
+
 //import com.sun.prism.paint.Color;
 import java.awt.Color;
 import java.util.ArrayList;
