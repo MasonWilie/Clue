@@ -33,28 +33,28 @@ import clueGame.BoardCell;
 public class Board {
 	private int numRows;
 	private int numColumns;
-	
+
 	public static final int MAX_BOARD_SIZE = 50;
-		
+
 	private BoardCell[][] board;
-	
+
 	private Map<Character, String> legend; 
 	private Map<BoardCell, Set<BoardCell>> adjMatrix;
-	
+
 	private Set<BoardCell> targets;
-	
+
 	private String boardConfigFile;
 	private String roomConfigFile;
 	private String peopleConfigFile;
 	private String cardConfigFile;
-	
+
 	private Solution solution;
-	
-	
+
+
 	private ArrayList<Player> people;
 	private ArrayList<Card> deck;
 	private ArrayList<Card> originalDeck;
-	
+
 	private static Board theInstance = new Board();
 	// constructor is private to ensure only one can be created
 	private Board() {
@@ -66,7 +66,7 @@ public class Board {
 	public static Board getInstance() {
 		return theInstance;
 	}
-	
+
 	public Color convertColor(String strColor) {
 		Color color; 
 		try {     
@@ -86,13 +86,13 @@ public class Board {
 		peopleConfigFile = "data/" + newPeopleConfig;
 		cardConfigFile = "data/" + newCardConfig;
 	}
-	
+
 	public void initialize() throws BadConfigFormatException{
-		
-		
+
+
 		legend = new HashMap<>(); // Resets the legend
 		adjMatrix = new HashMap<>(); // Resets the adjacencies
-		
+
 		try {
 			loadRoomConfig();
 			loadBoardConfig();
@@ -105,56 +105,56 @@ public class Board {
 			e.printStackTrace();
 		}
 	}
-	
+
 	// Loads the initial and description of rooms from the room config file
 	public void loadRoomConfig() throws FileNotFoundException, BadConfigFormatException {
 		File roomsFile = new File(roomConfigFile);
 		Scanner in = new Scanner(new FileReader(roomsFile));
-		
-		
+
+
 		int lineCounter = 0;
 		while (in.hasNextLine()) {
 			Character initial;
 			String description;
 			String roomType;
-			
+
 			List<String> stringElements = Arrays.asList(in.nextLine().split(","));
-			
+
 			if (stringElements.size() != 3) {
 				in.close();
 				throw new BadConfigFormatException("Too many elements in line " + lineCounter
 						+ ". Format should follow Initial, Description, Card");
 			}
-			
+
 			initial = stringElements.get(0).charAt(0);
 			description = stringElements.get(1);
 			roomType = stringElements.get(2);
-			
+
 			while(description.charAt(0) == ' ') {
 				description = description.substring(1, description.length());
 			}
-			
+
 			while(roomType.charAt(0) == ' ') {
 				roomType = roomType.substring(1, roomType.length());
 			}
-			
+
 			if (!roomType.equals("Card") && !roomType.equals("Other")) {
 				in.close();
 				throw new BadConfigFormatException("Room type on line " + lineCounter + " not equal to Card or Other. Value recieved: " + roomType);
 			}
-			
+
 			legend.put(initial, description);
 			lineCounter++;
 		}
 		in.close();
-		
+
 	}
-	
+
 	// Loads the configuration of the board from the board csv file
 	public void loadBoardConfig() throws FileNotFoundException, BadConfigFormatException {
 		File boardFile = new File(boardConfigFile);
 		Scanner in = new Scanner(new FileReader(boardFile));
-		
+
 		String nextLine;
 		numRows = 0;
 		ArrayList<String[]> grid = new ArrayList<>();
@@ -164,15 +164,15 @@ public class Board {
 			if (currentRow.length != 0) {
 				grid.add(currentRow);
 			}
-			
+
 		}
 		in.close();
-		
+
 		numRows = grid.size();
 		numColumns = grid.get(0).length;
-		
+
 		board = new BoardCell[numRows][numColumns];
-		
+
 		for (int i = 0; i < numRows; i++) {
 			if (grid.get(i).length != numColumns) {
 				throw new BadConfigFormatException("Row " + (i + 1) + " has a different number of columns");
@@ -203,28 +203,28 @@ public class Board {
 				}else {
 					cell.setDoorDirection(DoorDirection.NONE);
 				}
-				
+
 				char initial = tile.charAt(0);
-				
+
 				if (legend.containsKey(initial)) {
 					cell.setInitial(initial);
 				}else {
 					throw new BadConfigFormatException("Initial " + initial + ", at location (" + i + ", " + j + ")  not contained in legend");
 				}
-				
-				
-				
-				
+
+
+
+
 				board[i][j] = cell;
 			}
 		}
-		
+
 	}
-	
+
 	// Calculates the adjacent cells next to each cell and stores it into a map
 	private void calcAdjacencies() {
 		adjMatrix = new HashMap<>();
-		
+
 		for (BoardCell[] row : board) {
 			for (BoardCell cell : row) {
 				Set<BoardCell> adjacenciesSet = new HashSet<>();
@@ -237,10 +237,10 @@ public class Board {
 			}
 		}
 	}
-	
+
 	private Set<BoardCell> calcAdjWalkway(BoardCell cell){
 		Set<BoardCell> adjSet = new HashSet<>();
-		
+
 		BoardCell adjacentCell;
 		if (cell.getRow() != (numRows - 1)) {// If the cell is not at the very bottom
 			adjacentCell = getCellAt(cell.getRow() + 1, cell.getColumn());
@@ -265,8 +265,8 @@ public class Board {
 		}
 		return adjSet;
 	}
-	
-	
+
+
 	private Set<BoardCell> calcAdjDoorway(BoardCell cell){
 		Set<BoardCell> adjSet = new HashSet<>();
 		switch(cell.getDoorDirection()) {	
@@ -287,30 +287,30 @@ public class Board {
 		}
 		return adjSet;
 	}
-		
+
 	// Calculates the reachable cells starting at startCell and having pathLength tiles to move
 	public void calcTargets(int row, int col, int pathLength) {
 		targets = new HashSet<>();
 		BoardCell startCell = getCellAt(row, col);
-		
-		
+
+
 		Set<BoardCell> adjacentCells = adjMatrix.get(startCell);
 		for (BoardCell cell : adjacentCells) {
 			if (cell != startCell) {
 				cellTargets(cell, startCell, pathLength - 1, startCell);
 			}
-			
+
 		}
-		
+
 		if (targets.contains(startCell)) {
 			targets.remove(startCell);
 		}
-		
-		
+
+
 	}
-	
+
 	private void cellTargets(BoardCell newCell, BoardCell oldCell, int steps, BoardCell startCell){
-		
+
 		if (steps == 0 || newCell.isDoorway()) {
 			targets.add(newCell);
 		}else {
@@ -319,24 +319,24 @@ public class Board {
 				if (cell != oldCell && cell != newCell && cell != startCell) {
 					cellTargets(cell, newCell, steps - 1, startCell);
 				}
-				
+
 			}
 		}
-		
+
 	}
-	
+
 	public Set<BoardCell> getTargets(){
 		return targets;
 	}
-	
+
 	public Map<Character, String> getLegend(){
 		return legend;
 	}
-	
+
 	public Set<BoardCell> getAdjList(int row, int col) {
 		return adjMatrix.get(getCellAt(row, col));
 	}
-	
+
 	public int getNumRows() {
 		return numRows;
 	}
@@ -344,19 +344,19 @@ public class Board {
 	public int getNumColumns() {
 		return numColumns;
 	}
-	
+
 	public BoardCell getCellAt(int row, int col) {
 		return board[row][col];
 	}
 
-	
+
 	// Loads game players into the game from the players text file
 	public void loadPeopleConfig() throws FileNotFoundException, BadConfigFormatException{
-		
-		
+
+
 		File playerFile = new File(peopleConfigFile);
 		Scanner in = new Scanner(new FileReader(playerFile));
-		
+
 		String nextLine;
 		int thisRow = 0;
 		people = new ArrayList<>();
@@ -378,19 +378,19 @@ public class Board {
 		}
 		in.close(); // Closing file that we were reading from
 	}
-	
+
 	// Returns all the poeple in the game
 	public ArrayList<Player> getPeople(){
 		return people;
 	}
-	
+
 	// Loads the cards from the card file.
 	public void loadDeckConfig() throws FileNotFoundException, BadConfigFormatException{
 		originalDeck = new ArrayList<Card>();
-		
+
 		File playerFile = new File(cardConfigFile);
 		Scanner in = new Scanner(new FileReader(playerFile));
-		
+
 		// Getting the first line, which represents the people cards, and making cards out of them
 		if (in.hasNextLine()) {
 			String[] names = in.nextLine().split(" ");
@@ -401,7 +401,7 @@ public class Board {
 			in.close();
 			throw new BadConfigFormatException("Missing lines in card config file");
 		}
-		
+
 		if (in.hasNextLine()) { // Getting the second line, which represents the weapons
 			String[] weapons = in.nextLine().split(" ");
 			for(String weapon:weapons) {
@@ -411,28 +411,28 @@ public class Board {
 			in.close();
 			throw new BadConfigFormatException("Missing lines in card config file");
 		}
-		
+
 		if (in.hasNextLine()) { // if there is a third line, bad format
 			in.close();
 			throw new BadConfigFormatException("Too many lines in card config file");
 		}
-		
+
 		for(char initial : legend.keySet()) { // Iterating through the legend and making room cards out of each room
 			if (initial != 'X' && initial != 'W') { // If it is not a walkway or the closet
 				originalDeck.add(new Card(legend.get(initial), CardType.ROOM));
 			}
 		}
-		
+
 		deck = originalDeck; // Setting the deck that will be played with, while keeping the original one that was read in
 		in.close();
 	}
-	
+
 	// Picks the 3 winning cards (person, weapon, room), and removes them from the play deck
 	private void pickWinningCards() {
 		List<Card> personDeck = new ArrayList<>();
 		List<Card> roomDeck = new ArrayList<>();
 		List<Card> weaponDeck = new ArrayList<>();
-		
+
 		// Seperating the cards into their respective decks based on type
 		for (Card card : deck) {
 			if (card.getType() == CardType.PERSON) {
@@ -443,41 +443,41 @@ public class Board {
 				weaponDeck.add(card);
 			}
 		}
-		
+
 		deck = new ArrayList<>();
-		
+
 		Random rand = new Random();
-		
+
 		// Picking random indexes based on the size of those decks
 		int wPersonIndex = rand.nextInt(personDeck.size());
 		int wRoomIndex = rand.nextInt(roomDeck.size());
 		int wWeaponIndex = rand.nextInt(weaponDeck.size());
-		
+
 		// Picking the winning cards
 		Card winningPerson = personDeck.get(wPersonIndex);
 		Card winningRoom = roomDeck.get(wRoomIndex);
 		Card winningWeapon = weaponDeck.get(wWeaponIndex);
-		
+
 		solution = new Solution(winningPerson, winningRoom, winningWeapon);
-		
+
 		// removing the winning cards from the deck
 		personDeck.remove(wPersonIndex);
 		roomDeck.remove(wRoomIndex);
 		weaponDeck.remove(wWeaponIndex);
-		
+
 		// Placing all the cards back into the deck, without the winning cards
 		deck.addAll(personDeck);
 		deck.addAll(weaponDeck);
 		deck.addAll(roomDeck);
-		
+
 		shuffleDeck(); // Shuffeling the deck
-		
-		
+
+
 	}
-	
+
 	private void shuffleDeck() {
 		Random rand = new Random();
-		
+
 		for (int i = 0; i < 10; i++) { // Shuffles the deck 10 times
 			ArrayList<Card> tempDeck = new ArrayList<>();
 			while(!deck.isEmpty()) {
@@ -507,8 +507,8 @@ public class Board {
 			}
 		}
 	}
-	
-	
+
+
 	// Returns the original deck
 	public ArrayList<Card> getOriginalDeck(){
 		return originalDeck;
