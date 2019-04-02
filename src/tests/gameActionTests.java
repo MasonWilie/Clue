@@ -46,5 +46,25 @@ public class gameActionTests {
 			assertTrue(theTargets.contains(aTarget));
 		}
 		
+		
+		
+		
+		// Testing by doorways
+		cPlayer.setRow(3);
+		cPlayer.setColumn(7);
+		
+		currentRow = cPlayer.getRow();
+		currentCol = cPlayer.getColumn();
+		
+		board.calcTargets(currentRow, currentCol, 6);
+		
+		for (int i = 0; i < 20; i++) {
+			BoardCell aTarget = cPlayer.chooseTarget(theTargets);
+			assertTrue(aTarget.isDoorway());
+		}
+		
+		
+		
+		
 	}
 }
