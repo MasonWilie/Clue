@@ -12,6 +12,10 @@ public class Player {
 	//added this
 	private ArrayList<Card> playerHand;
 	
+	public Player() {
+		playerHand = new ArrayList<Card>();
+	}
+	
 	public int getHandSize() {
 		return playerHand.size();
 	}

@@ -61,9 +61,9 @@ public class gameSetupTests {
 	
 	@Test
 	public void testLoadDeckCards() {
-		ArrayList<Card> cards = board.getDeck();
+		ArrayList<Card> cards = board.getOriginalDeck();
 		
-		assertEquals(20, cards.size());
+		assertEquals(23, cards.size());
 		
 		int numPeople = 0;
 		int numWeapons = 0;
@@ -81,10 +81,9 @@ public class gameSetupTests {
 			}
 		}
 		
-		// All less than the total number by 1 because winning cards chosen from deck already
-		assertEquals(8, numPeople);
-		assertEquals(5, numWeapons);
-		assertEquals(7, numRooms);
+		assertEquals(9, numPeople);
+		assertEquals(6, numWeapons);
+		assertEquals(8, numRooms);
 		
 		String chosenRoom = "Library";
 		String chosenWeapon = "Bazooka";

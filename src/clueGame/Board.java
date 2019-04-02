@@ -54,6 +54,7 @@ public class Board {
 	
 	private ArrayList<Player> people;
 	private ArrayList<Card> deck;
+	private ArrayList<Card> originalDeck;
 	
 	private static Board theInstance = new Board();
 	// constructor is private to ensure only one can be created
@@ -99,6 +100,7 @@ public class Board {
 			loadPeopleConfig();
 			loadDeckConfig();
 			pickWinningCards();
+			dealCards();
 			calcAdjacencies();
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -383,7 +385,7 @@ public class Board {
 	}
 	
 	public void loadDeckConfig() throws FileNotFoundException, BadConfigFormatException{
-		deck = new ArrayList<Card>();
+		originalDeck = new ArrayList<Card>();
 		
 		File playerFile = new File(cardConfigFile);
 		Scanner in = new Scanner(new FileReader(playerFile));
@@ -391,7 +393,7 @@ public class Board {
 		if (in.hasNextLine()) {
 			String[] names = in.nextLine().split(" ");
 			for (String name : names) {
-				deck.add(new Card(name, CardType.PERSON));
+				originalDeck.add(new Card(name, CardType.PERSON));
 			}
 		}else {
 			in.close();
@@ -401,7 +403,7 @@ public class Board {
 		if (in.hasNextLine()) {
 			String[] weapons = in.nextLine().split(" ");
 			for(String weapon:weapons) {
-				deck.add(new Card(weapon, CardType.WEAPON));
+				originalDeck.add(new Card(weapon, CardType.WEAPON));
 			}
 		}else {
 			in.close();
@@ -415,10 +417,11 @@ public class Board {
 		
 		for(char initial : legend.keySet()) {
 			if (initial != 'X' && initial != 'W') {
-				deck.add(new Card(legend.get(initial), CardType.ROOM));
+				originalDeck.add(new Card(legend.get(initial), CardType.ROOM));
 			}
 		}
 		
+		deck = originalDeck;
 		in.close();
 	}
 	
@@ -483,15 +486,10 @@ public class Board {
 
 	//made this. initialize should run this
 	public void dealCards() {
-		int peopleIter = 0;
-		while (deck.size() > 0) {
-			people.get(peopleIter).addToHand(deck.get(deck.size()-1));
-			deck.remove(deck.size()-1);
-			if (peopleIter+1 > people.size()-1) {
-				peopleIter = 0;
-			} else {
-				peopleIter++;
-			}
-		}
+		
+	}
+	
+	public ArrayList<Card> getOriginalDeck(){
+		return originalDeck;
 	}
 }
