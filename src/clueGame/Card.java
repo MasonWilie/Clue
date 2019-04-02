@@ -1,5 +1,14 @@
 package clueGame;
 
+/**
+ * Card Class:
+ * Represents a card and all attributes of a card
+ * 
+ * @author Hunter Rich
+ * @author Mason Wilie
+ * 
+ */
+
 public class Card {
 	private String cardName;
 	private CardType type;
