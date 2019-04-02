@@ -123,7 +123,7 @@ public class gameSetupTests {
 		
 		for (int i = 0; i < people.size()-1; i++) {
 			//2 or 3 or smth
-			if (abs(people.get(i).getHandSize() - people.get(i+1).getHandSize()) < 2) {
+			if (Math.abs(people.get(i).getHandSize() - people.get(i+1).getHandSize()) < 2) {
 			} else {
 				closeNumCards = false;
 				break;
