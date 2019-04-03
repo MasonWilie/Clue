@@ -2,6 +2,7 @@ package tests;
 
 import static org.junit.Assert.assertTrue;
 
+import java.util.ArrayList;
 import java.util.Set;
 
 import org.junit.Before;
@@ -125,7 +126,80 @@ public class gameActionTests {
 //		assertTrue(theSolution.person.equals(thePerson) && theSolution.weapon.equals(theWeapon) && theSolution.room.equals(theRoom));
 	}
 	
+	@Test
+	public void createSuggestionTest() {
+		//check if current position matches suggested room
+		Solution theSuggestion = board.getPeople().get(2).makeSuggestion();
+		Card suggestedRoom = theSuggestion.room;
+		int compRow = board.getPeople().get(2).getRow();
+		int compCol = board.getPeople().get(2).getColumn();
+		assertTrue(suggestedRoom.getName().equals(board.getLegend().get(board.getCellAt(compRow, compCol).getInitial())));
+		
+		
+		//If only one weapon not seen, it's selected
+		ArrayList<Card> crazyWeaponHand = null;
+		for (Card i : board.getOriginalDeck()) {
+			if (i.getType().equals(CardType.WEAPON)) {
+				crazyWeaponHand.add(i);
+			}
+		}
+		Card weaponToPick = crazyWeaponHand.get(crazyWeaponHand.size()-1);
+		crazyWeaponHand.remove(crazyWeaponHand.size()-1);
+		board.getPeople().get(2).setHand(crazyWeaponHand);
+		Solution theSuggestion2 = board.getPeople().get(2).makeSuggestion();
+		assertTrue(theSuggestion2.weapon.equals(weaponToPick));
+		
+		
+		//if only one person not seen, it's selected (can be same test as weapon)
+		ArrayList<Card> crazyPersonHand = null;
+		for (Card i : board.getOriginalDeck()) {
+			if (i.getType().equals(CardType.PERSON)) {
+				crazyPersonHand.add(i);
+			}
+		}
+		Card personToPick = crazyPersonHand.get(crazyPersonHand.size()-1);
+		crazyPersonHand.remove(crazyPersonHand.size()-1);
+		board.getPeople().get(2).setHand(crazyPersonHand);
+		Solution theSuggestion3 = board.getPeople().get(2).makeSuggestion();
+		assertTrue(theSuggestion3.person.equals(personToPick));
+		
+		
+		//if multiple weapons not seen, one of them is randomly selected
+		ArrayList<Card> crazyWeaponHand1 = null;
+		for (Card i : board.getOriginalDeck()) {
+			if (i.getType().equals(CardType.WEAPON)) {
+				crazyWeaponHand1.add(i);
+			}
+		}
+		Card weaponToPick1 = crazyWeaponHand1.get(crazyWeaponHand1.size()-1);
+		crazyWeaponHand1.remove(crazyWeaponHand1.size()-1);
+		Card weaponToPick12 = crazyWeaponHand1.get(crazyWeaponHand1.size()-1);
+		crazyWeaponHand1.remove(crazyWeaponHand1.size()-1);
+		board.getPeople().get(2).setHand(crazyWeaponHand1);
+		Solution theSuggestion4 = board.getPeople().get(2).makeSuggestion();
+		assertTrue(theSuggestion4.weapon.equals(weaponToPick1) || theSuggestion4.weapon.equals(weaponToPick12));
+		
+		
+		//if multiple persons not seen, one of them is randomly selected
+		ArrayList<Card> crazyPersonHand1 = null;
+		for (Card i : board.getOriginalDeck()) {
+			if (i.getType().equals(CardType.PERSON)) {
+				crazyPersonHand1.add(i);
+			}
+		}
+		Card personToPick1 = crazyPersonHand1.get(crazyPersonHand1.size()-1);
+		crazyPersonHand1.remove(crazyPersonHand1.size()-1);
+		Card personToPick12 = crazyPersonHand1.get(crazyPersonHand1.size()-1);
+		crazyPersonHand1.remove(crazyPersonHand1.size()-1);
+		board.getPeople().get(2).setHand(crazyPersonHand1);
+		Solution theSuggestion5 = board.getPeople().get(2).makeSuggestion();
+		assertTrue(theSuggestion5.person.equals(personToPick1) || theSuggestion5.person.equals(personToPick12));
+	}
 	
+	@Test
+	public void disproveSolutionTest() {
+		
+	}
 	
 	
 	

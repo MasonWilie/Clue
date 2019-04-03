@@ -87,7 +87,7 @@ public class Board {
 		cardConfigFile = "data/" + newCardConfig;
 	}
 
-	public void initialize() throws BadConfigFormatException{
+	public void initialize() throws BadConfigFormatException {
 
 
 		legend = new HashMap<>(); // Resets the legend
