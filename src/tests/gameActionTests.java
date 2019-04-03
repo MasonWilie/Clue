@@ -28,7 +28,7 @@ import clueGame.CardType;
 public class gameActionTests {
 	private static Board board;
 	@BeforeClass
-	public void testTargetSetup() {
+	public static void testTargetSetup() {
 		board = Board.getInstance();
 		board.setConfigFiles("Board_Layout.csv", "ClueRooms.txt", "players.txt", "cards.txt");		
 		board.initialize();
