@@ -67,19 +67,62 @@ public class gameActionTests {
 		}
 	}
 	
-	//test if a given set of 3 cards is the solution (which are 3 cards)
+	//test if a given set of 3 cards is the solution (which are 3 cards) (wrong person)
 	@Test
 	public void testAccusation() {
-		Card accusingPerson = new Card("Fran", CardType.PERSON);
-		Card accusingWeapon = new Card("Bazooka", CardType.WEAPON);
-		Card accusingRoom = new Card("Library", CardType.ROOM);
+		//wrong person
+		Card accusingPerson = new Card("joeschmoe", CardType.PERSON);
+		Card accusingWeapon = board.getSolution().weapon;
+		Card accusingRoom = board.getSolution().room;
 		
 		Solution theSolution = board.getSolution();
 		
-		assertTrue(theSolution.person.equals(accusingPerson) && theSolution.weapon.equals(accusingWeapon) && theSolution.room.equals(accusingRoom));
+		assertTrue(theSolution.weapon.equals(accusingWeapon) && theSolution.room.equals(accusingRoom));
+		assertTrue(!(theSolution.person.equals(accusingPerson)));
 		
-		//make some more situations where we set the solution and then test it (should assert as true)
-		//maybe make another one that is of different people
+		//wrong weapon
+		Card accusingPerson1 = board.getSolution().person;
+		Card accusingWeapon1 = new Card("peashooter", CardType.WEAPON);
+		Card accusingRoom1 = board.getSolution().room;
+		
+		Solution theSolution1 = board.getSolution();
+		
+		assertTrue(theSolution1.person.equals(accusingPerson1) && theSolution1.room.equals(accusingRoom1));
+		assertTrue(!(theSolution1.weapon.equals(accusingWeapon1)));
+		
+		//wrong room
+		Card accusingPerson2 = board.getSolution().person;
+		Card accusingWeapon2 = board.getSolution().weapon;
+		Card accusingRoom2 = new Card("dungeonlair", CardType.ROOM);
+		
+		Solution theSolution2 = board.getSolution();
+		
+		assertTrue(theSolution2.person.equals(accusingPerson2) && theSolution2.weapon.equals(accusingWeapon2));
+		assertTrue(!(theSolution2.room.equals(accusingRoom2)));
+		
+		//correct solution
+		Card sol1 = theSolution.person;
+		Card sol2 = theSolution.weapon;
+		Card sol3 = theSolution.room;
+		
+		assertTrue(theSolution.person.equals(sol1) && theSolution.weapon.equals(sol2) && theSolution.room.equals(sol3));
+		
+//		//gets room from player's hand and its the wrong room
+//		Card thePerson = null;
+//		Card theWeapon = null;
+//		Card theRoom = null;
+//		for (int i = 0; i < 3; i++) {
+//			if (board.getPeople().get(0).getHand().get(i).getType().equals(CardType.PERSON)) {
+//				thePerson = board.getPeople().get(0).getHand().get(i);
+//			} else if (board.getPeople().get(0).getHand().get(i).getType().equals(CardType.WEAPON)) {
+//				theWeapon = board.getPeople().get(0).getHand().get(i);
+//			} else {
+//				theRoom = board.getPeople().get(0).getHand().get(i);
+//			}
+//		}
+//		
+//		//thePerson = 
+//		assertTrue(theSolution.person.equals(thePerson) && theSolution.weapon.equals(theWeapon) && theSolution.room.equals(theRoom));
 	}
 	
 	
