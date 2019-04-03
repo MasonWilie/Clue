@@ -422,6 +422,10 @@ public class Board {
 				originalDeck.add(new Card(legend.get(initial), CardType.ROOM));
 			}
 		}
+		
+		for (Player person : people) {
+			person.setDeck(originalDeck);
+		}
 
 		deck = originalDeck; // Setting the deck that will be played with, while keeping the original one that was read in
 		in.close();
