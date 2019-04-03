@@ -25,6 +25,14 @@ public class Player {
 	protected Set<Solution> prevGuesses;
 	protected ArrayList<Card> allCards;
 	
+	protected Set<Card> allPersonCards;
+	protected Set<Card> allRoomCards;
+	protected Set<Card> allWeaponCards;
+	
+	protected Set<Card> personCards;
+	protected Set<Card> roomCards;
+	protected Set<Card> weaponCards;
+	
 	private BoardCell target;
 	
 	private ArrayList<Card> playerHand;
@@ -33,10 +41,34 @@ public class Player {
 	public Player() {
 		playerHand = new ArrayList<Card>();
 		prevGuesses = new HashSet<>();
+		
+		allPersonCards = new HashSet<>();
+		allRoomCards = new HashSet<>();
+		allWeaponCards = new HashSet<>();
+		
+		personCards = new HashSet<>();
+		roomCards = new HashSet<>();
+		weaponCards = new HashSet<>();
+		
 	}
 	
 	public void setDeck(ArrayList<Card> ogDeck) {
 		this.allCards = ogDeck;
+		
+		for (Card card : this.allCards) {
+			switch(card.getType()) {
+			case ROOM:
+				allRoomCards.add(card);
+				break;
+			case WEAPON:
+				allWeaponCards.add(card);
+				break;
+			case PERSON:
+				allPersonCards.add(card);
+				break;
+			}
+		}
+		
 	}
 	
 	public int getHandSize() {
@@ -54,6 +86,17 @@ public class Player {
 	
 	public void addToHand(Card aCard) {
 		playerHand.add(aCard);
+		switch (aCard.getType()) {
+		case ROOM:
+			roomCards.add(aCard);
+			break;
+		case WEAPON:
+			weaponCards.add(aCard);
+			break;
+		case PERSON:
+			personCards.add(aCard);
+			break;
+		}
 	}
 	
 	// For tests only
@@ -92,6 +135,31 @@ public class Player {
 	public void setColor(Color color) {
 		this.color = color;
 	}
+	
+	
+	public void setHand(ArrayList<Card> newHand) {
+		playerHand = newHand;
+		
+		for (Card card : newHand) {
+				playerHand.add(card);
+				switch (card.getType()) {
+				case ROOM:
+					roomCards.add(card);
+					break;
+				case WEAPON:
+					weaponCards.add(card);
+					break;
+				case PERSON:
+					personCards.add(card);
+					break;
+				}
+		}
+		
+		
+		
+		
+	}
+	
 	
 	
 }

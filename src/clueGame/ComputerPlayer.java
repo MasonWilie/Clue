@@ -16,17 +16,82 @@ import java.util.Set;
 
 public class ComputerPlayer extends Player{
 	
+	
 	public BoardCell pickLocation(Set<BoardCell> targets) {
 		return null;
 	}
 	
-	public void makeAccusation() {
+	public Solution makeSuggestion() {
+		Random rand = new Random();
 		
+		Set<Card> unseenWeaponCards = allWeaponCards;
+		unseenWeaponCards.removeAll(weaponCards);
+		
+		Set<Card> unseenPersonCards = allPersonCards;
+		unseenPersonCards.removeAll(personCards);
+		
+		Set<Card> unseenRoomCards = allRoomCards;
+		unseenRoomCards.removeAll(roomCards);
+		
+		Solution guess;
+		boolean newGuess = true;
+		
+		do {
+			
+			Card pGuess = null;
+			Card rGuess = null;
+			Card wGuess = null;
+			
+			int randIndex = rand.nextInt(unseenWeaponCards.size());
+			int i = 0;
+			for (Card card : unseenWeaponCards) {
+				if (i == randIndex) {
+					wGuess = card;
+					break;
+				}
+				i++;
+			}
+			
+			randIndex = rand.nextInt(unseenPersonCards.size());
+			i = 0;
+			for (Card card : unseenPersonCards) {
+				if (i == randIndex) {
+					pGuess = card;
+					break;
+				}
+				i++;
+			}
+			
+			randIndex = rand.nextInt(unseenRoomCards.size());
+			i = 0;
+			for (Card card : unseenRoomCards) {
+				if (i == randIndex) {
+					rGuess = card;
+					break;
+				}
+				i++;
+			}
+			
+			
+			
+			guess = new Solution(pGuess, rGuess, wGuess);
+			
+			newGuess = true;
+			for (Solution g : prevGuesses) {
+				if (g.equals(guess)) {
+					newGuess = false;
+					break;
+				}
+			}
+			
+		}while(!newGuess);
+		
+		return guess;
 	}
 	
-	public void createSuggestion() {
-		
-	}
+	
+	
+	
 	
 	
 	
@@ -56,6 +121,7 @@ public class ComputerPlayer extends Player{
 		return doors.get(selectionIndex);
 		
 	}
+	
 	
 	
 	

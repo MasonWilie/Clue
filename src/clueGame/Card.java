@@ -22,11 +22,19 @@ public class Card {
 		return cardName;
 	}
 	
-	public boolean equals() {
-		return true;
-	}
-	
 	public CardType getType() {
 		return type;
 	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (this.getClass() != obj.getClass()) return false;
+		
+		Card card = (Card)obj;
+		
+		return this.getName().equals(card.getName()) && this.getType() == card.getType();
+	}
+	
+	
+	
 }

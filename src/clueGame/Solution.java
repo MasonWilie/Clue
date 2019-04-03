@@ -20,4 +20,31 @@ public class Solution {
 		this.weapon = w;
 	}
 	
+	public Card getPersonCard() {
+		return this.person;
+	}
+	
+	public Card getRoomCard() {
+		return this.room;
+	}
+	
+	public Card getWeaponCard() {
+		return this.weapon;
+	}
+	
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (obj.getClass() != this.getClass()) return false;
+		
+		Solution solution = (Solution)obj; 
+		
+		return this.getPersonCard().equals(solution.getPersonCard()) &&
+				this.getRoomCard().equals(solution.getRoomCard()) &&
+				this.getWeaponCard().equals(solution.getWeaponCard());
+		
+		
+	}
+	
+	
 }
