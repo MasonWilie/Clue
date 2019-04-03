@@ -13,6 +13,7 @@ package clueGame;
 //import com.sun.prism.paint.Color;
 import java.awt.Color;
 import java.util.ArrayList;
+import java.util.Set;
 
 public class Player {
 	private String playerName;
@@ -20,12 +21,20 @@ public class Player {
 	private int column;
 	private Color color;
 	
+	protected Set<Solution> prevGuesses;
+	protected ArrayList<Card> allCards;
+	
 	private BoardCell target;
 	
 	private ArrayList<Card> playerHand;
 	
+	
 	public Player() {
 		playerHand = new ArrayList<Card>();
+	}
+	
+	public void setDeck(ArrayList<Card> ogDeck) {
+		this.allCards = ogDeck;
 	}
 	
 	public int getHandSize() {
