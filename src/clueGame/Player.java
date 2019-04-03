@@ -13,6 +13,7 @@ package clueGame;
 //import com.sun.prism.paint.Color;
 import java.awt.Color;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Set;
 
 public class Player {
@@ -31,6 +32,7 @@ public class Player {
 	
 	public Player() {
 		playerHand = new ArrayList<Card>();
+		prevGuesses = new HashSet<>();
 	}
 	
 	public void setDeck(ArrayList<Card> ogDeck) {
