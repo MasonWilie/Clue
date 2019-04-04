@@ -116,7 +116,7 @@ public class gameActionTests {
 	@Test
 	public void createSuggestionTest() {
 
-		Card ballroomCard = new Card("Ballroom", CardType.ROOM);
+		Card ballroomCard = new Card("Closet", CardType.ROOM);
 
 
 		//check if current position matches suggested room
