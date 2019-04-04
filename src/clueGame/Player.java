@@ -35,7 +35,7 @@ public class Player {
 	
 	private BoardCell target;
 	
-	private ArrayList<Card> playerHand;
+	protected ArrayList<Card> playerHand;
 	
 	
 	public Player() {
@@ -53,9 +53,14 @@ public class Player {
 	}
 	
 	public void setDeck(ArrayList<Card> ogDeck) {
-		this.allCards = ogDeck;
+		this.allCards = new ArrayList<>();
+		this.allCards.addAll(ogDeck);
 		
-		for (Card card : this.allCards) {
+		allRoomCards = new HashSet<>();
+		allWeaponCards = new HashSet<>();
+		allPersonCards = new HashSet<>();
+		
+		for (Card card : ogDeck) {
 			switch(card.getType()) {
 			case ROOM:
 				allRoomCards.add(card);
@@ -138,7 +143,12 @@ public class Player {
 	
 	
 	public void setHand(ArrayList<Card> newHand) {
-		playerHand = newHand;
+		playerHand = new ArrayList<>();
+		playerHand.addAll(newHand);
+		
+		roomCards = new HashSet<>();
+		weaponCards = new HashSet<>();
+		personCards = new HashSet<>();
 		
 		for (Card card : newHand) {
 				switch (card.getType()) {

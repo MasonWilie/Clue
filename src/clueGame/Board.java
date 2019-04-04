@@ -525,4 +525,11 @@ public class Board {
 	public ArrayList<Card> getOriginalDeck(){
 		return originalDeck;
 	}
+
+	public Card handleSuggestion(Solution suggestion) {
+		if (suggestion.equals(solution)) return null;
+		
+	
+		return null;
+	}
 }

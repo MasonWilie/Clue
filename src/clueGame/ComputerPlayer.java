@@ -24,10 +24,13 @@ public class ComputerPlayer extends Player{
 	public Solution makeSuggestion(Card currentRoom) {
 		Random rand = new Random();
 		
-		Set<Card> unseenWeaponCards = allWeaponCards;
+		Set<Card> unseenWeaponCards = new HashSet<>();
+		unseenWeaponCards.addAll(allWeaponCards);
 		unseenWeaponCards.removeAll(weaponCards);
 		
-		Set<Card> unseenPersonCards = allPersonCards;
+		
+		Set<Card> unseenPersonCards = new HashSet<>();
+		unseenPersonCards.addAll(allPersonCards);
 		unseenPersonCards.removeAll(personCards);
 		
 		Solution guess;
@@ -39,7 +42,7 @@ public class ComputerPlayer extends Player{
 			Card wGuess = null;
 			int randIndex;
 			
-			if (unseenWeaponCards.size() == 0) {
+			if (unseenWeaponCards.size() == 1 || unseenPersonCards.size() == 0) {
 				randIndex = 0;
 			}else {
 				randIndex = rand.nextInt(unseenWeaponCards.size());
@@ -54,7 +57,7 @@ public class ComputerPlayer extends Player{
 				i++;
 			}
 			
-			if (unseenPersonCards.size() == 0) {
+			if (unseenPersonCards.size() == 1 || unseenPersonCards.size() == 0) {
 				randIndex = 0;
 			}else {
 				randIndex = rand.nextInt(unseenPersonCards.size());
@@ -115,6 +118,35 @@ public class ComputerPlayer extends Player{
 		
 		int selectionIndex = rand.nextInt(doors.size());
 		return doors.get(selectionIndex);
+		
+	}
+	
+	public Card disproveSuggestion(Solution suggestion) {
+		
+		ArrayList<Card> sameCards = new ArrayList<>();
+		
+		
+		
+		for (Card card : playerHand) {
+			if (card.equals(suggestion.getPersonCard()) ||
+				card.equals(suggestion.getRoomCard()) ||
+				card.equals(suggestion.getWeaponCard())){
+				sameCards.add(card);
+			}
+		}
+		
+		
+		if (sameCards.size() == 0) return null;
+		
+		
+		Random rand = new Random();
+		
+		return sameCards.get(rand.nextInt(sameCards.size()));
+		
+		
+		
+		
+		
 		
 	}
 	
