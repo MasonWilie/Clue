@@ -94,18 +94,20 @@ public class ComputerPlayer extends Player{
 	}
 	
 	
-	
+	// Selects a target for the player to go to
 	public BoardCell chooseTarget(Set<BoardCell> targets) {
 		
 		ArrayList<BoardCell> doors = new ArrayList<>();
 		Random rand = new Random();
 		
+		// Finds all doorways (which have priority)
 		for (BoardCell cell : targets) {
 			if (cell.isDoorway()) {
 				doors.add(cell);
 			}
 		}
 		
+		// If there are no doorways, pick a random cell
 		if (doors.isEmpty()) {
 			int selectionIndex = rand.nextInt(targets.size());
 			int index = 0;
@@ -117,6 +119,7 @@ public class ComputerPlayer extends Player{
 			}
 		}
 		
+		// If there are doorways, pick a random doorway
 		int selectionIndex = rand.nextInt(doors.size());
 		return doors.get(selectionIndex);
 		
