@@ -203,6 +203,9 @@ public class gameActionTests {
 	
 	@Test
 	public void disproveSuggestionTest() {
+		
+		Card ballroomCard = new Card("Ballroom", CardType.ROOM);
+		
 		//If player has only one matching card it should be returned
 		Solution theSolution = board.getSolution();
 		ArrayList<Card> theirHand = new ArrayList<Card>();
@@ -211,8 +214,8 @@ public class gameActionTests {
 		Card aBadCard2 = new Card("Sillyroom", CardType.ROOM);
 		theirHand.add(aBadCard1);
 		theirHand.add(aBadCard2);
-		Solution theSuggestion = ((ComputerPlayer)board.getPeople().get(2)).makeSuggestion(/*put room in here*/);
-		Card returnedCard = ((ComputerPlayer)board.getPeople().get(2)).disproveSuggestion(/*thesuggestion*/);
+		Solution theSuggestion = ((ComputerPlayer)board.getPeople().get(2)).makeSuggestion(ballroomCard);
+		Card returnedCard = ((ComputerPlayer)board.getPeople().get(2)).disproveSuggestion(theSuggestion);
 		assertTrue(returnedCard.equals(theSolution.person));
 		
 		
@@ -222,8 +225,8 @@ public class gameActionTests {
 		theirHand1.add(theSolution.weapon);
 		Card aBadCard21 = new Card("Sillyroom", CardType.ROOM);
 		theirHand1.add(aBadCard21);
-		Solution theSuggestion1 = ((ComputerPlayer)board.getPeople().get(2)).makeSuggestion(/*put room in here*/);
-		Card returnedCard1 = ((ComputerPlayer)board.getPeople().get(2)).disproveSuggestion(/*thesuggestion*/);
+		Solution theSuggestion1 = ((ComputerPlayer)board.getPeople().get(2)).makeSuggestion(ballroomCard);
+		Card returnedCard1 = ((ComputerPlayer)board.getPeople().get(2)).disproveSuggestion(theSuggestion1);
 		assertTrue(returnedCard1.equals(theSolution.person) || returnedCard1.equals(theSolution.weapon));
 		
 		
@@ -235,8 +238,8 @@ public class gameActionTests {
 		theirHand2.add(aBadCard31);
 		theirHand2.add(aBadCard32);
 		theirHand2.add(aBadCard33);
-		Solution theSuggestion9 = ((ComputerPlayer)board.getPeople().get(2)).makeSuggestion(/*put room in here*/);
-		Card returnedCard9 = ((ComputerPlayer)board.getPeople().get(2)).disproveSuggestion(/*thesuggestion*/);
+		Solution theSuggestion9 = ((ComputerPlayer)board.getPeople().get(2)).makeSuggestion(ballroomCard);
+		Card returnedCard9 = ((ComputerPlayer)board.getPeople().get(2)).disproveSuggestion(theSuggestion9);
 		assertTrue(!(returnedCard9.equals(theSolution.person) || returnedCard9.equals(theSolution.weapon) || returnedCard9.equals(theSolution.room)));
 	}
 	
