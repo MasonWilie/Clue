@@ -198,8 +198,42 @@ public class gameActionTests {
 	}
 	
 	@Test
-	public void disproveSolutionTest() {
+	public void disproveSuggestionTest() {
+		//If player has only one matching card it should be returned
+		Solution theSolution = board.getSolution();
+		ArrayList<Card> theirHand = new ArrayList<Card>();
+		theirHand.add(theSolution.person);
+		Card aBadCard1 = new Card("Sillyweapon", CardType.WEAPON);
+		Card aBadCard2 = new Card("Sillyroom", CardType.ROOM);
+		theirHand.add(aBadCard1);
+		theirHand.add(aBadCard2);
+		Solution theSuggestion = ((ComputerPlayer)board.getPeople().get(2)).makeSuggestion(/*put room in here*/);
+		Card returnedCard = ((ComputerPlayer)board.getPeople().get(2)).disproveSuggestion(/*thesuggestion*/);
+		assertTrue(returnedCard.equals(theSolution.person));
 		
+		
+		//If players has >1 matching card, returned card should be chosen randomly
+		ArrayList<Card> theirHand1 = new ArrayList<Card>();
+		theirHand1.add(theSolution.person);
+		theirHand1.add(theSolution.weapon);
+		Card aBadCard21 = new Card("Sillyroom", CardType.ROOM);
+		theirHand1.add(aBadCard21);
+		Solution theSuggestion1 = ((ComputerPlayer)board.getPeople().get(2)).makeSuggestion(/*put room in here*/);
+		Card returnedCard1 = ((ComputerPlayer)board.getPeople().get(2)).disproveSuggestion(/*thesuggestion*/);
+		assertTrue(returnedCard1.equals(theSolution.person) || returnedCard1.equals(theSolution.weapon));
+		
+		
+		//If player has no matching cards, null is returned
+		ArrayList<Card> theirHand2 = new ArrayList<Card>();
+		Card aBadCard31 = new Card("Sillyperson", CardType.PERSON);
+		Card aBadCard32 = new Card("Sillyweapon", CardType.WEAPON);
+		Card aBadCard33 = new Card("Sillyroom", CardType.ROOM);
+		theirHand2.add(aBadCard31);
+		theirHand2.add(aBadCard32);
+		theirHand2.add(aBadCard33);
+		Solution theSuggestion9 = ((ComputerPlayer)board.getPeople().get(2)).makeSuggestion(/*put room in here*/);
+		Card returnedCard9 = ((ComputerPlayer)board.getPeople().get(2)).disproveSuggestion(/*thesuggestion*/);
+		assertTrue(!(returnedCard9.equals(theSolution.person) || returnedCard9.equals(theSolution.weapon) || returnedCard9.equals(theSolution.room)));
 	}
 	
 	
