@@ -24,10 +24,10 @@ public class ComputerPlayer extends Player{
 	public Solution makeSuggestion(Card currentRoom) {
 		Random rand = new Random();
 		
+		// Get all the cards that the player does not have in their possession
 		Set<Card> unseenWeaponCards = new HashSet<>();
 		unseenWeaponCards.addAll(allWeaponCards);
 		unseenWeaponCards.removeAll(weaponCards);
-		
 		
 		Set<Card> unseenPersonCards = new HashSet<>();
 		unseenPersonCards.addAll(allPersonCards);
@@ -42,7 +42,8 @@ public class ComputerPlayer extends Player{
 			Card wGuess = null;
 			int randIndex;
 			
-			if (unseenWeaponCards.size() == 1 || unseenPersonCards.size() == 0) {
+			// Pick a random weapon card that the player does not have
+			if (unseenWeaponCards.size() == 1 || unseenWeaponCards.size() == 0) {
 				randIndex = 0;
 			}else {
 				randIndex = rand.nextInt(unseenWeaponCards.size());
@@ -57,12 +58,13 @@ public class ComputerPlayer extends Player{
 				i++;
 			}
 			
+			
+			// Pick a random person card that the player does not have
 			if (unseenPersonCards.size() == 1 || unseenPersonCards.size() == 0) {
 				randIndex = 0;
 			}else {
 				randIndex = rand.nextInt(unseenPersonCards.size());
-			}
-			
+			}	
 			i = 0;
 			for (Card card : unseenPersonCards) {
 				if (i == randIndex) {
@@ -75,6 +77,7 @@ public class ComputerPlayer extends Player{
 			
 			guess = new Solution(pGuess, currentRoom, wGuess);
 			
+			// Determine if the solution has already been guessed
 			newGuess = true;
 			for (Solution g : prevGuesses) {
 				if (g.equals(guess)) {
@@ -85,26 +88,26 @@ public class ComputerPlayer extends Player{
 			
 		}while(!newGuess);
 		
+		prevGuesses.add(guess); // Add the guess to the set of already guessed solutions
+		
 		return guess;
 	}
 	
 	
-	
-	
-	
-	
-	
+	// Selects a target for the player to go to
 	public BoardCell chooseTarget(Set<BoardCell> targets) {
 		
 		ArrayList<BoardCell> doors = new ArrayList<>();
 		Random rand = new Random();
 		
+		// Finds all doorways (which have priority)
 		for (BoardCell cell : targets) {
 			if (cell.isDoorway()) {
 				doors.add(cell);
 			}
 		}
 		
+		// If there are no doorways, pick a random cell
 		if (doors.isEmpty()) {
 			int selectionIndex = rand.nextInt(targets.size());
 			int index = 0;
@@ -116,6 +119,7 @@ public class ComputerPlayer extends Player{
 			}
 		}
 		
+		// If there are doorways, pick a random doorway
 		int selectionIndex = rand.nextInt(doors.size());
 		return doors.get(selectionIndex);
 		

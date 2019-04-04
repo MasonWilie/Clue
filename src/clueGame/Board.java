@@ -530,23 +530,22 @@ public class Board {
 		if (suggestion.equals(solution)) return null;
 		
 		
+		// Figure out where in the list of players the accuser is in order to start after them
 		int accuserIndex = -1;
 		for (int i = 0; i < people.size(); i++) {
 			if (people.get(i) == accuser) {
 				accuserIndex = i;
 			}
 		}
+		int currentDisproverIndex = accuserIndex + 1; // Start with the person after the accuser
 		
-		int currentDisproverIndex = accuserIndex + 1;
-		while(currentDisproverIndex != accuserIndex) {
-			if (currentDisproverIndex == people.size()) currentDisproverIndex = 0;
+		while(currentDisproverIndex != accuserIndex) { // Loop until you make it back the accuser
+			if (currentDisproverIndex == people.size()) currentDisproverIndex = 0; // Makes the list circular
+			Card returnedCard = people.get(currentDisproverIndex).disproveSuggestion(suggestion); // Get if player can disprove
 			
-			Card returnedCard = people.get(currentDisproverIndex).disproveSuggestion(suggestion);
-			
-			if (returnedCard != null) return returnedCard;
-			currentDisproverIndex++;
+			if (returnedCard != null) return returnedCard; // If can disprove, return card
+			currentDisproverIndex++; // Go to next player
 		}
-		
 	
 		return null;
 	}
