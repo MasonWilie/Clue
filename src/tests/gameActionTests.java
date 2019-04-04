@@ -253,7 +253,7 @@ public class gameActionTests {
 		//Suggestion no one can disprove returns null
 		Solution solution = board.getSolution();
 		Solution suggestion = board.getSolution();
-		assertTrue(null.equals(handleSuggestion(suggestion, board.getPeople().get(2))));
+		assertEquals(null, board.handleSuggestion(suggestion, board.getPeople().get(2)));
 		
 		//have a suggestion that has 2 correct cards and 1 card in accuser hand returns null
 		ArrayList<Card> hand = new ArrayList<Card>();
@@ -263,7 +263,7 @@ public class gameActionTests {
 		hand.add(wrong);
 		board.getPeople().get(2).setHand(hand);
 		Solution suggestion1 = ((ComputerPlayer)board.getPeople().get(2)).makeSuggestion(wrong);
-		assertTrue(null.equals(handleSuggestion(suggestion1, board.getPeople().get(2))));
+		assertEquals(null, board.handleSuggestion(suggestion1, board.getPeople().get(2)));
 		
 		//have a suggestion that has 2 correct cards and 1 card in a human hand and returns that card they have
 		ArrayList<Card> hand1 = new ArrayList<Card>();
@@ -273,7 +273,7 @@ public class gameActionTests {
 		hand1.add(disprovingCard);
 		board.getPeople().get(1).setHand(hand1);
 		Solution suggestion2 = ((ComputerPlayer)board.getPeople().get(2)).makeSuggestion(disprovingCard);
-		assertTrue(disprovingCard.equals(handleSuggestion(suggestion2, board.getPeople().get(2))));
+		assertTrue(disprovingCard.equals(board.handleSuggestion(suggestion2, board.getPeople().get(2))));
 		
 		//have a suggestion that has 2 correct cards and 1 card in human hand who is also accuser returns null
 		ArrayList<Card> hand2 = new ArrayList<Card>();
@@ -283,7 +283,7 @@ public class gameActionTests {
 		hand2.add(disprovingCard1);
 		board.getPeople().get(1).setHand(hand2);
 		Solution suggestion3 = ((ComputerPlayer)board.getPeople().get(1)).makeSuggestion(disprovingCard1);
-		assertTrue(null.equals(handleSuggestion(suggestion3, board.getPeople().get(1))));
+		assertEquals(null, board.handleSuggestion(suggestion3, board.getPeople().get(1)));
 		
 		//suggestion with 1 correct card and 2 cards in 2 players' hands ...something
 		ArrayList<Card> someonesHand1 = new ArrayList<Card>();
@@ -300,7 +300,7 @@ public class gameActionTests {
 		board.getPeople().get(1).setHand(someonesHand2);
 		board.getPeople().get(2).setHand(whatSomeoneWillSuggest);
 		Solution aSuggestion = ((ComputerPlayer)board.getPeople().get(2)).makeSuggestion(solution.room);
-		assertTrue(aWrongPerson.equals(handleSuggestion(aSuggestion, board.getPeople().get(2))));
+		assertEquals(aWrongPerson, board.handleSuggestion(aSuggestion, board.getPeople().get(2)));
 		
 		//something
 		ArrayList<Card> someonesHand11 = new ArrayList<Card>();
@@ -317,7 +317,7 @@ public class gameActionTests {
 		board.getPeople().get(4).setHand(someonesHand21);
 		board.getPeople().get(2).setHand(whatSomeoneWillSuggest1);
 		Solution aSuggestion1 = ((ComputerPlayer)board.getPeople().get(2)).makeSuggestion(solution.room);
-		assertTrue(aWrongPerson1.equals(handleSuggestion(aSuggestion1, board.getPeople().get(2))));
+		assertEquals(aWrongPerson1, board.handleSuggestion(aSuggestion1, board.getPeople().get(2)));
 	}
 	
 	

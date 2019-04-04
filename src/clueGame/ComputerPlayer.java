@@ -121,34 +121,7 @@ public class ComputerPlayer extends Player{
 		
 	}
 	
-	public Card disproveSuggestion(Solution suggestion) {
-		
-		ArrayList<Card> sameCards = new ArrayList<>();
-		
-		
-		
-		for (Card card : playerHand) {
-			if (card.equals(suggestion.getPersonCard()) ||
-				card.equals(suggestion.getRoomCard()) ||
-				card.equals(suggestion.getWeaponCard())){
-				sameCards.add(card);
-			}
-		}
-		
-		
-		if (sameCards.size() == 0) return null;
-		
-		
-		Random rand = new Random();
-		
-		return sameCards.get(rand.nextInt(sameCards.size()));
-		
-		
-		
-		
-		
-		
-	}
+	
 	
 	
 	

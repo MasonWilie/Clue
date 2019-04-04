@@ -14,6 +14,7 @@ package clueGame;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Random;
 import java.util.Set;
 
 public class Player {
@@ -84,10 +85,6 @@ public class Player {
 		return playerHand;
 	}
 	
-
-	public Card disproveSuggestion(Solution suggestion) {
-		return null;
-	}
 	
 	public void addToHand(Card aCard) {
 		playerHand.add(aCard);
@@ -163,6 +160,35 @@ public class Player {
 					break;
 				}
 		}
+		
+		
+		
+		
+	}
+	
+public Card disproveSuggestion(Solution suggestion) {
+		
+		ArrayList<Card> sameCards = new ArrayList<>();
+		
+		
+		
+		for (Card card : playerHand) {
+			if (card.equals(suggestion.getPersonCard()) ||
+				card.equals(suggestion.getRoomCard()) ||
+				card.equals(suggestion.getWeaponCard())){
+				sameCards.add(card);
+			}
+		}
+		
+		
+		if (sameCards.size() == 0) return null;
+		
+		
+		Random rand = new Random();
+		
+		return sameCards.get(rand.nextInt(sameCards.size()));
+		
+		
 		
 		
 		

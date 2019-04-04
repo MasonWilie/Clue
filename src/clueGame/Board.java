@@ -526,8 +526,26 @@ public class Board {
 		return originalDeck;
 	}
 
-	public Card handleSuggestion(Solution suggestion) {
+	public Card handleSuggestion(Solution suggestion, Player accuser) {
 		if (suggestion.equals(solution)) return null;
+		
+		
+		int accuserIndex = -1;
+		for (int i = 0; i < people.size(); i++) {
+			if (people.get(i) == accuser) {
+				accuserIndex = i;
+			}
+		}
+		
+		int currentDisproverIndex = accuserIndex + 1;
+		while(currentDisproverIndex != accuserIndex) {
+			if (currentDisproverIndex == people.size()) currentDisproverIndex = 0;
+			
+			Card returnedCard = people.get(currentDisproverIndex).disproveSuggestion(suggestion);
+			
+			if (returnedCard != null) return returnedCard;
+			currentDisproverIndex++;
+		}
 		
 	
 		return null;
