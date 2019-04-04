@@ -21,7 +21,7 @@ public class ComputerPlayer extends Player{
 		return null;
 	}
 	
-	public Solution makeSuggestion() {
+	public Solution makeSuggestion(Card currentRoom) {
 		Random rand = new Random();
 		
 		Set<Card> unseenWeaponCards = allWeaponCards;
@@ -30,19 +30,21 @@ public class ComputerPlayer extends Player{
 		Set<Card> unseenPersonCards = allPersonCards;
 		unseenPersonCards.removeAll(personCards);
 		
-		Set<Card> unseenRoomCards = allRoomCards;
-		unseenRoomCards.removeAll(roomCards);
-		
 		Solution guess;
 		boolean newGuess = true;
 		
 		do {
 			
 			Card pGuess = null;
-			Card rGuess = null;
 			Card wGuess = null;
+			int randIndex;
 			
-			int randIndex = rand.nextInt(unseenWeaponCards.size());
+			if (unseenWeaponCards.size() == 0) {
+				randIndex = 0;
+			}else {
+				randIndex = rand.nextInt(unseenWeaponCards.size());
+			}
+			
 			int i = 0;
 			for (Card card : unseenWeaponCards) {
 				if (i == randIndex) {
@@ -52,7 +54,12 @@ public class ComputerPlayer extends Player{
 				i++;
 			}
 			
-			randIndex = rand.nextInt(unseenPersonCards.size());
+			if (unseenPersonCards.size() == 0) {
+				randIndex = 0;
+			}else {
+				randIndex = rand.nextInt(unseenPersonCards.size());
+			}
+			
 			i = 0;
 			for (Card card : unseenPersonCards) {
 				if (i == randIndex) {
@@ -62,19 +69,8 @@ public class ComputerPlayer extends Player{
 				i++;
 			}
 			
-			randIndex = rand.nextInt(unseenRoomCards.size());
-			i = 0;
-			for (Card card : unseenRoomCards) {
-				if (i == randIndex) {
-					rGuess = card;
-					break;
-				}
-				i++;
-			}
 			
-			
-			
-			guess = new Solution(pGuess, rGuess, wGuess);
+			guess = new Solution(pGuess, currentRoom, wGuess);
 			
 			newGuess = true;
 			for (Solution g : prevGuesses) {

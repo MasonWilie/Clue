@@ -141,7 +141,6 @@ public class Player {
 		playerHand = newHand;
 		
 		for (Card card : newHand) {
-				playerHand.add(card);
 				switch (card.getType()) {
 				case ROOM:
 					roomCards.add(card);

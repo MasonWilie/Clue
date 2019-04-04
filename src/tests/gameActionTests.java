@@ -129,8 +129,12 @@ public class gameActionTests {
 	
 	@Test
 	public void createSuggestionTest() {
+		
+		Card ballroomCard = new Card("Ballroom", CardType.ROOM);
+		
+		
 		//check if current position matches suggested room
-		Solution theSuggestion = ((ComputerPlayer)board.getPeople().get(2)).makeSuggestion();
+		Solution theSuggestion = ((ComputerPlayer)board.getPeople().get(2)).makeSuggestion(ballroomCard);
 		Card suggestedRoom = theSuggestion.room;
 		int compRow = board.getPeople().get(2).getRow();
 		int compCol = board.getPeople().get(2).getColumn();
@@ -147,7 +151,7 @@ public class gameActionTests {
 		Card weaponToPick = crazyWeaponHand.get(crazyWeaponHand.size()-1);
 		crazyWeaponHand.remove(crazyWeaponHand.size()-1);
 		board.getPeople().get(2).setHand(crazyWeaponHand);
-		Solution theSuggestion2 = ((ComputerPlayer)board.getPeople().get(2)).makeSuggestion();
+		Solution theSuggestion2 = ((ComputerPlayer)board.getPeople().get(2)).makeSuggestion(ballroomCard);
 		assertTrue(theSuggestion2.weapon.equals(weaponToPick));
 		
 		
@@ -161,7 +165,7 @@ public class gameActionTests {
 		Card personToPick = crazyPersonHand.get(crazyPersonHand.size()-1);
 		crazyPersonHand.remove(crazyPersonHand.size()-1);
 		board.getPeople().get(2).setHand(crazyPersonHand);
-		Solution theSuggestion3 = ((ComputerPlayer)board.getPeople().get(2)).makeSuggestion();
+		Solution theSuggestion3 = ((ComputerPlayer)board.getPeople().get(2)).makeSuggestion(ballroomCard);
 		assertTrue(theSuggestion3.person.equals(personToPick));
 		
 		
@@ -177,7 +181,7 @@ public class gameActionTests {
 		Card weaponToPick12 = crazyWeaponHand1.get(crazyWeaponHand1.size()-1);
 		crazyWeaponHand1.remove(crazyWeaponHand1.size()-1);
 		board.getPeople().get(2).setHand(crazyWeaponHand1);
-		Solution theSuggestion4 = ((ComputerPlayer)board.getPeople().get(2)).makeSuggestion();
+		Solution theSuggestion4 = ((ComputerPlayer)board.getPeople().get(2)).makeSuggestion(ballroomCard);
 		assertTrue(theSuggestion4.weapon.equals(weaponToPick1) || theSuggestion4.weapon.equals(weaponToPick12));
 		
 		
@@ -193,7 +197,7 @@ public class gameActionTests {
 		Card personToPick12 = crazyPersonHand1.get(crazyPersonHand1.size()-1);
 		crazyPersonHand1.remove(crazyPersonHand1.size()-1);
 		board.getPeople().get(2).setHand(crazyPersonHand1);
-		Solution theSuggestion5 = ((ComputerPlayer)board.getPeople().get(2)).makeSuggestion();
+		Solution theSuggestion5 = ((ComputerPlayer)board.getPeople().get(2)).makeSuggestion(ballroomCard);
 		assertTrue(theSuggestion5.person.equals(personToPick1) || theSuggestion5.person.equals(personToPick12));
 	}
 	
