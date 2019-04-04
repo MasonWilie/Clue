@@ -152,7 +152,7 @@ public class gameActionTests {
 		crazyWeaponHand.remove(crazyWeaponHand.size()-1);
 		board.getPeople().get(2).setHand(crazyWeaponHand);
 		Solution theSuggestion2 = ((ComputerPlayer)board.getPeople().get(2)).makeSuggestion(ballroomCard);
-		assertTrue(theSuggestion2.weapon.equals(weaponToPick));
+		assertEquals(theSuggestion2.weapon, weaponToPick);
 		
 		
 		//if only one person not seen, it's selected (can be same test as weapon)
@@ -166,7 +166,7 @@ public class gameActionTests {
 		crazyPersonHand.remove(crazyPersonHand.size()-1);
 		board.getPeople().get(2).setHand(crazyPersonHand);
 		Solution theSuggestion3 = ((ComputerPlayer)board.getPeople().get(2)).makeSuggestion(ballroomCard);
-		assertTrue(theSuggestion3.person.equals(personToPick));
+		assertEquals(theSuggestion3.person, personToPick);
 		
 		
 		//if multiple weapons not seen, one of them is randomly selected
@@ -203,32 +203,36 @@ public class gameActionTests {
 	
 	@Test
 	public void disproveSuggestionTest() {
-		
-		Card ballroomCard = new Card("Ballroom", CardType.ROOM);
-		
-		
+	
 		//If player has only one matching card it should be returned
 		Solution theSolution = board.getSolution();
+		
+		Card testCard = new Card("right_person", CardType.PERSON);
 		ArrayList<Card> theirHand = new ArrayList<Card>();
-		theirHand.add(theSolution.person);
 		Card aBadCard1 = new Card("Sillyweapon", CardType.WEAPON);
 		Card aBadCard2 = new Card("Sillyroom", CardType.ROOM);
 		theirHand.add(aBadCard1);
 		theirHand.add(aBadCard2);
-		Solution theSuggestion = ((ComputerPlayer)board.getPeople().get(2)).makeSuggestion(ballroomCard);
+		theirHand.add(testCard);
+		board.getPeople().get(2).setHand(theirHand);
+		Solution theSuggestion = new Solution(testCard, new Card("Wrong", CardType.ROOM), new Card("Wronger", CardType.WEAPON));
 		Card returnedCard = ((ComputerPlayer)board.getPeople().get(2)).disproveSuggestion(theSuggestion);
-		assertTrue(returnedCard.equals(theSolution.person));
+		assertEquals(returnedCard, testCard);
 		
 		
 		//If players has >1 matching card, returned card should be chosen randomly
 		ArrayList<Card> theirHand1 = new ArrayList<Card>();
-		theirHand1.add(theSolution.person);
-		theirHand1.add(theSolution.weapon);
-		Card aBadCard21 = new Card("Sillyroom", CardType.ROOM);
-		theirHand1.add(aBadCard21);
-		Solution theSuggestion1 = ((ComputerPlayer)board.getPeople().get(2)).makeSuggestion(ballroomCard);
-		Card returnedCard1 = ((ComputerPlayer)board.getPeople().get(2)).disproveSuggestion(theSuggestion1);
-		assertTrue(returnedCard1.equals(theSolution.person) || returnedCard1.equals(theSolution.weapon));
+		Card testRoom = new Card("Sillyroom", CardType.ROOM);
+		Card testPerson = new Card("John", CardType.PERSON);
+		Card testWeapon = new Card("Sword", CardType.WEAPON);
+		theirHand1.add(testRoom);
+		theirHand1.add(testPerson);
+		theirHand1.add(testWeapon);
+		board.getPeople().get(2).setHand(theirHand1);
+		Card wrongRoom = new Card("Wrong!", CardType.ROOM);
+		theSuggestion = new Solution(testPerson, wrongRoom, testWeapon);
+		Card returnedCard1 = ((ComputerPlayer)board.getPeople().get(2)).disproveSuggestion(theSuggestion);
+		assertTrue(returnedCard1.equals(testPerson) || returnedCard1.equals(testWeapon));
 		
 		
 		//If player has no matching cards, null is returned
@@ -239,9 +243,9 @@ public class gameActionTests {
 		theirHand2.add(aBadCard31);
 		theirHand2.add(aBadCard32);
 		theirHand2.add(aBadCard33);
-		Solution theSuggestion9 = ((ComputerPlayer)board.getPeople().get(2)).makeSuggestion(ballroomCard);
-		Card returnedCard9 = ((ComputerPlayer)board.getPeople().get(2)).disproveSuggestion(theSuggestion9);
-		assertTrue(!(returnedCard9.equals(theSolution.person) || returnedCard9.equals(theSolution.weapon) || returnedCard9.equals(theSolution.room)));
+		board.getPeople().get(2).setHand(theirHand2);
+		Card returnedCard9 = ((ComputerPlayer)board.getPeople().get(2)).disproveSuggestion(theSolution);
+		assertTrue(returnedCard9 == null);
 	}
 	
 	
