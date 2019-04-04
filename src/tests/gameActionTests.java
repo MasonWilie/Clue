@@ -206,6 +206,7 @@ public class gameActionTests {
 		
 		Card ballroomCard = new Card("Ballroom", CardType.ROOM);
 		
+		
 		//If player has only one matching card it should be returned
 		Solution theSolution = board.getSolution();
 		ArrayList<Card> theirHand = new ArrayList<Card>();
