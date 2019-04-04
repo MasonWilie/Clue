@@ -38,6 +38,7 @@ public class gameActionTests {
 		board.initialize();
 	}
 
+	// Tests selecting a space to move to based on the targets
 	@Test
 	public void testTargetSelection() {
 		ComputerPlayer cPlayer = new ComputerPlayer();
@@ -48,7 +49,7 @@ public class gameActionTests {
 		board.calcTargets(currentRow, currentCol, 3);
 		Set<BoardCell> theTargets = board.getTargets();
 
-		//run through choosing many different targets and making sure they are in the list of targets
+		//run through choosing many different targets and making sure they are in the list of targets, checks randomness
 		for (int i = 0; i < 20; i++) {
 			BoardCell aTarget = cPlayer.chooseTarget(theTargets);
 			assertTrue(theTargets.contains(aTarget));
@@ -71,7 +72,7 @@ public class gameActionTests {
 		}
 	}
 
-	//test if a given set of 3 cards is the solution (which are 3 cards) (wrong person)
+	//test if a given set of 3 cards is the solution (which are 3 cards)
 	@Test
 	public void testAccusation() {
 		//wrong person
@@ -113,11 +114,11 @@ public class gameActionTests {
 
 	}
 
+	// Tests to make sure we suggest the right cards based on cards that have been seen. Also makes sure that the room suggestion matches the current location
 	@Test
 	public void createSuggestionTest() {
 
 		Card ballroomCard = new Card("Ballroom", CardType.ROOM);
-
 
 		//check if current position matches suggested room
 		Solution theSuggestion = ((ComputerPlayer)board.getPeople().get(2)).makeSuggestion(ballroomCard);
@@ -187,6 +188,7 @@ public class gameActionTests {
 		assertTrue(theSuggestion5.person.equals(personToPick1) || theSuggestion5.person.equals(personToPick12));
 	}
 
+	//Tests returning null or a matching card depending on if a player can successfully disprove a suggestion
 	@Test
 	public void disproveSuggestionTest() {
 
@@ -234,6 +236,7 @@ public class gameActionTests {
 		assertTrue(returnedCard9 == null);
 	}
 
+	//Handles different scenarios of suggestions and accusations based on who can disprove what. Returns null or the answer.
 	@Test
 	public void handleSuggestionTest() {
 		ArrayList<Player> oldPeople = board.getPeople();
