@@ -147,6 +147,8 @@ public class Player {
 		weaponCards = new HashSet<>();
 		personCards = new HashSet<>();
 		
+		
+		// Divides cards into seperate hands
 		for (Card card : newHand) {
 				switch (card.getType()) {
 				case ROOM:
@@ -171,7 +173,7 @@ public Card disproveSuggestion(Solution suggestion) {
 		ArrayList<Card> sameCards = new ArrayList<>();
 		
 		
-		
+		// Get all the cards that the player has and are in the suggestion
 		for (Card card : playerHand) {
 			if (card.equals(suggestion.getPersonCard()) ||
 				card.equals(suggestion.getRoomCard()) ||
@@ -181,12 +183,12 @@ public Card disproveSuggestion(Solution suggestion) {
 		}
 		
 		
-		if (sameCards.size() == 0) return null;
+		if (sameCards.size() == 0) return null; // Return null if can't disprove
 		
 		
 		Random rand = new Random();
 		
-		return sameCards.get(rand.nextInt(sameCards.size()));
+		return sameCards.get(rand.nextInt(sameCards.size())); // Return random one of the cards if can
 		
 		
 		
