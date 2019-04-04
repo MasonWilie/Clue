@@ -550,4 +550,8 @@ public class Board {
 	
 		return null;
 	}
+
+	public void setPeople(ArrayList<Player> newPeople) {
+		people = newPeople;
+	}
 }
