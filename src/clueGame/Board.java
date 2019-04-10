@@ -13,7 +13,11 @@ import java.util.Map;
 import java.util.Random;
 import java.util.Scanner;
 import java.util.Set;
+
+import javax.swing.JPanel;
+
 import java.awt.Color;
+import java.awt.Graphics;
 import java.lang.reflect.Field;
 
 
@@ -30,7 +34,7 @@ import clueGame.BoardCell;
  * 
  */
 
-public class Board {
+public class Board extends JPanel{
 	private int numRows;
 	private int numColumns;
 
@@ -49,6 +53,8 @@ public class Board {
 	private String cardConfigFile;
 
 	private Solution solution;
+	private static final int BOARD_RES_X = 400;
+	private static final int BOARD_RES_Y = 400;
 
 
 	private ArrayList<Player> people;
@@ -552,5 +558,11 @@ public class Board {
 
 	public void setPeople(ArrayList<Player> newPeople) {
 		people = newPeople;
+	}
+	
+	public void paintComponent(Graphics g) {
+		super.paintComponents(g);
+		this.setBackground(Color.GRAY);
+		
 	}
 }

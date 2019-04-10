@@ -1,6 +1,10 @@
 package clueGame;
 
+import java.awt.Color;
+import java.awt.Graphics;
 import java.io.FileNotFoundException;
+
+import javax.swing.JPanel;
 
 /**
  * BoardCell Class:
@@ -10,13 +14,19 @@ import java.io.FileNotFoundException;
  * @author Mason Wilie
  * 
  */
-public class BoardCell {
+public class BoardCell extends JPanel{
 	private int row, column;
 	private char initial;
 	DoorDirection direction;
 	
+	private int cellDim;
+	
 	public int getRow() { 
 		return row;
+	}
+	
+	public void setCellDim(int dim) {
+		this.cellDim = dim;
 	}
 
 	public DoorDirection getDoorDirection() {
@@ -62,6 +72,15 @@ public class BoardCell {
 	
 	public void setDoorDirection(DoorDirection newDirection) {
 		direction = newDirection;
+	}
+	
+	public void paint(Graphics g) {
+		if (this.isDoorway()) {
+			
+		}else if (this.isWalkway()) {
+			
+		}
+		
 	}
 	
 }

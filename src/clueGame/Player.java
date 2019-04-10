@@ -37,6 +37,7 @@ public class Player {
 	private BoardCell target;
 	
 	protected ArrayList<Card> playerHand;
+
 	
 	
 	public Player() {
