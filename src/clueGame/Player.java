@@ -170,6 +170,7 @@ public class Player {
 		
 	}
 	
+	// Player drawing itself
 	public void paint(Graphics g, int diameter, int xPixLoc, int yPixLoc) {
 		g.setColor(color);
 		

@@ -565,22 +565,24 @@ public class Board extends JPanel{
 		people = newPeople;
 	}
 	
+	// Paints the board
 	public void paintComponent(Graphics g) {
 		super.paintComponents(g);
 		
-		
 		this.setBackground(Color.darkGray);
 		
-		Color backgroundColor = new Color(192, 192, 192);
+		Color backgroundColor = new Color(192, 192, 192); // Gray color for background
 		g.setColor(backgroundColor);
 		
 		int cellDim = (int)(((double)BOARD_RES / (double)board[0].length));
 		
+		// Getting board dimensions in pixels
 		int fillX = cellDim * numColumns;
 		int fillY = cellDim * numRows;
 		
-		g.fillRect(0, 0, fillX, fillY);
+		g.fillRect(0, 0, fillX, fillY); // Drawing the background
 		
+		// Drawing every cell
 		for (BoardCell[] row : board) {
 			for (BoardCell cell : row) {
 				cell.setCellDim(cellDim);
@@ -590,6 +592,8 @@ public class Board extends JPanel{
 		
 	}
 	
+	
+	// Determines which cell will have the room label on it using the average x and y of the cells in that room.
 	private void determineLabelCells() {
 		Map<Character, ArrayList<BoardCell>> rooms = new HashMap<>(); // Mapping room initial to all cells in that room
 		
@@ -614,25 +618,24 @@ public class Board extends JPanel{
 			double cellCol = 0;
 			double cellRow = 0;
 			
+			// Averaging the x and y of the cells in the room
 			for (BoardCell cell : cellsInRoom) {
 				cellCol += cell.getColumn();
 				cellRow += cell.getRow();
 				
 			}
-			
 			cellCol = Math.floor(cellCol / (double)cellsInRoom.size());
 			cellRow = Math.ceil(cellRow / (double)cellsInRoom.size());
 			
+			// Checking boundary conditions
 			if (cellCol >= numColumns - 1) cellCol = numColumns - 1;
 			if (cellRow >= numRows - 1) cellRow = numRows -1;
 			
-			BoardCell labelCell = board[(int)cellRow][(int)cellCol];
+			BoardCell labelCell = board[(int)cellRow][(int)cellCol]; // Getting the initial of the cell
 
-			String label = legend.get(labelCell.getInitial());
+			String label = legend.get(labelCell.getInitial()); // getting the label that coorisponds to that initial from the legend
 			
-			
-			
-			labelCell.setDrawLabel(label);
+			labelCell.setDrawLabel(label); // Setting it so the BoardCell will draw the label when it draws itself
 			
 		}
 		

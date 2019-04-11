@@ -22,7 +22,6 @@ public class BoardCell extends JPanel{
 	private Player playerOnCell;
 	
 	private int cellDim;
-	private int boardRes_x, boardRes_y;
 	private boolean drawLabel = false;
 	private String label;
 	
@@ -47,10 +46,6 @@ public class BoardCell extends JPanel{
 		this.cellDim = dim;
 	}
 	
-	public void setBoardRes(int boardRes_x, int boardRes_y) {
-		this.boardRes_x = boardRes_x;
-		this.boardRes_y = boardRes_y;
-	}
 
 	public DoorDirection getDoorDirection() {
 		return direction;
@@ -97,6 +92,10 @@ public class BoardCell extends JPanel{
 		direction = newDirection;
 	}
 	
+	
+	/*
+	 * Paints a boardcell on the game board
+	 */
 	public void paint(Graphics g) {
 		int xPixLoc = this.column * cellDim;
 		int yPixLoc = this.row * cellDim;
@@ -108,6 +107,8 @@ public class BoardCell extends JPanel{
 			int length = cellDim;
 			
 			int height=0, width=0;
+			
+			// Determine parameters based on door direction
 			switch(this.getDoorDirection()) {
 			case UP:
 				height = thickness;
@@ -126,7 +127,12 @@ public class BoardCell extends JPanel{
 				height = length;
 				width = thickness;
 				xPixLoc += cellDim - thickness;
+				break;
+			case NONE:
+				break;
 			}
+			
+			// Draw the door
 			g.setColor(Color.BLUE);
 			g.fillRect(xPixLoc, yPixLoc, width, height);
 			
@@ -134,19 +140,22 @@ public class BoardCell extends JPanel{
 			int borderWidth = (int)((double)cellDim * 0.05);
 			if (borderWidth == 0) borderWidth = 1;
 			
-			
+			// Drawing the outline
 			g.setColor(Color.BLACK);
 			g.fillRect(xPixLoc, yPixLoc, cellDim, cellDim);
 			
+			//Drawing the walkway square
 			g.setColor(Color.YELLOW);
 			g.fillRect(xPixLoc + borderWidth, yPixLoc + borderWidth, cellDim - (2 * borderWidth), cellDim - (2 * borderWidth));
 		}
 		
+		// Drawing the label
 		if (drawLabel) {
 			g.setColor(Color.BLUE);
 			g.drawString(label, xPixLoc, yPixLoc);
 		}
 		
+		// Drawing the player
 		if (playerOnCell != null) {
 			playerOnCell.paint(g, cellDim, xPixLoc, yPixLoc);
 		}

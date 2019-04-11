@@ -55,19 +55,17 @@ public class ControlGUI extends JPanel{
 		JPanel controlPanel = createControlPanel();
 		JMenuBar menuBar = createMenuBar();
 		
+		c.fill = GridBagConstraints.BOTH;
+		c.insets = new Insets(1, 1, 1, 1);
 		
+		// Setting up the menu bar
 		c.gridheight = 1;
 		c.gridwidth = 10;
 		c.gridx = 0;
 		c.gridy = 0;
-		
-		
 		add(menuBar, c);
 		
-		
-		c.fill = GridBagConstraints.BOTH;
-		c.insets = new Insets(1, 1, 1, 1);
-		
+		// Setting up the game board display
 		c.weightx = 0.9;
 		c.weighty = 0.9;
 		c.gridx = 0;
@@ -76,6 +74,7 @@ public class ControlGUI extends JPanel{
 		c.gridheight = 6;
 		add(board, c);
 		
+		// Setting up the the card panel
 		c.weightx = 0;
 		c.weighty = 0;
 		c.gridx = 7;
@@ -84,6 +83,7 @@ public class ControlGUI extends JPanel{
 		c.gridheight = 6;
 		add(cardPanel, c);
 		
+		// Setting up the control panel (bottons and stuff on bottom)
 		c.weightx = 0;
 		c.weighty = 0.1;
 		c.gridx = 0;
@@ -96,6 +96,8 @@ public class ControlGUI extends JPanel{
 		
 	}
 	
+	
+	// Creates the bottom control panel on the Control GUI
 	public JPanel createControlPanel() {
 		JPanel controlPanel = new JPanel();
 		controlPanel.setLayout(new GridBagLayout());
@@ -106,20 +108,19 @@ public class ControlGUI extends JPanel{
 		
 		c.anchor = GridBagConstraints.FIRST_LINE_START;
 		c.fill = GridBagConstraints.BOTH;
-		
 		c.weightx = 1;
-		c.gridwidth = 9;
-		c.gridheight = 2;
 		
-		c.gridx = 0;
+		
+		c.gridx = 0; // Buttons start in top left corner
 		c.gridy = 0;
-		c.gridheight = 2;
-		c.weighty = 0.9;
+		c.gridheight = 2; // Take up 2 thirds of grid space
+		c.gridwidth = 9; // Entire length of grid
+		c.weighty = 0.9; // Buttons take up most of the remaining y space
 		controlPanel.add(topButtons, c);
 		
-		c.weighty = 0.1;
-		c.gridy = 2;
-		c.gridheight = 1;
+		c.weighty = 0.1; // Bottom portion does not get much of remaining y space
+		c.gridy = 2; // Starts 2 down, 0 over
+		c.gridheight = 1; // Only 1 high
 		controlPanel.add(bottomButtons, c);
 		
 		return controlPanel;
@@ -253,31 +254,8 @@ public class ControlGUI extends JPanel{
 		return textFieldBox;
 	}
 	
-	/* show():
-	 * Displays everything in the GUI
-	 * 
-	 */
-	public void show() {
-		frame = new JFrame();
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setTitle("Game GUI");
-		frame.setSize(FRAME_X, FRAME_Y);
-		
-		gameGUI = new ControlGUI();
-		frame.add(gameGUI, BorderLayout.CENTER);
-		frame.setVisible(true);
-		
-	}
 	
-	public static void setUp() {
-		// Board is singleton, get the only instance
-		board = Board.getInstance();
-		// set the file names to use my config files
-		board.setConfigFiles("Board_Layout.csv", "ClueRooms.txt", "players.txt", "cards.txt");		
-		// Initialize will load BOTH config files 
-		board.initialize();
-	}
-	
+	// Creates the cards panel
 	public JPanel createMyCardsPanel() {
 		JPanel cardsPanel = new JPanel();
 		cardsPanel.setLayout(new BoxLayout(cardsPanel, BoxLayout.Y_AXIS));
@@ -285,18 +263,16 @@ public class ControlGUI extends JPanel{
 		JPanel myCardsMain = createMyCardsFieldBox("MyCards", "People", "Rooms", "Weapons", 100, true);
 		
 		cardsPanel.add(myCardsMain);
-		
-		//?
-		//cardsPanel.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
-		
 		return cardsPanel;
 	}
 	
+	// Creates the menu bar with file
 	public JMenuBar createMenuBar() {
 		JMenuBar menuBar = new JMenuBar();
-		
+
 		JMenu file = new JMenu("File");
 		
+		// Adds the menu items to the file dropdown
 		JMenuItem exit = new JMenuItem("Exit");
 		JMenuItem showNotes = new JMenuItem("Show Notes");
 		
@@ -348,6 +324,32 @@ public class ControlGUI extends JPanel{
 		
 		
 		return textFieldBox;
+	}
+	
+	// Sets up the game board
+	public static void setUp() {
+		// Board is singleton, get the only instance
+		board = Board.getInstance();
+		// set the file names to use my config files
+		board.setConfigFiles("Board_Layout.csv", "ClueRooms.txt", "players.txt", "cards.txt");		
+		// Initialize will load BOTH config files 
+		board.initialize();
+	}
+	
+	/* show():
+	 * Displays everything in the GUI
+	 * 
+	 */
+	public void show() {
+		frame = new JFrame();
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setTitle("Game GUI");
+		frame.setSize(FRAME_X, FRAME_Y);
+		
+		gameGUI = new ControlGUI();
+		frame.add(gameGUI, BorderLayout.CENTER);
+		frame.setVisible(true);
+		
 	}
 	
 	public static void main(String[] args) {
