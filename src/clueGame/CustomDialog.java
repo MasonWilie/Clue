@@ -239,9 +239,5 @@ public class CustomDialog extends JPanel{
 
 	}
 
-	public static void main(String[] args) {
-		CustomDialog dialog1 = new CustomDialog();
-		dialog1.show();
-	}
 
 }

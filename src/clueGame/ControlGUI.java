@@ -355,6 +355,9 @@ public class ControlGUI extends JPanel{
 	public static void main(String[] args) {
 		ControlGUI gui = new ControlGUI();
 		gui.show();
+		
+		CustomDialog cDialog = new CustomDialog();
+		cDialog.show();
 	}
 	
 }
