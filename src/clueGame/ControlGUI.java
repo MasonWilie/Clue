@@ -4,12 +4,20 @@ import java.awt.BorderLayout;
 import java.awt.ComponentOrientation;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.GridLayout;
+import java.awt.Insets;
+import java.awt.Menu;
 
 import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
@@ -29,18 +37,92 @@ public class ControlGUI extends JPanel{
 	private ControlGUI gameGUI;
 	private JFrame frame;
 	
-	private final int FRAME_X = 800;
-	private final int FRAME_Y = 250;
+	private final int FRAME_X = 1000;
+	private final int FRAME_Y = 1000;
 	
+	private static Board board;
 	
 	public ControlGUI() {
-		setLayout(new GridLayout(2, 0));
+		setUp();
+		
+		setLayout(new GridBagLayout());
+		GridBagConstraints c = new GridBagConstraints();
+		
+		c.anchor = GridBagConstraints.FIRST_LINE_START;
+		
+		
+		JPanel cardPanel = createMyCardsPanel();
+		JPanel controlPanel = createControlPanel();
+		JMenuBar menuBar = createMenuBar();
+		
+		
+		c.gridheight = 1;
+		c.gridwidth = 10;
+		c.gridx = 0;
+		c.gridy = 0;
+		
+		
+		add(menuBar, c);
+		
+		
+		c.fill = GridBagConstraints.BOTH;
+		c.insets = new Insets(1, 1, 1, 1);
+		
+		c.weightx = 0.9;
+		c.weighty = 0.9;
+		c.gridx = 0;
+		c.gridy=1;
+		c.gridwidth = 6;
+		c.gridheight = 6;
+		add(board, c);
+		
+		c.weightx = 0;
+		c.weighty = 0;
+		c.gridx = 7;
+		c.gridy = 1;
+		c.gridwidth = 3;
+		c.gridheight = 6;
+		add(cardPanel, c);
+		
+		c.weightx = 0;
+		c.weighty = 0.1;
+		c.gridx = 0;
+		c.gridy = 7;
+		c.gridheight = 3;
+		c.gridwidth = 10;
+		add(controlPanel, c);
+		
+		
+		
+	}
+	
+	public JPanel createControlPanel() {
+		JPanel controlPanel = new JPanel();
+		controlPanel.setLayout(new GridBagLayout());
+		GridBagConstraints c = new GridBagConstraints();
+		
 		JPanel topButtons = createTopButtonsPanel();
 		JPanel bottomButtons = createBottomButtonsPanel();
-		add(topButtons);
-		add(bottomButtons);
 		
+		c.anchor = GridBagConstraints.FIRST_LINE_START;
+		c.fill = GridBagConstraints.BOTH;
 		
+		c.weightx = 1;
+		c.gridwidth = 9;
+		c.gridheight = 2;
+		
+		c.gridx = 0;
+		c.gridy = 0;
+		c.gridheight = 2;
+		c.weighty = 0.9;
+		controlPanel.add(topButtons, c);
+		
+		c.weighty = 0.1;
+		c.gridy = 2;
+		c.gridheight = 1;
+		controlPanel.add(bottomButtons, c);
+		
+		return controlPanel;
 	}
 	
 	/* createTopButtonsPanel():
@@ -51,15 +133,34 @@ public class ControlGUI extends JPanel{
 	
 	public JPanel createTopButtonsPanel() {
 		JPanel panel = new JPanel();
-		panel.setLayout(new GridLayout(0, 3));
+		panel.setLayout(new GridBagLayout());
+		GridBagConstraints c = new GridBagConstraints();
+		
+		
 		
 		JPanel whoseTurn = createTextField("Whose turn?");
-		JPanel nextPlayer = createButtonPanel("Next player");
-		JPanel makeAccusation = createButtonPanel("Make an accusation");
-
-		panel.add(whoseTurn);
-		panel.add(nextPlayer);
-		panel.add(makeAccusation);
+		JButton nextPlayer = new JButton("Next player");
+		JButton makeAccusation = new JButton("Make an accusation");
+		
+		c.anchor = GridBagConstraints.FIRST_LINE_START;
+		c.fill = GridBagConstraints.BOTH;
+		c.gridwidth = 3;
+		
+		
+		c.weightx = 1;
+		c.weighty = 1;
+		
+		c.gridx = 0;
+		c.gridy = 0;
+		c.gridheight = 1;
+		panel.add(whoseTurn, c);
+		
+		c.gridx = 3;
+		c.gridheight = 2;
+		panel.add(nextPlayer, c);
+		
+		c.gridx = 6;
+		panel.add(makeAccusation, c);
 		
 		return panel;
 	}
@@ -71,7 +172,7 @@ public class ControlGUI extends JPanel{
 	public JPanel createButtonPanel(String textField) {
 		JButton button = new JButton(textField);
 		JPanel buttonPanel = new JPanel();
-		button.setPreferredSize(new Dimension(FRAME_X/3 - 5, (int)(FRAME_Y/2.5) - 5));
+		//button.setPreferredSize(new Dimension(FRAME_X/10 - 5, (int)(FRAME_Y/10) - 5));
 		buttonPanel.add(button);
 		return buttonPanel;
 	}
@@ -90,7 +191,7 @@ public class ControlGUI extends JPanel{
 		JTextField textBox = new JTextField();
 		textBox.setEditable(false);
 		
-		textBox.setPreferredSize(new Dimension((int)(FRAME_X / 4), 20));
+		//textBox.setPreferredSize(new Dimension((int)(FRAME_X / 4), 20));
 		
 		
 		panel.add(text);
@@ -166,6 +267,87 @@ public class ControlGUI extends JPanel{
 		frame.add(gameGUI, BorderLayout.CENTER);
 		frame.setVisible(true);
 		
+	}
+	
+	public static void setUp() {
+		// Board is singleton, get the only instance
+		board = Board.getInstance();
+		// set the file names to use my config files
+		board.setConfigFiles("Board_Layout.csv", "ClueRooms.txt", "players.txt", "cards.txt");		
+		// Initialize will load BOTH config files 
+		board.initialize();
+	}
+	
+	public JPanel createMyCardsPanel() {
+		JPanel cardsPanel = new JPanel();
+		cardsPanel.setLayout(new BoxLayout(cardsPanel, BoxLayout.Y_AXIS));
+		
+		JPanel myCardsMain = createMyCardsFieldBox("MyCards", "People", "Rooms", "Weapons", 100, true);
+		
+		cardsPanel.add(myCardsMain);
+		
+		//?
+		//cardsPanel.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
+		
+		return cardsPanel;
+	}
+	
+	public JMenuBar createMenuBar() {
+		JMenuBar menuBar = new JMenuBar();
+		
+		JMenu file = new JMenu("File");
+		
+		JMenuItem exit = new JMenuItem("Exit");
+		JMenuItem showNotes = new JMenuItem("Show Notes");
+		
+		file.add(exit);
+		file.add(showNotes);
+		
+		
+		
+		menuBar.add(file);
+		
+		return menuBar;
+	}
+	
+	
+	public JPanel createMyCardsFieldBox(String label, String prompt1, String prompt2, String prompt3, int height, boolean useCols) {
+		JPanel textFieldBox = new JPanel();
+		
+		if (!useCols)
+			textFieldBox.setLayout(new BoxLayout(textFieldBox, BoxLayout.Y_AXIS));
+		else
+			textFieldBox.setLayout(new BoxLayout(textFieldBox, BoxLayout.Y_AXIS));
+		JLabel text1 = new JLabel(prompt1);
+		JLabel text2 = new JLabel(prompt2);
+		JLabel text3 = new JLabel(prompt3);
+		
+		JTextField textField1 = new JTextField();
+		JTextField textField2 = new JTextField();
+		JTextField textField3 = new JTextField();
+		textField1.setEditable(false);
+		textField2.setEditable(false);
+		textField3.setEditable(false);
+		
+		TitledBorder title = BorderFactory.createTitledBorder(label);
+		title.setTitlePosition(TitledBorder.TOP);
+		
+
+		textFieldBox.setBorder(title);
+		
+		textField1.setPreferredSize(new Dimension(50, height));
+		textField2.setPreferredSize(new Dimension(50, height));
+		textField3.setPreferredSize(new Dimension(50, height));
+		
+		textFieldBox.add(text1);
+		textFieldBox.add(textField1);
+		textFieldBox.add(text2);
+		textFieldBox.add(textField2);
+		textFieldBox.add(text3);
+		textFieldBox.add(textField3);
+		
+		
+		return textFieldBox;
 	}
 	
 	public static void main(String[] args) {

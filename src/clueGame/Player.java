@@ -12,6 +12,7 @@ package clueGame;
 
 //import com.sun.prism.paint.Color;
 import java.awt.Color;
+import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Random;
@@ -165,6 +166,14 @@ public class Player {
 		}
 		
 		
+		
+		
+	}
+	
+	public void paint(Graphics g, int diameter, int xPixLoc, int yPixLoc) {
+		g.setColor(color);
+		
+		g.fillOval(xPixLoc, yPixLoc, diameter, diameter);
 		
 		
 	}

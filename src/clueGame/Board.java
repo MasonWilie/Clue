@@ -53,8 +53,7 @@ public class Board extends JPanel{
 	private String cardConfigFile;
 
 	private Solution solution;
-	private static final int BOARD_RES_X = 400;
-	private static final int BOARD_RES_Y = 400;
+	private static final int BOARD_RES = 700;
 
 
 	private ArrayList<Player> people;
@@ -107,6 +106,7 @@ public class Board extends JPanel{
 			pickWinningCards();
 			dealCards();
 			calcAdjacencies();
+			determineLabelCells();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -380,7 +380,12 @@ public class Board extends JPanel{
 			people.get(thisRow).setRow(Integer.parseInt(currentRow[2])); // Setting row
 			people.get(thisRow).setColumn(Integer.parseInt(currentRow[3])); // Setting column
 			people.get(thisRow).setColor(convertColor(currentRow[4])); // Setting color
+			Player currentPerson = people.get(thisRow);
 			thisRow++;
+			
+			
+			
+			board[currentPerson.getRow()][currentPerson.getColumn()].setPlayer(currentPerson);
 		}
 		in.close(); // Closing file that we were reading from
 	}
@@ -562,7 +567,75 @@ public class Board extends JPanel{
 	
 	public void paintComponent(Graphics g) {
 		super.paintComponents(g);
-		this.setBackground(Color.GRAY);
+		
+		
+		this.setBackground(Color.darkGray);
+		
+		Color backgroundColor = new Color(192, 192, 192);
+		g.setColor(backgroundColor);
+		
+		int cellDim = (int)(((double)BOARD_RES / (double)board[0].length));
+		
+		int fillX = cellDim * numColumns;
+		int fillY = cellDim * numRows;
+		
+		g.fillRect(0, 0, fillX, fillY);
+		
+		for (BoardCell[] row : board) {
+			for (BoardCell cell : row) {
+				cell.setCellDim(cellDim);
+				cell.paint(g);
+			}
+		}
+		
+	}
+	
+	private void determineLabelCells() {
+		Map<Character, ArrayList<BoardCell>> rooms = new HashMap<>(); // Mapping room initial to all cells in that room
+		
+		for (BoardCell[] row : board) {
+			for (BoardCell cell : row) {
+				Character cellInitial = cell.getInitial(); // Getting the initial of the room
+				if (cellInitial =='W') continue;
+				if (rooms.containsKey(cellInitial)) { // If that initial is already in the map
+					rooms.get(cellInitial).add(cell); // Add the cell to that arraylist
+				}else { // If the key is not already in the map
+					ArrayList<BoardCell> cells = new ArrayList<>(); // create a new arraylist
+					cells.add(cell); // add that cell to the arraylist
+					rooms.put(cellInitial, cells); // set that initial to the key and the new arraylist
+				}
+			}
+		}
+		
+		
+		for (Character initial : rooms.keySet()) {
+			ArrayList<BoardCell> cellsInRoom = rooms.get(initial);
+			
+			double cellCol = 0;
+			double cellRow = 0;
+			
+			for (BoardCell cell : cellsInRoom) {
+				cellCol += cell.getColumn();
+				cellRow += cell.getRow();
+				
+			}
+			
+			cellCol = Math.floor(cellCol / (double)cellsInRoom.size());
+			cellRow = Math.ceil(cellRow / (double)cellsInRoom.size());
+			
+			if (cellCol >= numColumns - 1) cellCol = numColumns - 1;
+			if (cellRow >= numRows - 1) cellRow = numRows -1;
+			
+			BoardCell labelCell = board[(int)cellRow][(int)cellCol];
+
+			String label = legend.get(labelCell.getInitial());
+			
+			
+			
+			labelCell.setDrawLabel(label);
+			
+		}
+		
 		
 	}
 }

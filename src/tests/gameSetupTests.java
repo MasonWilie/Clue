@@ -33,7 +33,7 @@ public class gameSetupTests {
 		// Board is singleton, get the only instance
 		board = Board.getInstance();
 		// set the file names to use my config files
-		board.setConfigFiles("Board_Layout.csv", "ClueRooms.txt", "players.txt", "cards.txt");		
+		board.setConfigFiles("Board_Layout.csv", "ClueRooms.txt", "players_test.txt", "cards.txt");		
 		// Initialize will load BOTH config files 
 		board.initialize();
 	}

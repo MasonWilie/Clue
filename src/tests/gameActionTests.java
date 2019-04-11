@@ -34,7 +34,7 @@ public class gameActionTests {
 	@BeforeClass
 	public static void testTargetSetup() {
 		board = Board.getInstance();
-		board.setConfigFiles("Board_Layout.csv", "ClueRooms.txt", "players.txt", "cards.txt");		
+		board.setConfigFiles("Board_Layout.csv", "ClueRooms.txt", "players_test.txt", "cards.txt");		
 		board.initialize();
 	}
 

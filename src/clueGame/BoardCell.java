@@ -19,14 +19,37 @@ public class BoardCell extends JPanel{
 	private char initial;
 	DoorDirection direction;
 	
+	private Player playerOnCell;
+	
 	private int cellDim;
+	private int boardRes_x, boardRes_y;
+	private boolean drawLabel = false;
+	private String label;
 	
 	public int getRow() { 
 		return row;
 	}
 	
+	public void setPlayer(Player newPlayer) {
+		playerOnCell = newPlayer;
+	}
+	
+	public void removePlayer() {
+		playerOnCell = null;
+	}
+	
+	public void setDrawLabel(String label) {
+		this.drawLabel = true;
+		this.label = label;
+	}
+	
 	public void setCellDim(int dim) {
 		this.cellDim = dim;
+	}
+	
+	public void setBoardRes(int boardRes_x, int boardRes_y) {
+		this.boardRes_x = boardRes_x;
+		this.boardRes_y = boardRes_y;
 	}
 
 	public DoorDirection getDoorDirection() {
@@ -75,12 +98,60 @@ public class BoardCell extends JPanel{
 	}
 	
 	public void paint(Graphics g) {
+		int xPixLoc = this.column * cellDim;
+		int yPixLoc = this.row * cellDim;
+		
 		if (this.isDoorway()) {
+			int thickness = (int)((double)cellDim * 0.15);
+			if (thickness == 0) thickness = 1;
+			
+			int length = cellDim;
+			
+			int height=0, width=0;
+			switch(this.getDoorDirection()) {
+			case UP:
+				height = thickness;
+				width = length;
+				break;
+			case DOWN:
+				height = thickness;
+				width = length;
+				yPixLoc += cellDim - thickness;
+				break;
+			case LEFT:
+				height = length;
+				width = thickness;
+				break;
+			case RIGHT:
+				height = length;
+				width = thickness;
+				xPixLoc += cellDim - thickness;
+			}
+			g.setColor(Color.BLUE);
+			g.fillRect(xPixLoc, yPixLoc, width, height);
 			
 		}else if (this.isWalkway()) {
+			int borderWidth = (int)((double)cellDim * 0.05);
+			if (borderWidth == 0) borderWidth = 1;
 			
+			
+			g.setColor(Color.BLACK);
+			g.fillRect(xPixLoc, yPixLoc, cellDim, cellDim);
+			
+			g.setColor(Color.YELLOW);
+			g.fillRect(xPixLoc + borderWidth, yPixLoc + borderWidth, cellDim - (2 * borderWidth), cellDim - (2 * borderWidth));
+		}
+		
+		if (drawLabel) {
+			g.setColor(Color.BLUE);
+			g.drawString(label, xPixLoc, yPixLoc);
+		}
+		
+		if (playerOnCell != null) {
+			playerOnCell.paint(g, cellDim, xPixLoc, yPixLoc);
 		}
 		
 	}
+	
 	
 }
