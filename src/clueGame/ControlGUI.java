@@ -9,6 +9,7 @@ import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.Menu;
+import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -265,30 +266,56 @@ public class ControlGUI extends JPanel{
 		JPanel cardsPanel = new JPanel();
 		cardsPanel.setLayout(new BoxLayout(cardsPanel, BoxLayout.Y_AXIS));
 		
-		JPanel myCardsMain = createMyCardsFieldBox("MyCards", "People", "Rooms", "Weapons", 100, true);
+		ArrayList<Card> playerCards = currentPlayer.getHand();
 		
-		cardsPanel.add(myCardsMain);
+		ArrayList<Card> peopleCards = new ArrayList<>();
+		ArrayList<Card> roomCards = new ArrayList<>();
+		ArrayList<Card> weaponCards = new ArrayList<>();
+		
+		for (Card card : playerCards) {
+			switch(card.getType()) {
+			case PERSON:
+				peopleCards.add(card);
+				break;
+			case ROOM:
+				roomCards.add(card);
+				break;
+			case WEAPON:
+				weaponCards.add(card);
+				break;
+			}
+		}
+		
+		JTextField people = createCardBox("People", peopleCards);
+		JTextField rooms = createCardBox("Rooms", roomCards);
+		JTextField weapons = createCardBox("Weapons", weaponCards);
+		
+		cardsPanel.add(people);
+		cardsPanel.add(rooms);
+		cardsPanel.add(weapons);
+		
+		
 		return cardsPanel;
 	}
 	
-	// Creates the menu bar with file
-	public JMenuBar createMenuBar() {
-		JMenuBar menuBar = new JMenuBar();
-
-		JMenu file = new JMenu("File");
+	private JTextField createCardBox(String label, ArrayList<Card> cards) {
+		JTextField cardBox = new JTextField();
 		
-		// Adds the menu items to the file dropdown
-		JMenuItem exit = new JMenuItem("Exit");
-		JMenuItem showNotes = new JMenuItem("Show Notes");
+		TitledBorder title = BorderFactory.createTitledBorder(label);
+		title.setTitlePosition(TitledBorder.TOP);
+		cardBox.setBorder(title);
 		
-		file.add(exit);
-		file.add(showNotes);
+		cardBox.setEditable(false);
 		
+		String textBoxContents = "";
 		
+		for (Card card : cards) {
+			textBoxContents += card.getName() + '\n';
+		}
 		
-		menuBar.add(file);
+		cardBox.setText(textBoxContents);
 		
-		return menuBar;
+		return cardBox;
 	}
 	
 	
@@ -329,6 +356,26 @@ public class ControlGUI extends JPanel{
 		
 		
 		return textFieldBox;
+	}
+	
+	// Creates the menu bar with file
+	public JMenuBar createMenuBar() {
+		JMenuBar menuBar = new JMenuBar();
+
+		JMenu file = new JMenu("File");
+		
+		// Adds the menu items to the file dropdown
+		JMenuItem exit = new JMenuItem("Exit");
+		JMenuItem showNotes = new JMenuItem("Show Notes");
+		
+		file.add(exit);
+		file.add(showNotes);
+		
+		
+		
+		menuBar.add(file);
+		
+		return menuBar;
 	}
 	
 	// Sets up the game board
