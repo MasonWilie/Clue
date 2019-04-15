@@ -21,6 +21,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.TitledBorder;
@@ -81,7 +82,7 @@ public class ControlGUI extends JPanel{
 		add(board, c);
 		
 		// Setting up the the card panel
-		c.weightx = 0;
+		c.weightx = 0.1;
 		c.weighty = 0;
 		c.gridx = 7;
 		c.gridy = 1;
@@ -286,20 +287,24 @@ public class ControlGUI extends JPanel{
 			}
 		}
 		
-		JTextField people = createCardBox("People", peopleCards);
-		JTextField rooms = createCardBox("Rooms", roomCards);
-		JTextField weapons = createCardBox("Weapons", weaponCards);
+		JTextArea people = createCardBox("People", peopleCards);
+		JTextArea rooms = createCardBox("Rooms", roomCards);
+		JTextArea weapons = createCardBox("Weapons", weaponCards);
 		
 		cardsPanel.add(people);
 		cardsPanel.add(rooms);
 		cardsPanel.add(weapons);
 		
+		TitledBorder title = BorderFactory.createTitledBorder("My Cards");
+		title.setTitlePosition(TitledBorder.TOP);
+		cardsPanel.setBorder(title);
+		
 		
 		return cardsPanel;
 	}
 	
-	private JTextField createCardBox(String label, ArrayList<Card> cards) {
-		JTextField cardBox = new JTextField();
+	private JTextArea createCardBox(String label, ArrayList<Card> cards) {
+		JTextArea cardBox = new JTextArea();
 		
 		TitledBorder title = BorderFactory.createTitledBorder(label);
 		title.setTitlePosition(TitledBorder.TOP);
@@ -307,56 +312,14 @@ public class ControlGUI extends JPanel{
 		
 		cardBox.setEditable(false);
 		
-		String textBoxContents = "";
-		
-		for (Card card : cards) {
-			textBoxContents += card.getName() + '\n';
+		for (int i = 0; i < cards.size(); i++) {
+			cardBox.append( cards.get(i).getName() + '\n');
 		}
 		
-		cardBox.setText(textBoxContents);
 		
 		return cardBox;
 	}
 	
-	
-	public JPanel createMyCardsFieldBox(String label, String prompt1, String prompt2, String prompt3, int height, boolean useCols) {
-		JPanel textFieldBox = new JPanel();
-		
-		if (!useCols)
-			textFieldBox.setLayout(new BoxLayout(textFieldBox, BoxLayout.Y_AXIS));
-		else
-			textFieldBox.setLayout(new BoxLayout(textFieldBox, BoxLayout.Y_AXIS));
-		JLabel text1 = new JLabel(prompt1);
-		JLabel text2 = new JLabel(prompt2);
-		JLabel text3 = new JLabel(prompt3);
-		
-		JTextField textField1 = new JTextField();
-		JTextField textField2 = new JTextField();
-		JTextField textField3 = new JTextField();
-		textField1.setEditable(false);
-		textField2.setEditable(false);
-		textField3.setEditable(false);
-		
-		TitledBorder title = BorderFactory.createTitledBorder(label);
-		title.setTitlePosition(TitledBorder.TOP);
-		
-
-		textFieldBox.setBorder(title);
-		
-		textField1.setPreferredSize(new Dimension(50, height));
-		textField2.setPreferredSize(new Dimension(50, height));
-		textField3.setPreferredSize(new Dimension(50, height));
-		
-		textFieldBox.add(text1);
-		textFieldBox.add(textField1);
-		textFieldBox.add(text2);
-		textFieldBox.add(textField2);
-		textFieldBox.add(text3);
-		textFieldBox.add(textField3);
-		
-		
-		return textFieldBox;
-	}
 	
 	// Creates the menu bar with file
 	public JMenuBar createMenuBar() {
