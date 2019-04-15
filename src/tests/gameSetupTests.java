@@ -77,7 +77,7 @@ public class gameSetupTests {
 		ArrayList<Card> cards = board.getOriginalDeck();
 
 		//Checks that the number of cards in the deck is correct
-		assertEquals(23, cards.size());
+		assertEquals(19, cards.size());
 
 		int numPeople = 0;
 		int numWeapons = 0;
@@ -96,13 +96,13 @@ public class gameSetupTests {
 		}
 
 		//Checks that the right number of people, weapons, and rooms exist in the deck of cards
-		assertEquals(9, numPeople);
+		assertEquals(5, numPeople);
 		assertEquals(6, numWeapons);
 		assertEquals(8, numRooms);
 
 		String chosenRoom = "Library";
 		String chosenWeapon = "Bazooka";
-		String chosenPerson = "Fran";
+		String chosenPerson = "John";
 
 		boolean roomFound=false;
 		boolean weaponFound=false;
