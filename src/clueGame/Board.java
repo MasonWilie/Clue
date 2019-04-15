@@ -57,6 +57,7 @@ public class Board extends JPanel{
 
 
 	private ArrayList<Player> people;
+	private Player currentPlayer;
 	private ArrayList<Card> deck;
 	private ArrayList<Card> originalDeck;
 
@@ -641,4 +642,21 @@ public class Board extends JPanel{
 		
 		
 	}
+	
+	public String getHumanPlayerName() {
+		
+		
+		
+		for (Player player : people) {
+			if (player instanceof HumanPlayer) {
+				return player.getPlayerName();
+			}
+		}
+		return "No Human Player Found";
+	}
+	
+	public Player getCurrentPlayer() {
+		return currentPlayer;
+	}
+	
 }

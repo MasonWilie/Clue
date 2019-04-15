@@ -1,5 +1,5 @@
-John h 4 6 red
-Cindy h 11 5 blue
+John c 4 6 red
+Cindy c 11 5 blue
 Robo23 c 16 7 white
 Mark c 21 17 green
 Susan h 8 21 black

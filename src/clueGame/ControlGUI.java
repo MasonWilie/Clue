@@ -18,6 +18,7 @@ import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
@@ -42,8 +43,12 @@ public class ControlGUI extends JPanel{
 	
 	private static Board board;
 	
+	private Player currentPlayer;
+	
 	public ControlGUI() {
 		setUp();
+		
+		currentPlayer = board.getCurrentPlayer();
 		
 		setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
@@ -341,18 +346,24 @@ public class ControlGUI extends JPanel{
 	 * 
 	 */
 	public void show() {
+		
+		
+		
 		frame = new JFrame();
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setTitle("Game GUI");
 		frame.setSize(FRAME_X, FRAME_Y);
+		frame.add(this, BorderLayout.CENTER);
 		
-		gameGUI = new ControlGUI();
-		frame.add(gameGUI, BorderLayout.CENTER);
+		String message = "You are " + board.getHumanPlayerName() + ", press Next Player to begin play";
+		JOptionPane.showMessageDialog(frame, message, "Welcome to Clue", JOptionPane.INFORMATION_MESSAGE);
+		
 		frame.setVisible(true);
 		
 	}
 	
 	public static void main(String[] args) {
+		
 		ControlGUI gui = new ControlGUI();
 		gui.show();
 		
