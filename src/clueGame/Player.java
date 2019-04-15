@@ -38,6 +38,8 @@ public class Player {
 	private BoardCell target;
 	
 	protected ArrayList<Card> playerHand;
+	
+	private int dieRoll;
 
 	
 	
@@ -53,6 +55,17 @@ public class Player {
 		roomCards = new HashSet<>();
 		weaponCards = new HashSet<>();
 		
+		rollDie();
+		
+	}
+	
+	public void rollDie() {
+		Random rand = new Random();
+		dieRoll = rand.nextInt(5) + 1;
+	}
+	
+	public int getDieRoll() {
+		return dieRoll;
 	}
 	
 	public void setDeck(ArrayList<Card> ogDeck) {

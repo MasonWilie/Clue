@@ -146,7 +146,7 @@ public class ControlGUI extends JPanel{
 		
 		
 		
-		JPanel whoseTurn = createTextField("Whose turn?");
+		JPanel whoseTurn = createTextField("Whose turn?", currentPlayer.getPlayerName());
 		JButton nextPlayer = new JButton("Next player");
 		JButton makeAccusation = new JButton("Make an accusation");
 		
@@ -190,7 +190,7 @@ public class ControlGUI extends JPanel{
 	 * Creates a text field used in the top buttons, with the label specified by the argument 'prompt'
 	 * 
 	 */
-	public JPanel createTextField(String prompt) {
+	public JPanel createTextField(String prompt, String contents) {
 		JPanel panel = new JPanel();
 		
 		panel.setLayout(new GridLayout(3, 0));
@@ -198,8 +198,7 @@ public class ControlGUI extends JPanel{
 		JLabel text = new JLabel(prompt, SwingConstants.CENTER);
 		JTextField textBox = new JTextField();
 		textBox.setEditable(false);
-		
-		//textBox.setPreferredSize(new Dimension((int)(FRAME_X / 4), 20));
+		textBox.setText(contents);
 		
 		
 		panel.add(text);
@@ -216,9 +215,9 @@ public class ControlGUI extends JPanel{
 		JPanel bottomButtons = new JPanel();
 		bottomButtons.setLayout(new FlowLayout());
 		
-		JPanel die = createTextFieldBox("Die", "Roll", 40, true);
-		JPanel guess = createTextFieldBox("Guess", "Guess", 350, false);
-		JPanel guessResult = createTextFieldBox("Guess Result", "Response", 120, true);
+		JPanel die = createTextFieldBox("Die", "Roll", 40, true, Integer.toString(currentPlayer.getDieRoll()));
+		JPanel guess = createTextFieldBox("Guess", "Guess", 350, false, "");
+		JPanel guessResult = createTextFieldBox("Guess Result", "Response", 120, true, "");
 		
 		bottomButtons.add(die);
 		bottomButtons.add(guess);
@@ -234,7 +233,7 @@ public class ControlGUI extends JPanel{
 	 * Creates the text field with a border and label as seen in the bottom of the GUI
 	 * 
 	 */
-	public JPanel createTextFieldBox(String label, String prompt, int width, boolean useCols) {
+	public JPanel createTextFieldBox(String label, String prompt, int width, boolean useCols, String contents) {
 		JPanel textFieldBox = new JPanel();
 		
 		if (!useCols)
@@ -253,6 +252,8 @@ public class ControlGUI extends JPanel{
 		textFieldBox.setBorder(title);
 		
 		textField.setPreferredSize(new Dimension(width, 20));
+		
+		textField.setText(contents);
 		
 		textFieldBox.add(text);
 		textFieldBox.add(textField);
