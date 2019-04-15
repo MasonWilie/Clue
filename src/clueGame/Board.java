@@ -103,6 +103,14 @@ public class Board extends JPanel{
 			loadRoomConfig();
 			loadBoardConfig();
 			loadPeopleConfig();
+			
+			//loop through people and set currentplayer to the human player
+			for (Player i : people) {
+				if (i instanceof HumanPlayer) {
+					currentPlayer = i;
+					break;
+				}
+			}
 			loadDeckConfig();
 			pickWinningCards();
 			dealCards();
