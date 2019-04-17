@@ -97,6 +97,14 @@ public class BoardCell extends JPanel{
 	 * Paints a boardcell on the game board
 	 */
 	public void paint(Graphics g) {
+		paintCell(g, Color.YELLOW);
+	}
+	
+	public void paintAsTarget(Graphics g) {
+		paintCell(g, Color.CYAN);
+	}
+	
+	public void paintCell(Graphics g, Color color) {
 		int xPixLoc = this.column * cellDim;
 		int yPixLoc = this.row * cellDim;
 		
@@ -133,7 +141,11 @@ public class BoardCell extends JPanel{
 			}
 			
 			// Draw the door
-			g.setColor(Color.BLUE);
+			Color doorColor = Color.BLUE;
+			
+			if (color != Color.YELLOW) doorColor = color;
+			
+			g.setColor(doorColor);
 			g.fillRect(xPixLoc, yPixLoc, width, height);
 			
 		}else if (this.isWalkway()) {
@@ -145,7 +157,7 @@ public class BoardCell extends JPanel{
 			g.fillRect(xPixLoc, yPixLoc, cellDim, cellDim);
 			
 			//Drawing the walkway square
-			g.setColor(Color.YELLOW);
+			g.setColor(color);
 			g.fillRect(xPixLoc + borderWidth, yPixLoc + borderWidth, cellDim - (2 * borderWidth), cellDim - (2 * borderWidth));
 		}
 		
@@ -159,8 +171,5 @@ public class BoardCell extends JPanel{
 		if (playerOnCell != null) {
 			playerOnCell.paint(g, cellDim, xPixLoc, yPixLoc);
 		}
-		
 	}
-	
-	
 }

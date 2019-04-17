@@ -46,6 +46,7 @@ public class Board extends JPanel{
 	private Map<BoardCell, Set<BoardCell>> adjMatrix;
 
 	private Set<BoardCell> targets;
+	private BoardCell chosenTarget;
 
 	private String boardConfigFile;
 	private String roomConfigFile;
@@ -105,9 +106,9 @@ public class Board extends JPanel{
 			loadPeopleConfig();
 			
 			//loop through people and set currentplayer to the human player
-			for (Player i : people) {
-				if (i instanceof HumanPlayer) {
-					currentPlayer = i;
+			for (Player person : people) {
+				if (person instanceof HumanPlayer) {
+					currentPlayer = person;
 					break;
 				}
 			}
@@ -591,11 +592,23 @@ public class Board extends JPanel{
 		
 		g.fillRect(0, 0, fillX, fillY); // Drawing the background
 		
+		if (currentPlayer instanceof HumanPlayer) {
+			calcTargets(currentPlayer.getRow(), currentPlayer.getColumn(), currentPlayer.getDieRoll());
+		}
+		
 		// Drawing every cell
 		for (BoardCell[] row : board) {
 			for (BoardCell cell : row) {
 				cell.setCellDim(cellDim);
-				cell.paint(g);
+				if (currentPlayer instanceof HumanPlayer) { // If the current player is a human, you have to draw their targets
+					if (targets.contains(cell)) {
+						cell.paintAsTarget(g);
+					}else {
+						cell.paint(g);
+					}
+				}else {
+					cell.paint(g);
+				}
 			}
 		}
 		
@@ -667,4 +680,18 @@ public class Board extends JPanel{
 		return currentPlayer;
 	}
 	
+	
+	/*
+	 * Goes to the next player, returns false if the player did not change, true if it did.
+	 */
+	public boolean nextPlayer() {
+		if (!targetSelected()) return false;
+		
+		
+		return true;
+	}
+	
+	public boolean targetSelected() {
+		return (chosenTarget != null);
+	}
 }

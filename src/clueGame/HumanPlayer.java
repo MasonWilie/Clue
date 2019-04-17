@@ -1,5 +1,7 @@
 package clueGame;
 
+import java.awt.Graphics;
+
 /**
  * HumanPlayer Class:
  * Represents a human player and all attributes of a human player.

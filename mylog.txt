@@ -1,3 +1,107 @@
+commit 87dc460b843273e4a792642b4d9fb518a5003b4f
+Author: Mason Wilie <masonwilie@gmail.com>
+Date:   Mon Apr 15 17:12:01 2019 -0600
+
+    Updated tests to match new changes
+
+commit 77a70b0b9cb440180045a30f407b1052cf40bf85
+Author: Mason Wilie <masonwilie@gmail.com>
+Date:   Mon Apr 15 17:09:05 2019 -0600
+
+    Die Roll added
+
+commit 4de5389997bb7446ef06b183e476a2ba2706286e
+Author: Mason Wilie <masonwilie@gmail.com>
+Date:   Mon Apr 15 16:57:48 2019 -0600
+
+    Card Display done
+
+commit 6a17d0196371a0e981f96450b7d51539d9f18926
+Merge: 8a61f34 b682f2f
+Author: Mason Wilie <masonwilie@gmail.com>
+Date:   Mon Apr 15 16:39:49 2019 -0600
+
+    Merge branch 'master' of https://github.com/MasonWilie/Clue.git
+
+commit 8a61f349df3b9833372858d6c6c4e8b94924b61d
+Author: Mason Wilie <masonwilie@gmail.com>
+Date:   Mon Apr 15 16:39:27 2019 -0600
+
+    Changed way cards were displayed to make it easier to actually display
+
+commit b682f2f08327b0dc04699bcfd0ad5e3933260d1a
+Author: Hunter Rich <hrich@mymail.mines.edu>
+Date:   Mon Apr 15 16:34:12 2019 -0600
+
+    added a loop to set the currentPlayer as the human player
+
+commit 14d02119f2530f452c2c4488a858bcfa1ed218e6
+Author: Mason Wilie <masonwilie@gmail.com>
+Date:   Mon Apr 15 16:24:41 2019 -0600
+
+    Added Splash screen
+
+commit d9be36049e9cc4a73c992cbf83094e3c39a33b33
+Author: Mason Wilie <masonwilie@gmail.com>
+Date:   Wed Apr 10 18:23:56 2019 -0600
+
+    Made custom dialog called from ControlGUI
+
+commit 6d5a87f609e6083e70e712f0bee2e56321685159
+Merge: fb706db cc19520
+Author: Mason Wilie <masonwilie@gmail.com>
+Date:   Wed Apr 10 18:18:39 2019 -0600
+
+    Merge branch 'master' of https://github.com/MasonWilie/Clue.git
+
+commit fb706dbda4884bdd8c823139c90653c2daa11d9c
+Author: Mason Wilie <masonwilie@gmail.com>
+Date:   Wed Apr 10 18:18:28 2019 -0600
+
+    Comments added
+
+commit cc19520e64be8cae8b9cd0ec5abf26b0893ff7de
+Author: Hunter Rich <hrich@mymail.mines.edu>
+Date:   Wed Apr 10 18:16:55 2019 -0600
+
+    added comments to CustomDialog.java
+
+commit 0e76552ac8fb7eef848a52e26e8b20eac0b77a07
+Author: Mason Wilie <masonwilie@gmail.com>
+Date:   Wed Apr 10 18:05:12 2019 -0600
+
+    Custom Dialog and Control GUI Working
+
+commit ef0694d6c5636aba47aeccc8665cac9d90018886
+Author: Mason Wilie <masonwilie@gmail.com>
+Date:   Wed Apr 10 14:33:20 2019 -0600
+
+    drawing functions added to board and boardcell
+
+commit d14162b1d4342b75dc11994e3fce7c41c92be91d
+Author: Mason Wilie <masonwilie@gmail.com>
+Date:   Mon Apr 8 16:25:39 2019 -0600
+
+    GUI Created
+
+commit d47cec6665468617a36341938ee0ec5830e45245
+Author: Mason Wilie <masonwilie@gmail.com>
+Date:   Thu Apr 4 11:09:42 2019 -0600
+
+    made ControlGUI extend JPanel
+
+commit 51a888532f62abb5be0c733a451cd29318f54c7f
+Author: Mason Wilie <masonwilie@gmail.com>
+Date:   Thu Apr 4 11:04:16 2019 -0600
+
+    ControlGUI class added
+
+commit 144789764138b0e15d4e17a598d8036c05603705
+Author: Mason Wilie <masonwilie@gmail.com>
+Date:   Thu Apr 4 11:03:53 2019 -0600
+
+    git log updated
+
 commit 745d1b05d6e06340411c4f5c5001449884025ec7
 Merge: d91a0c6 d0b6020
 Author: Hunter Rich <hrich@mymail.mines.edu>
