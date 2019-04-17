@@ -41,6 +41,8 @@ public class Board extends JPanel{
 	public static final int MAX_BOARD_SIZE = 50;
 
 	private BoardCell[][] board;
+	
+	private int cellDim;
 
 	private Map<Character, String> legend; 
 	private Map<BoardCell, Set<BoardCell>> adjMatrix;
@@ -67,6 +69,10 @@ public class Board extends JPanel{
 	private Board() {
 		legend = new HashMap<>();
 		adjMatrix = new HashMap<>();
+	}
+	
+	public int getCellDim() {
+		return cellDim;
 	}
 
 	// this method returns the only Board
@@ -117,6 +123,7 @@ public class Board extends JPanel{
 			dealCards();
 			calcAdjacencies();
 			determineLabelCells();
+			cellDim = (int)(((double)BOARD_RES / (double)board[0].length));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -584,7 +591,7 @@ public class Board extends JPanel{
 		Color backgroundColor = new Color(192, 192, 192); // Gray color for background
 		g.setColor(backgroundColor);
 		
-		int cellDim = (int)(((double)BOARD_RES / (double)board[0].length));
+		
 		
 		// Getting board dimensions in pixels
 		int fillX = cellDim * numColumns;

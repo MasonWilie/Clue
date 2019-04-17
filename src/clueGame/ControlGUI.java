@@ -10,7 +10,10 @@ import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.Menu;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -41,15 +44,37 @@ public class ControlGUI extends JPanel{
 	private ControlGUI gameGUI;
 	private JFrame frame;
 	
+	
+	private boolean hasChanged;
+	
+	private Mouse mouse;
+	
 	private final int FRAME_X = 1000;
 	private final int FRAME_Y = 1000;
 	
+	private ButtonListener nextPlayerButton;
+	private ButtonListener makeAccusationButton;
+	
 	private static Board board;
+	
+	private CustomDialog cDialog;
 	
 	private Player currentPlayer;
 	
 	public ControlGUI() {
+		frame = new JFrame();
+		
+		hasChanged = true;
+		
+		nextPlayerButton = new ButtonListener();
+		makeAccusationButton = new ButtonListener();
+		
+		cDialog = new CustomDialog();
+		
+		
 		setUp();
+		
+		mouse = new Mouse(board.getCellDim());
 		
 		currentPlayer = board.getCurrentPlayer();
 		
@@ -150,6 +175,9 @@ public class ControlGUI extends JPanel{
 		JPanel whoseTurn = createTextField("Whose turn?", currentPlayer.getPlayerName());
 		JButton nextPlayer = new JButton("Next player");
 		JButton makeAccusation = new JButton("Make an accusation");
+		
+		nextPlayer.addActionListener(nextPlayerButton);
+		makeAccusation.addActionListener(makeAccusationButton);
 		
 		c.anchor = GridBagConstraints.FIRST_LINE_START;
 		c.fill = GridBagConstraints.BOTH;
@@ -359,28 +387,61 @@ public class ControlGUI extends JPanel{
 	 */
 	public void show() {
 		
+		cDialog.show();
 		
-		
-		frame = new JFrame();
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setTitle("Game GUI");
 		frame.setSize(FRAME_X, FRAME_Y);
-		frame.add(this, BorderLayout.CENTER);
 		
+		while(true) {
+			if (hasChanged) {
+				
+				frame.add(this, BorderLayout.CENTER);
+				
+				frame.setVisible(true);
+
+				hasChanged = false;
+				
+			}
+			// REMOVE ME WHEN THERE IS MORE CODE TO SLOW IT DOWN, LISTENERS DON'T WORK WHEN IT IS LOOPING TOO FAST
+			/////////////////////////////////////////////////////////////////////////////
+			try {
+				TimeUnit.MILLISECONDS.sleep(5);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			////////////////////////////////////////////////////////////////////////////
+			actions();
+		}
+		
+		
+	}
+	
+	
+	public void actions() {
+		if (nextPlayerButton.beenPressed()) {
+			hasChanged = board.nextPlayer();
+		}
+		if (makeAccusationButton.beenPressed()) {
+			System.out.println("Making accusation");
+		}
+	}
+	
+	public void splash() {
 		String message = "You are " + board.getHumanPlayerName() + ", press Next Player to begin play";
 		JOptionPane.showMessageDialog(frame, message, "Welcome to Clue", JOptionPane.INFORMATION_MESSAGE);
-		
-		frame.setVisible(true);
-		
 	}
 	
 	public static void main(String[] args) {
 		
 		ControlGUI gui = new ControlGUI();
+		gui.splash();
 		gui.show();
 		
-		CustomDialog cDialog = new CustomDialog();
-		cDialog.show();
+		
+		
+		
 	}
 	
 }
