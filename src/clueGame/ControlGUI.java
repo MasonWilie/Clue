@@ -475,7 +475,6 @@ public class ControlGUI extends JPanel{
 		
 	}
 	
-	
 	public void actions() {
 		if (nextPlayerButton.beenPressed()) {
 			if (board.gameRunning) {

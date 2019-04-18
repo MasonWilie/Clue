@@ -3,6 +3,16 @@ package clueGame;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
+/**
+ * Mouse Class:
+ * Handles mouse click events in our ControlGUI class. Is able to return 
+ * row and column in format that makes sense in the game.
+ * 
+ * @author Hunter Rich
+ * @author Mason Wilie
+ * 
+ */
+
 public class Mouse implements MouseListener{
 	
 	private boolean hasClicked;
@@ -81,5 +91,6 @@ public class Mouse implements MouseListener{
 		// TODO Auto-generated method stub
 		
 	}
+
 
 }

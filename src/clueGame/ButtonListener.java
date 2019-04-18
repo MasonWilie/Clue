@@ -3,6 +3,16 @@ package clueGame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * ButtonListener Class:
+ * Handles button press events for the buttons in our ControlGUI class.
+ * 
+ * @author Hunter Rich
+ * @author Mason Wilie
+ * 
+ */
+
+
 public class ButtonListener implements ActionListener{
 	
 	private boolean beenPressed;
