@@ -93,6 +93,7 @@ public class ControlGUI extends JPanel{
 		setUp();
 		
 		mouse = new Mouse(board.getCellDim());
+		board.setMouse(mouse);
 		frame.addMouseListener(mouse);
 		
 		currentPlayer = board.getCurrentPlayer();
@@ -410,6 +411,8 @@ public class ControlGUI extends JPanel{
 				hasChanged = false;
 				
 			}
+			
+			board.repaint();
 			// REMOVE ME WHEN THERE IS MORE CODE TO SLOW IT DOWN, LISTENERS DON'T WORK WHEN IT IS LOOPING TOO FAST
 			/////////////////////////////////////////////////////////////////////////////
 			try {
@@ -429,7 +432,7 @@ public class ControlGUI extends JPanel{
 	
 	public void actions() {
 		if (nextPlayerButton.beenPressed()) {
-			hasChanged = board.nextPlayer();
+			board.nextPlayerPressed();
 		}
 		if (makeAccusationButton.beenPressed()) {
 			System.out.println("Making accusation");

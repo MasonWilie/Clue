@@ -42,6 +42,8 @@ public class Board extends JPanel{
 
 	private BoardCell[][] board;
 	
+	Graphics paintTo;
+	
 	private int cellDim;
 
 	private Map<Character, String> legend; 
@@ -73,12 +75,6 @@ public class Board extends JPanel{
 		legend = new HashMap<>();
 		adjMatrix = new HashMap<>();
 		
-		for (int i = 0; i < people.size(); i++) {
-			if (people.get(i) instanceof HumanPlayer) {
-				whichPersonWeOn = i;
-				break;
-			}
-		}
 	}
 	
 	public int getCellDim() {
@@ -134,6 +130,14 @@ public class Board extends JPanel{
 			calcAdjacencies();
 			determineLabelCells();
 			cellDim = (int)(((double)BOARD_RES / (double)board[0].length));
+			
+			for (int i = 0; i < people.size(); i++) {
+				if (people.get(i) instanceof HumanPlayer) {
+					whichPersonWeOn = i;
+					break;
+				}
+			}
+			
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -608,9 +612,16 @@ public class Board extends JPanel{
 		people = newPeople;
 	}
 	
+	public void repaintComponent() {
+		paintComponent(paintTo);
+	}
+	
 	// Paints the board
 	public void paintComponent(Graphics g) {
 		super.paintComponents(g);
+		
+		paintTo = g;
+		
 		
 		this.setBackground(Color.darkGray);
 		
