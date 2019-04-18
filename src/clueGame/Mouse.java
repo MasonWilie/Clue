@@ -9,12 +9,18 @@ public class Mouse implements MouseListener{
 	private int col;
 	private int row;
 	
+	private int colPixOffset;
+	private int rowPixOffset;
+	
 	private int cellDim;
 	
 	
 	public Mouse(int cellDim) {
 		this.cellDim = cellDim;
 		this.hasClicked = false;
+		
+		this.colPixOffset = 0;
+		this.rowPixOffset = 0;
 	}
 	
 	public boolean hasClicked() {
@@ -31,14 +37,22 @@ public class Mouse implements MouseListener{
 		return col;
 	}
 	
+	public void setColOffset(int offset) {
+		colPixOffset = offset;
+	}
+	
+	public void setRowOffset(int offset) {
+		rowPixOffset = offset;
+	}
+	
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		int colClickPix = e.getX();
-		int rowClickPix = e.getY();
+		int colClickPix = e.getX() - colPixOffset;
+		int rowClickPix = e.getY() - rowPixOffset;
 		
 		col = (int)Math.floor((double)colClickPix / (double)cellDim);
-		row = (int)Math.floor((double)rowClickPix / (double)cellDim);
+		row = (int)Math.floor((double)rowClickPix / (double)cellDim) - 1;
 		
 		hasClicked = true;
 		
