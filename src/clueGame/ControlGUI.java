@@ -28,6 +28,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.SwingUtilities;
 import javax.swing.border.TitledBorder;
 
 /**
@@ -42,7 +43,7 @@ import javax.swing.border.TitledBorder;
 public class ControlGUI extends JPanel{
 	
 	private ControlGUI gameGUI;
-	private JFrame frame;
+	private static JFrame frame;
 	
 	
 	JMenuBar menuBar;
@@ -422,11 +423,24 @@ public class ControlGUI extends JPanel{
 				e.printStackTrace();
 			}
 			////////////////////////////////////////////////////////////////////////////
-			board.repaint();
+			
 			actions();
 		}
 		
 		
+	}
+	
+	public static void handleErrors(int errorType) {
+		//error type is has already moved
+		if (errorType == 0) {
+			//create a window that says youve already moved
+			String message = "You may not move more than once!";
+			JOptionPane.showMessageDialog(frame, message, "Error", JOptionPane.INFORMATION_MESSAGE);
+		} else if (errorType == 1) { //error type is you tried to press Next Player without choosing a target
+			//create a window that says you need to choose a target first
+			String message = "Please select a target.";
+			JOptionPane.showMessageDialog(frame, message, "Error", JOptionPane.INFORMATION_MESSAGE);
+		}
 	}
 	
 	
@@ -439,6 +453,8 @@ public class ControlGUI extends JPanel{
 		}
 		if (mouse.hasClicked()) {
 			if (currentPlayer instanceof HumanPlayer) board.movingTime(mouse.getClickRow(), mouse.getClickCol());
+			SwingUtilities.updateComponentTreeUI(frame);
+			
 		}
 	}
 	
