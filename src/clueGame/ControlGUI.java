@@ -64,8 +64,8 @@ public class ControlGUI extends JPanel{
 	
 	private Mouse mouse;
 	
-	private final int FRAME_X = 1000;
-	private final int FRAME_Y = 1000;
+	private final int FRAME_X = 800;
+	private final int FRAME_Y = 800;
 	
 	private ButtonListener nextPlayerButton;
 	private ButtonListener makeAccusationButton;
@@ -77,6 +77,12 @@ public class ControlGUI extends JPanel{
 	private CustomDialog cDialog;
 	
 	private Player currentPlayer;
+	
+	public enum ErrorType{
+		DOUBLE_MOVE,
+		NO_TARGET_SELECTED,
+		INVALID_TARGET
+	}
 	
 	public ControlGUI() {
 		gameRunning = false;
@@ -430,17 +436,28 @@ public class ControlGUI extends JPanel{
 		
 	}
 	
-	public static void handleErrors(int errorType) {
-		//error type is has already moved
-		if (errorType == 0) {
-			//create a window that says youve already moved
-			String message = "You may not move more than once!";
-			JOptionPane.showMessageDialog(frame, message, "Error", JOptionPane.INFORMATION_MESSAGE);
-		} else if (errorType == 1) { //error type is you tried to press Next Player without choosing a target
-			//create a window that says you need to choose a target first
-			String message = "Please select a target.";
-			JOptionPane.showMessageDialog(frame, message, "Error", JOptionPane.INFORMATION_MESSAGE);
+	
+	public static void handleErrors(ErrorType e) {
+		
+		String message;
+		
+		switch(e) {
+		case DOUBLE_MOVE:
+			message = "You may not move more than once!";
+			break;
+		case NO_TARGET_SELECTED:
+			message = "Please select a target.";
+			break;
+		case INVALID_TARGET:
+			message = "Invalid target selection!";
+			break;
+		default:
+			message = "Invalid error code";
+			break;
 		}
+		
+		JOptionPane.showMessageDialog(frame, message);
+		
 	}
 	
 	private void updateInfo() {
@@ -450,51 +467,11 @@ public class ControlGUI extends JPanel{
 		currentPlayer.rollDie();
 		dieRollTextBox.setText(Integer.toString(currentPlayer.getDieRoll()));
 		
-		ArrayList<Card> playerDeck = currentPlayer.getHand();
-		
-		ArrayList<Card> personCards = new ArrayList<>();
-		ArrayList<Card> roomCards = new ArrayList<>();
-		ArrayList<Card> weaponCards = new ArrayList<>();
-		
-		for (Card card : playerDeck) {
-			switch(card.getType()) {
-			case PERSON:
-				personCards.add(card);
-				break;
-			case ROOM:
-				roomCards.add(card);
-				break;
-			case WEAPON:
-				weaponCards.add(card);
-				break;
-			}
-		}
 		
 		
-		peopleTextBox.selectAll();
-		peopleTextBox.replaceSelection("");
-		
-		roomsTextBox.selectAll();
-		roomsTextBox.replaceSelection("");
-		
-		weaponsTextBox.selectAll();
-		weaponsTextBox.replaceSelection("");
 		
 		
-		for (Card card : personCards) {
-			peopleTextBox.append(card.getName());
-
-		}
 		
-		for (Card card : roomCards) {
-			roomsTextBox.append(card.getName());
-
-		}
-		
-		for (Card card : weaponCards) {
-			weaponsTextBox.append(card.getName());
-
-		}
 		
 	}
 	
@@ -508,6 +485,53 @@ public class ControlGUI extends JPanel{
 				
 			}else {
 				board.gameRunning = true;
+				
+				currentPlayer = board.getCurrentPlayer();
+				
+				ArrayList<Card> playerDeck = currentPlayer.getHand();
+				
+				ArrayList<Card> personCards = new ArrayList<>();
+				ArrayList<Card> roomCards = new ArrayList<>();
+				ArrayList<Card> weaponCards = new ArrayList<>();
+				
+				for (Card card : playerDeck) {
+					switch(card.getType()) {
+					case PERSON:
+						personCards.add(card);
+						break;
+					case ROOM:
+						roomCards.add(card);
+						break;
+					case WEAPON:
+						weaponCards.add(card);
+						break;
+					}
+				}
+				
+				
+				String text = "";
+				
+				for (int i = 0; i < personCards.size(); i++) {
+					text = text + personCards.get(i).getName() + '\n';
+
+				}
+				peopleTextBox.setText(text);
+				
+				text = "";
+				for (int i = 0; i < roomCards.size(); i++) {
+					text = text + roomCards.get(i).getName() + '\n';
+
+				}
+				roomsTextBox.setText(text);
+				
+				text = "";
+				for (int i = 0; i < weaponCards.size(); i++) {
+					text = text + weaponCards.get(i).getName() + '\n';
+
+				}
+				weaponsTextBox.setText(text);
+				
+				
 				updateInfo();
 				
 			}

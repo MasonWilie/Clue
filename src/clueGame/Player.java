@@ -41,7 +41,7 @@ public class Player {
 	
 	private int dieRoll;
 
-	
+	private static Random rand = new Random();
 	
 	public Player() {
 		playerHand = new ArrayList<Card>();
@@ -60,7 +60,6 @@ public class Player {
 	}
 	
 	public void rollDie() {
-		Random rand = new Random();
 		dieRoll = rand.nextInt(5) + 1;
 	}
 	

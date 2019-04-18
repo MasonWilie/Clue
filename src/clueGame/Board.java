@@ -61,7 +61,7 @@ public class Board extends JPanel{
 	private String cardConfigFile;
 
 	private Solution solution;
-	private static final int BOARD_RES = 700;
+	private static final int BOARD_RES = 600;
 
 	private boolean humanHasSelectedTarget;
 	private static int whichPersonWeOn;
@@ -747,7 +747,7 @@ public class Board extends JPanel{
 		
 		if (currentPlayer instanceof HumanPlayer) {
 			if (!this.getHumanHasSelectedTarget()) {
-				ControlGUI.handleErrors(1);
+				ControlGUI.handleErrors(ControlGUI.ErrorType.NO_TARGET_SELECTED);
 				return false;
 			}
 			this.setHumanHasSelectedTarget(false);
@@ -761,8 +761,8 @@ public class Board extends JPanel{
 		
 		currentPlayer = people.get(whichPersonWeOn);
 		
-		if (!(currentPlayer instanceof HumanPlayer)) {
-			((ComputerPlayer)currentPlayer).makeMove(0, 0);
+		if (currentPlayer instanceof ComputerPlayer) {
+			currentPlayer.makeMove(0, 0);
 		}
 		
 		//this updates currentPlayer, so the display will get updated in the next tick of continuous updating
@@ -773,7 +773,7 @@ public class Board extends JPanel{
 	public void movingTime(int row, int col) {
 		//see if has already moved - 
 		if (humanHasSelectedTarget == true) {
-			ControlGUI.handleErrors(0);
+			ControlGUI.handleErrors(ControlGUI.ErrorType.DOUBLE_MOVE);
 			return;
 		}
 		//if not, do the stuff

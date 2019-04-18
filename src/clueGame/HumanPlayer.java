@@ -39,7 +39,7 @@ public class HumanPlayer extends Player{
 		
 		
 		if (!inTargets) {
-			ControlGUI.handleErrors(1);
+			ControlGUI.handleErrors(ControlGUI.ErrorType.INVALID_TARGET);
 			
 			return false;
 		}else {

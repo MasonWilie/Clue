@@ -111,6 +111,9 @@ public class BoardCell extends JPanel{
 		int xPixLoc = this.column * cellDim;
 		int yPixLoc = this.row * cellDim;
 		
+		int orgXLoc = xPixLoc;
+		int orgYLoc = yPixLoc;
+		
 		if (this.isDoorway()) {
 			int thickness = (int)((double)cellDim * 0.15);
 			if (thickness == 0) thickness = 1;
@@ -172,7 +175,7 @@ public class BoardCell extends JPanel{
 		
 		// Drawing the player
 		if (playerOnCell != null) {
-			playerOnCell.paint(g, cellDim, xPixLoc, yPixLoc);
+			playerOnCell.paint(g, cellDim, orgXLoc, orgYLoc);
 		}
 	}
 }
