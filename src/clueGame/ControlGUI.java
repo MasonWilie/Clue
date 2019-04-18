@@ -45,6 +45,20 @@ public class ControlGUI extends JPanel{
 	private JFrame frame;
 	
 	
+	JMenuBar menuBar;
+	
+	JTextField whoseTurnTextBox;
+	
+	JTextField dieRollTextBox;
+	JTextField guessTextBox;
+	JTextField responseTextBox;
+	
+	JTextArea peopleTextBox;
+	JTextArea roomsTextBox;
+	JTextArea weaponsTextBox;
+	
+	private boolean gameRunning;
+	
 	private boolean hasChanged;
 	
 	private Mouse mouse;
@@ -55,6 +69,8 @@ public class ControlGUI extends JPanel{
 	private ButtonListener nextPlayerButton;
 	private ButtonListener makeAccusationButton;
 	
+	
+	
 	private static Board board;
 	
 	private CustomDialog cDialog;
@@ -62,6 +78,8 @@ public class ControlGUI extends JPanel{
 	private Player currentPlayer;
 	
 	public ControlGUI() {
+		gameRunning = false;
+		
 		frame = new JFrame();
 		
 		hasChanged = true;
@@ -75,6 +93,7 @@ public class ControlGUI extends JPanel{
 		setUp();
 		
 		mouse = new Mouse(board.getCellDim());
+		frame.addMouseListener(mouse);
 		
 		currentPlayer = board.getCurrentPlayer();
 		
@@ -86,7 +105,7 @@ public class ControlGUI extends JPanel{
 		
 		JPanel cardPanel = createMyCardsPanel();
 		JPanel controlPanel = createControlPanel();
-		JMenuBar menuBar = createMenuBar();
+		menuBar = createMenuBar();
 		
 		c.fill = GridBagConstraints.BOTH;
 		c.insets = new Insets(1, 1, 1, 1);
@@ -106,6 +125,8 @@ public class ControlGUI extends JPanel{
 		c.gridwidth = 6;
 		c.gridheight = 6;
 		add(board, c);
+		
+		
 		
 		// Setting up the the card panel
 		c.weightx = 0.1;
@@ -128,6 +149,7 @@ public class ControlGUI extends JPanel{
 		
 		
 	}
+	
 	
 	
 	// Creates the bottom control panel on the Control GUI
@@ -171,8 +193,26 @@ public class ControlGUI extends JPanel{
 		GridBagConstraints c = new GridBagConstraints();
 		
 		
+		JPanel whoseTurn = new JPanel();
 		
-		JPanel whoseTurn = createTextField("Whose turn?", currentPlayer.getPlayerName());
+		
+		whoseTurn.setLayout(new GridLayout(3, 0));
+		
+		JLabel text = new JLabel("Whose turn?", SwingConstants.CENTER);
+		whoseTurnTextBox = new JTextField();
+		whoseTurnTextBox.setEditable(false);
+		if (currentPlayer != null && gameRunning) {
+			whoseTurnTextBox.setText(currentPlayer.getPlayerName());
+		}else {
+			whoseTurnTextBox.setText("");
+		}
+		
+		
+		
+		whoseTurn.add(text);
+		whoseTurn.add(whoseTurnTextBox);
+		
+		
 		JButton nextPlayer = new JButton("Next player");
 		JButton makeAccusation = new JButton("Make an accusation");
 		
@@ -215,27 +255,6 @@ public class ControlGUI extends JPanel{
 	}
 	
 	
-	/* createTextField():
-	 * Creates a text field used in the top buttons, with the label specified by the argument 'prompt'
-	 * 
-	 */
-	public JPanel createTextField(String prompt, String contents) {
-		JPanel panel = new JPanel();
-		
-		panel.setLayout(new GridLayout(3, 0));
-		
-		JLabel text = new JLabel(prompt, SwingConstants.CENTER);
-		JTextField textBox = new JTextField();
-		textBox.setEditable(false);
-		textBox.setText(contents);
-		
-		
-		panel.add(text);
-		panel.add(textBox);
-		
-		return panel;
-	}
-	
 	/* createBottomButtonsPanel():
 	 * Creates the fields that appear at the bottom of the GUI including the dice roll, the guess, and the response.
 	 * 
@@ -244,9 +263,21 @@ public class ControlGUI extends JPanel{
 		JPanel bottomButtons = new JPanel();
 		bottomButtons.setLayout(new FlowLayout());
 		
-		JPanel die = createTextFieldBox("Die", "Roll", 40, true, Integer.toString(currentPlayer.getDieRoll()));
-		JPanel guess = createTextFieldBox("Guess", "Guess", 350, false, "");
-		JPanel guessResult = createTextFieldBox("Guess Result", "Response", 120, true, "");
+		
+		
+		
+		
+		
+		dieRollTextBox = new JTextField();
+		guessTextBox = new JTextField();
+		responseTextBox = new JTextField();
+		
+		
+		
+		
+		JPanel die = createTextFieldBox("Die", "Roll", 40, true, dieRollTextBox);
+		JPanel guess = createTextFieldBox("Guess", "Guess", 350, false, guessTextBox);
+		JPanel guessResult = createTextFieldBox("Guess Result", "Response", 120, true, responseTextBox);
 		
 		bottomButtons.add(die);
 		bottomButtons.add(guess);
@@ -262,7 +293,7 @@ public class ControlGUI extends JPanel{
 	 * Creates the text field with a border and label as seen in the bottom of the GUI
 	 * 
 	 */
-	public JPanel createTextFieldBox(String label, String prompt, int width, boolean useCols, String contents) {
+	public JPanel createTextFieldBox(String label, String prompt, int width, boolean useCols, JTextField textField) {
 		JPanel textFieldBox = new JPanel();
 		
 		if (!useCols)
@@ -271,7 +302,6 @@ public class ControlGUI extends JPanel{
 			textFieldBox.setLayout(new GridLayout(0, 2));
 		JLabel text = new JLabel(prompt);
 		
-		JTextField textField = new JTextField();
 		textField.setEditable(false);
 		
 		TitledBorder title = BorderFactory.createTitledBorder(label);
@@ -281,8 +311,6 @@ public class ControlGUI extends JPanel{
 		textFieldBox.setBorder(title);
 		
 		textField.setPreferredSize(new Dimension(width, 20));
-		
-		textField.setText(contents);
 		
 		textFieldBox.add(text);
 		textFieldBox.add(textField);
@@ -296,34 +324,15 @@ public class ControlGUI extends JPanel{
 	public JPanel createMyCardsPanel() {
 		JPanel cardsPanel = new JPanel();
 		cardsPanel.setLayout(new BoxLayout(cardsPanel, BoxLayout.Y_AXIS));
+
 		
-		ArrayList<Card> playerCards = currentPlayer.getHand();
+		peopleTextBox = createCardBox("People");
+		roomsTextBox = createCardBox("Rooms");
+		weaponsTextBox = createCardBox("Weapons");
 		
-		ArrayList<Card> peopleCards = new ArrayList<>();
-		ArrayList<Card> roomCards = new ArrayList<>();
-		ArrayList<Card> weaponCards = new ArrayList<>();
-		
-		for (Card card : playerCards) {
-			switch(card.getType()) {
-			case PERSON:
-				peopleCards.add(card);
-				break;
-			case ROOM:
-				roomCards.add(card);
-				break;
-			case WEAPON:
-				weaponCards.add(card);
-				break;
-			}
-		}
-		
-		JTextArea people = createCardBox("People", peopleCards);
-		JTextArea rooms = createCardBox("Rooms", roomCards);
-		JTextArea weapons = createCardBox("Weapons", weaponCards);
-		
-		cardsPanel.add(people);
-		cardsPanel.add(rooms);
-		cardsPanel.add(weapons);
+		cardsPanel.add(peopleTextBox);
+		cardsPanel.add(roomsTextBox);
+		cardsPanel.add(weaponsTextBox);
 		
 		TitledBorder title = BorderFactory.createTitledBorder("My Cards");
 		title.setTitlePosition(TitledBorder.TOP);
@@ -333,7 +342,7 @@ public class ControlGUI extends JPanel{
 		return cardsPanel;
 	}
 	
-	private JTextArea createCardBox(String label, ArrayList<Card> cards) {
+	private JTextArea createCardBox(String label) {
 		JTextArea cardBox = new JTextArea();
 		
 		TitledBorder title = BorderFactory.createTitledBorder(label);
@@ -341,11 +350,6 @@ public class ControlGUI extends JPanel{
 		cardBox.setBorder(title);
 		
 		cardBox.setEditable(false);
-		
-		for (int i = 0; i < cards.size(); i++) {
-			cardBox.append( cards.get(i).getName() + '\n');
-		}
-		
 		
 		return cardBox;
 	}
@@ -399,6 +403,9 @@ public class ControlGUI extends JPanel{
 				frame.add(this, BorderLayout.CENTER);
 				
 				frame.setVisible(true);
+				
+				mouse.setColOffset(board.getX());
+				mouse.setRowOffset(board.getY());
 
 				hasChanged = false;
 				
@@ -412,6 +419,7 @@ public class ControlGUI extends JPanel{
 				e.printStackTrace();
 			}
 			////////////////////////////////////////////////////////////////////////////
+			
 			actions();
 		}
 		
@@ -425,6 +433,10 @@ public class ControlGUI extends JPanel{
 		}
 		if (makeAccusationButton.beenPressed()) {
 			System.out.println("Making accusation");
+		}
+		if (mouse.hasClicked()) {
+			System.out.println("Row: " + Integer.toString(mouse.getClickRow()));
+			System.out.println("Column: " + Integer.toString(mouse.getClickCol()) + "\n");
 		}
 	}
 	
