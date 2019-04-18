@@ -729,11 +729,11 @@ public class Board extends JPanel{
 	}
 	
 	//this method should be called when the Next Player button is pressed
-	public void nextPlayerPressed() {
+	public boolean nextPlayerPressed() {
 		//ensure its ok to move to the next player
 		if (!this.getHumanHasSelectedTarget()) {
 			System.out.println("Please select a target.");
-			return;
+			return false;
 		}
 		this.setHumanHasSelectedTarget(false);
 		
@@ -745,11 +745,24 @@ public class Board extends JPanel{
 		
 		//this updates currentPlayer, so the display will get updated in the next tick of continuous updating
 		currentPlayer = people.get(whichPersonWeOn);
+		return true;
+	}
+	
+	public void movingTime(int row, int col) {
+		//see if has already moved - 
+		if (humanHasSelectedTarget == true) {
+			System.out.println("You may not move more than once!");
+			return;
+		}
+		//if not, do the stuff
+		//call makeMove
 		
 		if (people.get(whichPersonWeOn) instanceof HumanPlayer) {
-			people.get(whichPersonWeOn).makeMove(getMouse().getClickRow(), getMouse().getClickCol());
+			people.get(whichPersonWeOn).makeMove(row,col);
 		} else {
 			people.get(whichPersonWeOn).makeMove(0, 0);
 		}
+		this.setHumanHasSelectedTarget(true);
+
 	}
 }
