@@ -768,12 +768,14 @@ public class Board extends JPanel{
 		//if not, do the stuff
 		//call makeMove
 		
-		if (people.get(whichPersonWeOn) instanceof HumanPlayer) {
-			people.get(whichPersonWeOn).makeMove(row,col);
-		} else {
-			people.get(whichPersonWeOn).makeMove(0, 0);
-		}
+
+		people.get(whichPersonWeOn).makeMove(row,col);
+		
 		this.setHumanHasSelectedTarget(true);
 
+	}
+	
+	public Graphics getGraphics() {
+		return paintTo;
 	}
 }

@@ -19,15 +19,41 @@ public class HumanPlayer extends Player{
 
 	@Override
 	public void makeMove(int row, int col) {
+		System.out.println("Die roll: " + Integer.toString(this.getDieRoll()));
 		Board.getInstance().calcTargets(this.getRow(), this.getColumn(), this.getDieRoll());
 		Set<BoardCell> theTargets = Board.getInstance().getTargets();
 		//check if the playerchoice boardcell is in the list of targets
-		if (!theTargets.contains(new BoardCell(row, col))) {
-			System.out.println("choose a valid target");
-			return;
+		
+		boolean inTargets = false;
+
+		
+		for (BoardCell cell : theTargets) {
+			if (cell.getRow() == row && cell.getColumn() == col) {
+				inTargets = true;
+				break;
+				
+			}
 		}
-		this.setRow(row);
-		this.setColumn(col);
+		
+		
+		Board.getInstance().getCellAt(this.getRow(), this.getColumn()).setPlayer(null);
+		
+		
+		if (!inTargets) {
+			System.out.println("Choose a valid target");
+			return;
+		}else {
+			this.setRow(row);
+			this.setColumn(col);
+			
+		}
+		
+		Board.getInstance().getCellAt(this.getRow(), this.getColumn()).setPlayer(this);
+		
+		System.out.println("New row: " + this.getRow());
+		System.out.println("New col: " + this.getColumn());
+		
+		
 		Board.getInstance().setHumanHasSelectedTarget(true);
 	}
 	

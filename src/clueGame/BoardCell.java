@@ -30,6 +30,9 @@ public class BoardCell extends JPanel{
 	}
 	
 	public void setPlayer(Player newPlayer) {
+		if (newPlayer == null) {
+			playerOnCell = new Player();
+		}
 		playerOnCell = newPlayer;
 	}
 	

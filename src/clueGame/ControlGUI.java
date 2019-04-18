@@ -412,7 +412,7 @@ public class ControlGUI extends JPanel{
 				
 			}
 			
-			board.repaint();
+			
 			// REMOVE ME WHEN THERE IS MORE CODE TO SLOW IT DOWN, LISTENERS DON'T WORK WHEN IT IS LOOPING TOO FAST
 			/////////////////////////////////////////////////////////////////////////////
 			try {
@@ -422,7 +422,7 @@ public class ControlGUI extends JPanel{
 				e.printStackTrace();
 			}
 			////////////////////////////////////////////////////////////////////////////
-			
+			board.repaint();
 			actions();
 		}
 		
@@ -438,8 +438,7 @@ public class ControlGUI extends JPanel{
 			System.out.println("Making accusation");
 		}
 		if (mouse.hasClicked()) {
-			System.out.println("Row: " + Integer.toString(mouse.getClickRow()));
-			System.out.println("Column: " + Integer.toString(mouse.getClickCol()) + "\n");
+			if (currentPlayer instanceof HumanPlayer) board.movingTime(mouse.getClickRow(), mouse.getClickCol());
 		}
 	}
 	
