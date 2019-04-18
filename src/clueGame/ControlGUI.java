@@ -443,10 +443,75 @@ public class ControlGUI extends JPanel{
 		}
 	}
 	
+	private void updateInfo() {
+		currentPlayer = board.getCurrentPlayer();
+		whoseTurnTextBox.setText(currentPlayer.getPlayerName());
+		
+		currentPlayer.rollDie();
+		dieRollTextBox.setText(Integer.toString(currentPlayer.getDieRoll()));
+		
+		ArrayList<Card> playerDeck = currentPlayer.getHand();
+		
+		ArrayList<Card> personCards = new ArrayList<>();
+		ArrayList<Card> roomCards = new ArrayList<>();
+		ArrayList<Card> weaponCards = new ArrayList<>();
+		
+		for (Card card : playerDeck) {
+			switch(card.getType()) {
+			case PERSON:
+				personCards.add(card);
+				break;
+			case ROOM:
+				roomCards.add(card);
+				break;
+			case WEAPON:
+				weaponCards.add(card);
+				break;
+			}
+		}
+		
+		
+		peopleTextBox.selectAll();
+		peopleTextBox.replaceSelection("");
+		
+		roomsTextBox.selectAll();
+		roomsTextBox.replaceSelection("");
+		
+		weaponsTextBox.selectAll();
+		weaponsTextBox.replaceSelection("");
+		
+		
+		for (Card card : personCards) {
+			peopleTextBox.append(card.getName());
+
+		}
+		
+		for (Card card : roomCards) {
+			roomsTextBox.append(card.getName());
+
+		}
+		
+		for (Card card : weaponCards) {
+			weaponsTextBox.append(card.getName());
+
+		}
+		
+	}
+	
 	
 	public void actions() {
 		if (nextPlayerButton.beenPressed()) {
-			board.nextPlayerPressed();
+			if (board.gameRunning) {
+				if (board.nextPlayerPressed()) {
+					updateInfo();
+				}
+				
+			}else {
+				board.gameRunning = true;
+				updateInfo();
+				
+			}
+			SwingUtilities.updateComponentTreeUI(frame);
 		}
 		if (makeAccusationButton.beenPressed()) {
 			System.out.println("Making accusation");

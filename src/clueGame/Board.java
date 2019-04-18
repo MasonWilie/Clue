@@ -39,6 +39,9 @@ public class Board extends JPanel{
 	private int numColumns;
 
 	public static final int MAX_BOARD_SIZE = 50;
+	
+	public boolean gameRunning = false;
+	
 
 	private BoardCell[][] board;
 	
@@ -636,7 +639,7 @@ public class Board extends JPanel{
 		
 		g.fillRect(0, 0, fillX, fillY); // Drawing the background
 		
-		if (currentPlayer instanceof HumanPlayer) {
+		if (currentPlayer instanceof HumanPlayer && gameRunning && !humanHasSelectedTarget) {
 			calcTargets(currentPlayer.getRow(), currentPlayer.getColumn(), currentPlayer.getDieRoll());
 		}
 		
@@ -644,7 +647,7 @@ public class Board extends JPanel{
 		for (BoardCell[] row : board) {
 			for (BoardCell cell : row) {
 				cell.setCellDim(cellDim);
-				if (currentPlayer instanceof HumanPlayer) { // If the current player is a human, you have to draw their targets
+				if (currentPlayer instanceof HumanPlayer && gameRunning && !humanHasSelectedTarget) { // If the current player is a human, you have to draw their targets
 					if (targets.contains(cell)) {
 						cell.paintAsTarget(g);
 					}else {
@@ -656,6 +659,10 @@ public class Board extends JPanel{
 			}
 		}
 		
+	}
+	
+	public void startGame() {
+		gameRunning = true;
 	}
 	
 	
@@ -728,12 +735,7 @@ public class Board extends JPanel{
 	/*
 	 * Goes to the next player, returns false if the player did not change, true if it did.
 	 */
-	public boolean nextPlayer() {
-		if (!targetSelected()) return false;
-		
-		
-		return true;
-	}
+
 	
 	public boolean targetSelected() {
 		return (chosenTarget != null);
@@ -742,11 +744,14 @@ public class Board extends JPanel{
 	//this method should be called when the Next Player button is pressed
 	public boolean nextPlayerPressed() {
 		//ensure its ok to move to the next player
-		if (!this.getHumanHasSelectedTarget()) {
-			System.out.println("Please select a target.");
-			return false;
+		
+		if (currentPlayer instanceof HumanPlayer) {
+			if (!this.getHumanHasSelectedTarget()) {
+				ControlGUI.handleErrors(1);
+				return false;
+			}
+			this.setHumanHasSelectedTarget(false);
 		}
-		this.setHumanHasSelectedTarget(false);
 		
 		if (whichPersonWeOn == people.size()-1) {
 			whichPersonWeOn = 0;
@@ -754,24 +759,30 @@ public class Board extends JPanel{
 			whichPersonWeOn++;
 		}
 		
-		//this updates currentPlayer, so the display will get updated in the next tick of continuous updating
 		currentPlayer = people.get(whichPersonWeOn);
+		
+		if (!(currentPlayer instanceof HumanPlayer)) {
+			((ComputerPlayer)currentPlayer).makeMove(0, 0);
+		}
+		
+		//this updates currentPlayer, so the display will get updated in the next tick of continuous updating
+		
 		return true;
 	}
 	
 	public void movingTime(int row, int col) {
 		//see if has already moved - 
 		if (humanHasSelectedTarget == true) {
-			System.out.println("You may not move more than once!");
+			ControlGUI.handleErrors(0);
 			return;
 		}
 		//if not, do the stuff
 		//call makeMove
 		
 
-		people.get(whichPersonWeOn).makeMove(row,col);
 		
-		this.setHumanHasSelectedTarget(true);
+		
+		this.setHumanHasSelectedTarget(people.get(whichPersonWeOn).makeMove(row,col));
 
 	}
 	
