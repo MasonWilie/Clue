@@ -126,7 +126,8 @@ public class ComputerPlayer extends Player{
 	}
 	
 	//moves computer player to a random location from the list of possible locations to move from (chooseTarget)
-	public void makeMove() {
+	@Override
+	public void makeMove(int row, int col /*these are necessary but unused*/) {
 		Board.getInstance().calcTargets(this.getRow(), this.getColumn(), this.getDieRoll());
 		BoardCell cellToMoveTo = chooseTarget(Board.getInstance().getTargets());
 		this.setRow(cellToMoveTo.getRow());

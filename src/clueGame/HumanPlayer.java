@@ -17,16 +17,18 @@ import java.util.Set;
 
 public class HumanPlayer extends Player{
 
+	@Override
 	public void makeMove(int row, int col) {
 		Board.getInstance().calcTargets(this.getRow(), this.getColumn(), this.getDieRoll());
 		Set<BoardCell> theTargets = Board.getInstance().getTargets();
 		//check if the playerchoice boardcell is in the list of targets
 		if (!theTargets.contains(new BoardCell(row, col))) {
 			System.out.println("choose a valid target");
-			//here, call start of picking targets sequence where user clicks a target
+			return;
 		}
 		this.setRow(row);
 		this.setColumn(col);
+		Board.getInstance().setHumanHasSelectedTarget(true);
 	}
 	
 }

@@ -58,6 +58,9 @@ public class Board extends JPanel{
 	private Solution solution;
 	private static final int BOARD_RES = 700;
 
+	private boolean humanHasSelectedTarget;
+	private static int whichPersonWeOn;
+	Mouse mouse;
 
 	private ArrayList<Player> people;
 	private Player currentPlayer;
@@ -69,6 +72,13 @@ public class Board extends JPanel{
 	private Board() {
 		legend = new HashMap<>();
 		adjMatrix = new HashMap<>();
+		
+		for (int i = 0; i < people.size(); i++) {
+			if (people.get(i) instanceof HumanPlayer) {
+				whichPersonWeOn = i;
+				break;
+			}
+		}
 	}
 	
 	public int getCellDim() {
@@ -370,6 +380,22 @@ public class Board extends JPanel{
 
 	public BoardCell getCellAt(int row, int col) {
 		return board[row][col];
+	}
+	
+	public boolean getHumanHasSelectedTarget() {
+		return humanHasSelectedTarget;
+	}
+
+	public void setHumanHasSelectedTarget(boolean humanHasSelectedTarget) {
+		this.humanHasSelectedTarget = humanHasSelectedTarget;
+	}
+	
+	public Mouse getMouse() {
+		return mouse;
+	}
+
+	public void setMouse(Mouse mouse) {
+		this.mouse = mouse;
 	}
 
 
@@ -700,5 +726,30 @@ public class Board extends JPanel{
 	
 	public boolean targetSelected() {
 		return (chosenTarget != null);
+	}
+	
+	//this method should be called when the Next Player button is pressed
+	public void nextPlayerPressed() {
+		//ensure its ok to move to the next player
+		if (!this.getHumanHasSelectedTarget()) {
+			System.out.println("Please select a target.");
+			return;
+		}
+		this.setHumanHasSelectedTarget(false);
+		
+		if (whichPersonWeOn == people.size()-1) {
+			whichPersonWeOn = 0;
+		} else {
+			whichPersonWeOn++;
+		}
+		
+		//this updates currentPlayer, so the display will get updated in the next tick of continuous updating
+		currentPlayer = people.get(whichPersonWeOn);
+		
+		if (people.get(whichPersonWeOn) instanceof HumanPlayer) {
+			people.get(whichPersonWeOn).makeMove(getMouse().getClickRow(), getMouse().getClickCol());
+		} else {
+			people.get(whichPersonWeOn).makeMove(0, 0);
+		}
 	}
 }

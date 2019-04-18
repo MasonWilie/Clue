@@ -220,6 +220,11 @@ public Card disproveSuggestion(Solution suggestion) {
 		
 		
 	}
+
+public void makeMove(int row, int col) {
+	// TODO Auto-generated method stub
+	
+}
 	
 	
 	
