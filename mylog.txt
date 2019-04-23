@@ -1,3 +1,108 @@
+commit d0295019b6a1716a18e05431326738dbbc9949f8
+Author: Mason Wilie <masonwilie@gmail.com>
+Date:   Thu Apr 18 12:14:01 2019 -0600
+
+    Comments added
+
+commit 6adb396b8da969d5e3a8109362be4917ece2938a
+Author: Mason Wilie <masonwilie@gmail.com>
+Date:   Thu Apr 18 12:10:54 2019 -0600
+
+    C23A Complete, fixed text box bug.
+
+commit 3d29f68bdd52724d4d2d51439e5eca422d9b5e52
+Author: Mason Wilie <masonwilie@gmail.com>
+Date:   Thu Apr 18 10:56:01 2019 -0600
+
+    Switching computers
+
+commit dc0c48c573135bb0796bb870fa8aeae8cc3b9c32
+Author: Mason Wilie <masonwilie@gmail.com>
+Date:   Wed Apr 17 22:46:45 2019 -0600
+
+    Player moves when space clicked
+
+commit bc144fada8104aaf29a61a0b3a5512878258aab3
+Author: Mason Wilie <masonwilie@gmail.com>
+Date:   Wed Apr 17 19:13:54 2019 -0600
+
+    Soemthing
+
+commit 999cbe4229d5cfb1a19e9cae4c9c6427a867793b
+Merge: 902e5ca 75a4d44
+Author: Mason Wilie <masonwilie@gmail.com>
+Date:   Wed Apr 17 18:35:13 2019 -0600
+
+    Merge branch 'master' of https://github.com/MasonWilie/Clue.git
+
+commit 902e5ca74296859d1f1ee930d1e33b3c6190d4ba
+Author: Mason Wilie <masonwilie@gmail.com>
+Date:   Wed Apr 17 18:35:04 2019 -0600
+
+    ...
+
+commit 75a4d4436c6417f05e941f67eec9de9b3463fd17
+Author: Hunter Rich <hrich@mymail.mines.edu>
+Date:   Wed Apr 17 18:34:36 2019 -0600
+
+    updated some functionality with movingTime
+
+commit f9249437460452ee2694bfe1e1ed094e2db44282
+Merge: 552b74e e023797
+Author: Hunter Rich <hrich@mymail.mines.edu>
+Date:   Wed Apr 17 18:06:34 2019 -0600
+
+    Merge branch 'master' of https://github.com/MasonWilie/Clue
+
+commit 552b74ef8e9af4194bd2ae3b3a9e8af7ea78ec84
+Author: Hunter Rich <hrich@mymail.mines.edu>
+Date:   Wed Apr 17 18:06:20 2019 -0600
+
+    made game control functionality part 1
+
+commit e02379784e2dd2e51f7e77a07461cd5627ca2ae7
+Author: Mason Wilie <masonwilie@gmail.com>
+Date:   Wed Apr 17 18:05:25 2019 -0600
+
+    Made each component of the JFrame different variables for easier edit
+
+commit f85d7595a002845f325687654c048e185c7f7023
+Author: Mason Wilie <masonwilie@gmail.com>
+Date:   Wed Apr 17 18:05:25 2019 -0600
+
+    Made each component of the JFrame different variables for easier edit
+
+commit 02c3b74fc641c7d176d2605ed02cc6493e1b4773
+Merge: 6c36db3 94c143e
+Author: Hunter Rich <hrich@mymail.mines.edu>
+Date:   Wed Apr 17 17:06:18 2019 -0600
+
+    Merge branch 'master' of https://github.com/MasonWilie/Clue
+
+commit 6c36db314959c73dad0b66e109fa7fb383468ff0
+Author: Hunter Rich <hrich@mymail.mines.edu>
+Date:   Wed Apr 17 17:06:07 2019 -0600
+
+    added playerturn and computerturn handling
+
+commit 94c143ec8e6f6bcfcca61f4de177ba81225c9f7f
+Author: Mason Wilie <masonwilie@gmail.com>
+Date:   Wed Apr 17 17:05:37 2019 -0600
+
+    Created mouse listener
+
+commit 14871bfea6c56ed79595bfdc10572ea4a6a88ee5
+Author: Mason Wilie <masonwilie@gmail.com>
+Date:   Wed Apr 17 16:07:41 2019 -0600
+
+    Added Button Listener class
+
+commit 234bdbb7cdb2db96b2af506e445231fd8aa19200
+Author: Mason Wilie <masonwilie@gmail.com>
+Date:   Wed Apr 17 16:06:40 2019 -0600
+
+    Added displaying of target tiles for human player
+
 commit 87dc460b843273e4a792642b4d9fb518a5003b4f
 Author: Mason Wilie <masonwilie@gmail.com>
 Date:   Mon Apr 15 17:12:01 2019 -0600
