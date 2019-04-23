@@ -16,6 +16,8 @@ import java.util.Set;
  */
 
 public class HumanPlayer extends Player{
+	
+	private boolean targetSelected;
 
 	@Override
 	public boolean makeMove(int row, int col) {
@@ -54,5 +56,6 @@ public class HumanPlayer extends Player{
 		Board.getInstance().setHumanHasSelectedTarget(true);
 		return true;
 	}
+
 	
 }

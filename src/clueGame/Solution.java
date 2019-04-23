@@ -14,10 +14,13 @@ public class Solution {
 	public Card room;
 	public Card weapon;
 	
+	public boolean disproven;
+	
 	public Solution(Card p, Card r, Card w) {
 		this.person = p;
 		this.room = r;
 		this.weapon = w;
+		this.disproven = false;
 	}
 	
 	public Card getPersonCard() {

@@ -16,6 +16,8 @@ import java.util.Set;
 
 public class ComputerPlayer extends Player{
 	
+	private Solution suggestion;
+	
 	
 	public BoardCell pickLocation(Set<BoardCell> targets) {
 		return null;
@@ -91,6 +93,27 @@ public class ComputerPlayer extends Player{
 		prevGuesses.add(guess); // Add the guess to the set of already guessed solutions
 		
 		return guess;
+	}
+	
+	public boolean makeAccusation() {
+		return Board.getInstance().handleAccusation(suggestion, this);
+	}
+	
+	public void takeTurn() {
+		if (suggestion != null && !suggestion.disproven) {
+			if (this.makeAccusation()) {
+				return;
+			}
+		}
+		this.makeMove(0, 0);
+		
+		BoardCell currentCell = Board.getInstance().getCellAt(this.getRow(), this.getColumn());
+		
+		if (currentCell.isRoom()) {
+			Card roomCard = new Card(currentCell.getName(), CardType.ROOM);
+			this.makeSuggestion(roomCard);
+			Board.getInstance().handleSuggestion(this.suggestion, this);
+		}
 	}
 	
 	

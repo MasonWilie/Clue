@@ -191,7 +191,7 @@ public class Player {
 		
 	}
 	
-public Card disproveSuggestion(Solution suggestion) {
+	public Card disproveSuggestion(Solution suggestion) {
 		
 		ArrayList<Card> sameCards = new ArrayList<>();
 		
@@ -220,12 +220,11 @@ public Card disproveSuggestion(Solution suggestion) {
 		
 	}
 
-public boolean makeMove(int row, int col) {
+	public boolean makeMove(int row, int col) {
 	// TODO Auto-generated method stub
 	return false;
 	
 }
-	
 	
 	
 }

@@ -61,7 +61,7 @@ public class Board extends JPanel{
 	private String cardConfigFile;
 
 	private Solution solution;
-	private static final int BOARD_RES = 600;
+	private static final int BOARD_RES = 500;
 
 	private boolean humanHasSelectedTarget;
 	private static int whichPersonWeOn;
@@ -71,12 +71,16 @@ public class Board extends JPanel{
 	private Player currentPlayer;
 	private ArrayList<Card> deck;
 	private ArrayList<Card> originalDeck;
+	
+	private Player winner;
+	private boolean gameOver;
 
 	private static Board theInstance = new Board();
 	// constructor is private to ensure only one can be created
 	private Board() {
 		legend = new HashMap<>();
 		adjMatrix = new HashMap<>();
+		this.gameOver = false;
 		
 	}
 	
@@ -588,7 +592,10 @@ public class Board extends JPanel{
 	}
 
 	public Card handleSuggestion(Solution suggestion, Player accuser) {
-		if (suggestion.equals(solution)) return null;
+		if (suggestion.equals(solution)) {
+			suggestion.disproven = false;
+			return null;
+		}
 		
 		
 		// Figure out where in the list of players the accuser is in order to start after them
@@ -604,10 +611,14 @@ public class Board extends JPanel{
 			if (currentDisproverIndex == people.size()) currentDisproverIndex = 0; // Makes the list circular
 			Card returnedCard = people.get(currentDisproverIndex).disproveSuggestion(suggestion); // Get if player can disprove
 			
-			if (returnedCard != null) return returnedCard; // If can disprove, return card
+			if (returnedCard != null) {
+				suggestion.disproven = true;
+				return returnedCard;
+			} // If can disprove, return card
 			currentDisproverIndex++; // Go to next player
 		}
 	
+		suggestion.disproven = false;
 		return null;
 	}
 
@@ -762,7 +773,9 @@ public class Board extends JPanel{
 		currentPlayer = people.get(whichPersonWeOn);
 		
 		if (currentPlayer instanceof ComputerPlayer) {
-			currentPlayer.makeMove(0, 0);
+			
+			((ComputerPlayer) currentPlayer).takeTurn();
+			
 		}
 		
 		//this updates currentPlayer, so the display will get updated in the next tick of continuous updating
@@ -789,4 +802,14 @@ public class Board extends JPanel{
 	public Graphics getGraphics() {
 		return paintTo;
 	}
+
+	public boolean handleAccusation(Solution accusation, Player accuser) {
+		if (accusation.equals(solution)) {
+			winner = accuser;
+			gameOver = true;
+			return true;
+		}
+		return false;
+	}
+
 }
