@@ -50,7 +50,10 @@ public class HumanPlayer extends Player{
 		}
 		
 		Board.getInstance().getCellAt(this.getRow(), this.getColumn()).setPlayer(this);
-	
+		
+		if (Board.getInstance().getCellAt(this.getRow(), this.getColumn()).getChosenTarget.isRoom()) {
+			ControlGUI.displayModal();
+		}
 		Board.getInstance().setHumanHasSelectedTarget(true);
 		return true;
 	}

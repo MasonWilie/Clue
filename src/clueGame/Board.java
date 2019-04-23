@@ -404,6 +404,10 @@ public class Board extends JPanel{
 	public void setMouse(Mouse mouse) {
 		this.mouse = mouse;
 	}
+	
+	public BoardCell getChosenTarget() {
+		return chosenTarget;
+	}
 
 
 	// Loads game players into the game from the players text file
@@ -784,6 +788,7 @@ public class Board extends JPanel{
 		
 		this.setHumanHasSelectedTarget(people.get(whichPersonWeOn).makeMove(row,col));
 
+	
 	}
 	
 	public Graphics getGraphics() {

@@ -83,7 +83,7 @@ public class BoardCell extends JPanel{
 		return initial == 'W';
 	}
 	
-	public boolean isRoom() throws FileNotFoundException {
+	public boolean isRoom() {
 		return initial != 'W';
 	}
 	

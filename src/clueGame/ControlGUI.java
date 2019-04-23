@@ -18,6 +18,7 @@ import java.util.concurrent.TimeUnit;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
@@ -544,6 +545,7 @@ public class ControlGUI extends JPanel{
 			SwingUtilities.updateComponentTreeUI(frame);
 			
 		}
+		
 	}
 	
 	public void splash() {
@@ -551,6 +553,13 @@ public class ControlGUI extends JPanel{
 		JOptionPane.showMessageDialog(frame, message, "Welcome to Clue", JOptionPane.INFORMATION_MESSAGE);
 	}
 	
+	public static void displayModal() {
+		JPanel newPanel = new JPanel();
+		final JDialog frame1 = new JDialog(frame, "faf", true);
+		frame1.getContentPane().add(newPanel);
+		frame1.pack();
+		frame1.setVisible(true);
+	}
 	public static void main(String[] args) {
 		
 		ControlGUI gui = new ControlGUI();
