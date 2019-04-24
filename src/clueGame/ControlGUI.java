@@ -34,6 +34,8 @@ import javax.swing.SwingUtilities;
 import javax.swing.SwingWorker;
 import javax.swing.border.TitledBorder;
 
+import com.sun.corba.se.impl.protocol.BootstrapServerRequestDispatcher;
+
 /**
  * ControlGUI Class:
  * Creates and displays the graphical user interface for the clue game.
@@ -67,8 +69,8 @@ public class ControlGUI extends JPanel{
 	
 	private Mouse mouse;
 	
-	private final int FRAME_X = 800;
-	private final int FRAME_Y = 800;
+	private final int FRAME_X = 850;
+	private final int FRAME_Y = 900;
 	
 	private ButtonListener nextPlayerButton;
 	private ButtonListener makeAccusationButton;
@@ -594,6 +596,9 @@ public class ControlGUI extends JPanel{
 	}
 	
 	public static void displayModal() {
+		makeGuessDialog = new JFrame();
+		makeGuessDialog.setTitle("Make a Guess");
+		
 		JPanel newPanel = new JPanel();
 		makeGuessDialog.getContentPane().add(newPanel);
 		makeGuessDialog.pack();
@@ -664,7 +669,16 @@ public class ControlGUI extends JPanel{
 			}
 			else if (makeGuessSubmitButton.beenPressed()) {
 				//do submit stuff
-				Board.getInstance().handleSuggestion(Board.getInstance().getSolution(), Board.getInstance().getCurrentPlayer());
+				
+				Card roomCard = new Card(board.getLegend().get(board.getCellAt(currentPlayer.getRow(), currentPlayer.getColumn()).getInitial()), CardType.ROOM);
+				Card personCard = new Card((String) makeGuessPeople.getSelectedItem(), CardType.PERSON);
+				Card weaponCard = new Card((String) makeGuessWeapons.getSelectedItem(), CardType.WEAPON);
+				
+				Solution guess = new Solution(personCard, roomCard, weaponCard);
+				
+				
+				
+				Board.getInstance().handleSuggestion(guess, currentPlayer);
 				makeGuessDialog.setVisible(false);
 				makeGuessDialog.dispose();
 				break;
