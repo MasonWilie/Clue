@@ -44,20 +44,20 @@ import javax.swing.border.TitledBorder;
 public class ControlGUI extends JPanel{
 	
 	private ControlGUI gameGUI;
-	private static JFrame frame;
+	public static JFrame frame;
 	
 	
 	JMenuBar menuBar;
 	
 	JTextField whoseTurnTextBox;
 	
-	JTextField dieRollTextBox;
-	JTextField guessTextBox;
-	JTextField responseTextBox;
+	static JTextField dieRollTextBox;
+	static JTextField guessTextBox;
+	static JTextField responseTextBox;
 	
-	JTextArea peopleTextBox;
-	JTextArea roomsTextBox;
-	JTextArea weaponsTextBox;
+	static JTextArea peopleTextBox;
+	static JTextArea roomsTextBox;
+	static JTextArea weaponsTextBox;
 	
 	private boolean gameRunning;
 	
@@ -84,6 +84,7 @@ public class ControlGUI extends JPanel{
 		NO_TARGET_SELECTED,
 		INVALID_TARGET
 	}
+
 	
 	public ControlGUI() {
 		gameRunning = false;
@@ -101,7 +102,6 @@ public class ControlGUI extends JPanel{
 		setUp();
 		
 		mouse = new Mouse(board.getCellDim());
-		board.setMouse(mouse);
 		frame.addMouseListener(mouse);
 		
 		currentPlayer = board.getCurrentPlayer();
@@ -462,6 +462,9 @@ public class ControlGUI extends JPanel{
 	}
 	
 	private void updateInfo() {
+		
+		
+		
 		currentPlayer = board.getCurrentPlayer();
 		whoseTurnTextBox.setText(currentPlayer.getPlayerName());
 		
@@ -478,6 +481,9 @@ public class ControlGUI extends JPanel{
 	
 	public void actions() {
 		if (nextPlayerButton.beenPressed()) {
+			guessTextBox.setText("");
+			responseTextBox.setText("");
+			
 			if (board.gameRunning) {
 				if (board.nextPlayerPressed()) {
 					updateInfo();
@@ -551,6 +557,18 @@ public class ControlGUI extends JPanel{
 	public void splash() {
 		String message = "You are " + board.getHumanPlayerName() + ", press Next Player to begin play";
 		JOptionPane.showMessageDialog(frame, message, "Welcome to Clue", JOptionPane.INFORMATION_MESSAGE);
+	}
+	
+	public void setGuess(Solution guess) {
+		String guessText = guess.getPersonCard().getName() + " ";
+		guessText += guess.getRoomCard().getName() + " ";
+		guessText += guess.getWeaponCard().getName();
+		
+		this.guessTextBox.setText(guessText);
+	}
+	
+	public void setRespose(Card card) {
+		responseTextBox.setText(card.getName());
 	}
 	
 	public static void displayModal() {

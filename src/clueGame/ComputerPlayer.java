@@ -17,6 +17,8 @@ import java.util.Set;
 public class ComputerPlayer extends Player{
 	
 	private Solution suggestion;
+	private BoardCell[] lastRooms = new BoardCell[2];
+	private int roomCounter = 0;
 	
 	
 	public BoardCell pickLocation(Set<BoardCell> targets) {
@@ -99,21 +101,26 @@ public class ComputerPlayer extends Player{
 		return Board.getInstance().handleAccusation(suggestion, this);
 	}
 	
-	public void takeTurn() {
+	public void takeTurn() { // If the player is ready to make an accusation, make the accusation
 		if (suggestion != null && !suggestion.disproven) {
 			if (this.makeAccusation()) {
+				System.out.println("Damn I won");
 				return;
 			}
 		}
-		this.makeMove(0, 0);
+		
+		this.makeMove(0, 0); // Player move
 		
 		BoardCell currentCell = Board.getInstance().getCellAt(this.getRow(), this.getColumn());
 		
-		if (currentCell.isRoom()) {
-			Card roomCard = new Card(currentCell.getName(), CardType.ROOM);
-			this.makeSuggestion(roomCard);
+		if (currentCell.isRoom()) { // If they are in a room, make a suggestion
+			Card roomCard = new Card(Board.getInstance().getLegend().get(currentCell.getInitial()), CardType.ROOM);
+			this.suggestion = this.makeSuggestion(roomCard);
 			Board.getInstance().handleSuggestion(this.suggestion, this);
 		}
+		
+		
+		
 	}
 	
 	
@@ -125,7 +132,11 @@ public class ComputerPlayer extends Player{
 		
 		// Finds all doorways (which have priority)
 		for (BoardCell cell : targets) {
-			if (cell.isDoorway()) {
+			boolean validDoor = cell.isDoorway();
+			validDoor &= this.lastRooms[0] == null || (cell != this.lastRooms[0] && cell.getInitial() != this.lastRooms[0].getInitial());
+			validDoor &= this.lastRooms[1] == null || (cell != this.lastRooms[1] && cell.getInitial() != this.lastRooms[1].getInitial());
+			
+			if (validDoor) {
 				doors.add(cell);
 			}
 		}
@@ -144,6 +155,9 @@ public class ComputerPlayer extends Player{
 		
 		// If there are doorways, pick a random doorway
 		int selectionIndex = rand.nextInt(doors.size());
+		this.lastRooms[this.roomCounter % 2] = doors.get(selectionIndex);
+		roomCounter++;
+		
 		return doors.get(selectionIndex);
 		
 	}
@@ -152,15 +166,13 @@ public class ComputerPlayer extends Player{
 	@Override
 	public boolean makeMove(int row, int col /*these are necessary but unused*/) {
 		Board.getInstance().calcTargets(this.getRow(), this.getColumn(), this.getDieRoll());
-		BoardCell cellToMoveTo = chooseTarget(Board.getInstance().getTargets());
+		BoardCell cellToMoveTo = chooseTarget(Board.getInstance().getTargets());	
 		
-		Board.getInstance().getCellAt(this.getRow(), this.getColumn()).setPlayer(null);
-		
-		this.setRow(cellToMoveTo.getRow());
-		this.setColumn(cellToMoveTo.getColumn());
-		cellToMoveTo.setPlayer(this);
+		this.move(cellToMoveTo.getRow(), cellToMoveTo.getColumn());
 		return true;
 	}
+	
+	
 	
 	
 	

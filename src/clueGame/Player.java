@@ -60,7 +60,7 @@ public class Player {
 	}
 	
 	public void rollDie() {
-		dieRoll = rand.nextInt(5) + 1;
+		dieRoll = rand.nextInt(6) + 1;
 	}
 	
 	public int getDieRoll() {
@@ -224,7 +224,24 @@ public class Player {
 	// TODO Auto-generated method stub
 	return false;
 	
-}
+	}
 	
+	public void move(int row, int col) {
+		Board.getInstance().getCellAt(this.getRow(), this.getColumn()).setPlayer(null);
+		this.setRow(row);
+		this.setColumn(col);
+		Board.getInstance().getCellAt(this.getRow(), this.getColumn()).setPlayer(this);
+		
+		for (Player person : Board.getInstance().getPeople()) {
+			BoardCell cell = Board.getInstance().getCellAt(person.getRow(), person.getColumn());
+			cell.setPlayer(person);
+			cell.paint(Board.getInstance().getGraphics());
+		}
+		
+		
+	}
 	
+	public void addPrevGuess(Solution guess) {
+		prevGuesses.add(guess);
+	}
 }
