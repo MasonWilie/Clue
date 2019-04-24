@@ -822,8 +822,6 @@ public class Board extends JPanel{
 		//if not, do the stuff
 		//call makeMove
 		
-
-		ControlGUI.startOfTurn = false;
 		
 		this.setHumanHasSelectedTarget(people.get(whichPersonWeOn).makeMove(row,col));
 
