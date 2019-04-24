@@ -396,6 +396,7 @@ public class Board extends JPanel{
 	}
 	
 	public boolean getHumanHasSelectedTarget() {
+		this.chosenTarget = ((HumanPlayer)currentPlayer).getTarget();
 		return humanHasSelectedTarget;
 	}
 
@@ -821,7 +822,7 @@ public class Board extends JPanel{
 		//call makeMove
 		
 
-		
+		ControlGUI.startOfTurn = false;
 		
 		this.setHumanHasSelectedTarget(people.get(whichPersonWeOn).makeMove(row,col));
 
