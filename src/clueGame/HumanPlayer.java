@@ -18,6 +18,7 @@ import java.util.Set;
 public class HumanPlayer extends Player{
 	
 	private boolean targetSelected;
+	private BoardCell target;
 
 	@Override
 	public boolean makeMove(int row, int col) {
@@ -47,13 +48,18 @@ public class HumanPlayer extends Player{
 			this.move(row, col);
 			
 		}
-		
-		if (Board.getInstance().getChosenTarget().isRoom()) {
+		target = Board.getInstance().getCellAt(row, col);
+		if (target.isRoom()) {
 			ControlGUI.displayModal();
 		}
 
 		Board.getInstance().setHumanHasSelectedTarget(true);
+		
 		return true;
+	}
+	
+	public BoardCell getTarget() {
+		return target;
 	}
 
 	

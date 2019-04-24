@@ -396,6 +396,7 @@ public class Board extends JPanel{
 	}
 	
 	public boolean getHumanHasSelectedTarget() {
+		this.chosenTarget = ((HumanPlayer)currentPlayer).getTarget();
 		return humanHasSelectedTarget;
 	}
 

@@ -31,6 +31,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
+import javax.swing.SwingWorker;
 import javax.swing.border.TitledBorder;
 
 /**
@@ -71,16 +72,25 @@ public class ControlGUI extends JPanel{
 	
 	private ButtonListener nextPlayerButton;
 	private ButtonListener makeAccusationButton;
-	private static ButtonListener cancelButton;
-	private static ButtonListener submitButton;
 	
-	private static final JDialog frame1 = new JDialog(frame, "Make a Guess", true);
+	
+	
+	
+	private static ButtonListener makeGuessCancelButton;
+	private static ButtonListener makeGuessSubmitButton;
+	private static JButton makeGuessCancel;
+	private static JButton makeGuessSubmit;
+	
+	private static JComboBox makeGuessPeople;
+	private static JComboBox makeGuessWeapons;
+	
+	private static JFrame makeGuessDialog = new JFrame();
 	
 	private static Board board;
 	
 	private CustomDialog cDialog;
 	
-	private Player currentPlayer;
+	private static Player currentPlayer;
 	
 	public enum ErrorType{
 		DOUBLE_MOVE,
@@ -90,6 +100,8 @@ public class ControlGUI extends JPanel{
 
 	
 	public ControlGUI() {
+		
+		makeGuessDialog.setTitle("Make a Guess");
 		gameRunning = false;
 		
 		frame = new JFrame();
@@ -98,8 +110,11 @@ public class ControlGUI extends JPanel{
 		
 		nextPlayerButton = new ButtonListener();
 		makeAccusationButton = new ButtonListener();
-		cancelButton = new ButtonListener();
-		submitButton = new ButtonListener();
+		makeGuessCancelButton = new ButtonListener();
+		makeGuessSubmitButton = new ButtonListener();
+		
+		makeGuessPeople = new JComboBox();
+		makeGuessWeapons  = new JComboBox();
 		
 		cDialog = new CustomDialog();
 		
@@ -556,14 +571,7 @@ public class ControlGUI extends JPanel{
 			SwingUtilities.updateComponentTreeUI(frame);
 			
 		}
-		if (cancelButton.beenPressed()) {
-			frame1.dispose();
-		}
-		if (submitButton.beenPressed()) {
-			//do submit stuff
-			Board.getInstance().handleSuggestion(Board.getInstance().getSolution(), Board.getInstance().getCurrentPlayer());
-			frame1.dispose();
-		}
+		
 		
 	}
 	
@@ -586,45 +594,85 @@ public class ControlGUI extends JPanel{
 	
 	public static void displayModal() {
 		JPanel newPanel = new JPanel();
-		frame1.getContentPane().add(newPanel);
-		frame1.pack();
-		frame1.setVisible(true);
+		makeGuessDialog.getContentPane().add(newPanel);
+		makeGuessDialog.pack();
+		makeGuessDialog.setSize(350, 250);
+		
 		
 		newPanel.setLayout(new GridLayout(4,2));
-		newPanel.add(new JLabel("Your room"));
-		newPanel.add(new JLabel("Person"));
-		newPanel.add(new JLabel("Weapon"));
-		JButton mySubmitButton = new JButton("Submit");
-		mySubmitButton.addActionListener(submitButton);
-		newPanel.add(new JButton("Submit"));
-		newPanel.add(new JLabel((Board.getInstance().getPeople().get(Board.getInstance().getWhichPersonWeOn()).getTarget().getLabel())));
-		String[] faf1 = {"Miss Scarlet", "Mr. Green", "Mrs. Peacock", "Colonel Mustard", "Mrs. White", "Professor Plum"};
-		newPanel.add(new JComboBox(faf1));
-		String[] faf2 = { "Candlestick", "Lead Pipe", "Rope", "Knife", "Revolver", "Wrench" };
-		newPanel.add(new JComboBox(faf2));
-		JButton myCancelButton = new JButton("Cancel");
-		myCancelButton.addActionListener(cancelButton);
-		newPanel.add(myCancelButton);
-		//now create the stuff in the grid places
 		
-//		JPanel cardsPanel = new JPanel();
-//		cardsPanel.setLayout(new BoxLayout(cardsPanel, BoxLayout.Y_AXIS));
-//
-//		
-//		peopleTextBox = createCardBox("People");
-//		roomsTextBox = createCardBox("Rooms");
-//		weaponsTextBox = createCardBox("Weapons");
-//		
-//		cardsPanel.add(peopleTextBox);
-//		cardsPanel.add(roomsTextBox);
-//		cardsPanel.add(weaponsTextBox);
-//		
-//		TitledBorder title = BorderFactory.createTitledBorder("My Cards");
-//		title.setTitlePosition(TitledBorder.TOP);
-//		cardsPanel.setBorder(title);
-//		
-//		
-//		return cardsPanel;
+		newPanel.add(new JLabel("Your room"));
+		JLabel room = new JLabel();
+		String roomText = board.getLegend().get(board.getCellAt(currentPlayer.getRow(), currentPlayer.getColumn()).getInitial());
+		room.setText(roomText);
+		newPanel.add(room);
+		
+		newPanel.add(new JLabel("Person"));
+		String[] peopleText = new String[board.getPeople().size()];
+		for (int i = 0; i < board.getPeople().size(); i++) {
+			peopleText[i] = board.getPeople().get(i).getPlayerName();
+		}
+		
+		makeGuessPeople.removeAllItems();
+		for (String person : peopleText) {
+			makeGuessPeople.addItem(person);
+		}
+		newPanel.add(makeGuessPeople);
+		
+		newPanel.add(new JLabel("Weapon"));
+		ArrayList<Card> weaponsCards = new ArrayList<>();
+		for (Card card : board.getOriginalDeck()) {
+			if (card.getType() == CardType.WEAPON) {
+				weaponsCards.add(card);
+			}
+		}
+		String[] weaponsText = new String[weaponsCards.size()];
+		for (int i = 0; i < weaponsCards.size(); i++) {
+			weaponsText[i] = weaponsCards.get(i).getName();
+		}
+		
+		makeGuessWeapons.removeAllItems();
+		for (String weapon : weaponsText) {
+			makeGuessWeapons.addItem(weapon);
+		}
+		
+		newPanel.add(makeGuessWeapons);
+		
+		makeGuessSubmit = new JButton("Submit");
+		makeGuessSubmit.addActionListener(makeGuessSubmitButton);
+		newPanel.add(makeGuessSubmit);
+		
+		
+		makeGuessCancel = new JButton("Cancel");
+		makeGuessCancel.addActionListener(makeGuessCancelButton);
+		newPanel.add(makeGuessCancel);
+		
+		makeGuessDialog.setVisible(true);
+		
+		while (true) {
+			try {
+				TimeUnit.MILLISECONDS.sleep(5);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			if (makeGuessCancelButton.beenPressed()) {
+				makeGuessDialog.setVisible(false);
+				makeGuessDialog.dispose();
+				break;
+			}
+			else if (makeGuessSubmitButton.beenPressed()) {
+				//do submit stuff
+				Board.getInstance().handleSuggestion(Board.getInstance().getSolution(), Board.getInstance().getCurrentPlayer());
+				makeGuessDialog.setVisible(false);
+				makeGuessDialog.dispose();
+				break;
+			}
+		}
+		
+		
+		
+		
 	}
 	public static void main(String[] args) {
 		
