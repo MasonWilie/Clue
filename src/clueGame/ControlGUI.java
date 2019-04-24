@@ -353,10 +353,6 @@ public class ControlGUI extends JPanel{
 	
 	// Creates the cards panel
 
-		
-		
-
-
 	
 	private JPanel createMyCardsPanel() {
 		JPanel cardsPanel = new JPanel();
@@ -567,7 +563,11 @@ public class ControlGUI extends JPanel{
 			SwingUtilities.updateComponentTreeUI(frame);
 		}
 		if (makeAccusationButton.beenPressed()) {
-			System.out.println("Making accusation");
+			if (currentPlayer instanceof HumanPlayer && board.getHumanHasSelectedTarget()) {
+				
+			}
+			
+			
 		}
 		if (mouse.hasClicked()) {
 			if (currentPlayer instanceof HumanPlayer) board.movingTime(mouse.getClickRow(), mouse.getClickCol());
