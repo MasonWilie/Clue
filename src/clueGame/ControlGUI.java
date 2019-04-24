@@ -82,10 +82,6 @@ public class ControlGUI extends JPanel{
 	
 	private static boolean accusationMade;
 	
-
-	
-	
-	
 	private static ButtonListener makeGuessCancelButton;
 	private static ButtonListener makeGuessSubmitButton;
 	private static JButton makeGuessCancel;
@@ -143,7 +139,6 @@ public class ControlGUI extends JPanel{
 		makeGuessRooms = new JComboBox();
 		
 		cDialog = new CustomDialog();
-		
 		
 		setUp();
 		
@@ -376,8 +371,6 @@ public class ControlGUI extends JPanel{
 	
 	
 	// Creates the cards panel
-
-	
 	private JPanel createMyCardsPanel() {
 		JPanel cardsPanel = new JPanel();
 		cardsPanel.setLayout(new BoxLayout(cardsPanel, BoxLayout.Y_AXIS));
@@ -507,15 +500,12 @@ public class ControlGUI extends JPanel{
 			}
 			
 			
-			// REMOVE ME WHEN THERE IS MORE CODE TO SLOW IT DOWN, LISTENERS DON'T WORK WHEN IT IS LOOPING TOO FAST
-			/////////////////////////////////////////////////////////////////////////////
+			
 			try {
 				TimeUnit.MILLISECONDS.sleep(5);
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			////////////////////////////////////////////////////////////////////////////
 			
 			actions();
 		}
@@ -584,6 +574,7 @@ public class ControlGUI extends JPanel{
 		
 	}
 	
+	//runs continuously checking for button presses
 	public void actions() {
 		if (nextPlayerButton.beenPressed()) {
 			guessTextBox.setText("");
@@ -595,7 +586,7 @@ public class ControlGUI extends JPanel{
 				}
 				
 			}else {
-				//the turn has started? 
+				//the turn has started
 				startOfTurn = true;
 				board.gameRunning = true;
 				
@@ -610,7 +601,7 @@ public class ControlGUI extends JPanel{
 		
 		if (makeAccusationButton.beenPressed()) {
 			if (currentPlayer instanceof HumanPlayer && !board.getHumanHasSelectedTarget() && !accusationMade) {
-				//window pop-up and process accusation ----TODO
+				//window pop-up and process accusation
 				
 				makeAccusationDialog = new JFrame();
 				
@@ -736,6 +727,7 @@ public class ControlGUI extends JPanel{
 		
 	}
 	
+	//initial screen, intro to the game
 	public void splash() {
 		String message = "You are " + board.getHumanPlayerName() + ", press Next Player to begin play";
 		JOptionPane.showMessageDialog(frame, message, "Welcome to Clue", JOptionPane.INFORMATION_MESSAGE);
@@ -753,6 +745,7 @@ public class ControlGUI extends JPanel{
 		responseTextBox.setText(card.getName());
 	}
 	
+	//displays the window for the player to make a guess
 	public static void displayModal() {
 		makeGuessDialog = new JFrame();
 		makeGuessDialog.setTitle("Make a Guess");
