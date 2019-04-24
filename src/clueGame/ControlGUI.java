@@ -34,6 +34,8 @@ import javax.swing.SwingUtilities;
 import javax.swing.SwingWorker;
 import javax.swing.border.TitledBorder;
 
+import com.sun.corba.se.impl.protocol.BootstrapServerRequestDispatcher;
+
 /**
  * ControlGUI Class:
  * Creates and displays the graphical user interface for the clue game.
@@ -68,8 +70,8 @@ public class ControlGUI extends JPanel{
 	
 	private Mouse mouse;
 	
-	private final int FRAME_X = 800;
-	private final int FRAME_Y = 800;
+	private final int FRAME_X = 850;
+	private final int FRAME_Y = 900;
 	
 	private ButtonListener nextPlayerButton;
 	private ButtonListener makeAccusationButton;
@@ -366,37 +368,81 @@ public class ControlGUI extends JPanel{
 	
 	
 	// Creates the cards panel
-	public JPanel createMyCardsPanel() {
-		JPanel cardsPanel = new JPanel();
-		cardsPanel.setLayout(new BoxLayout(cardsPanel, BoxLayout.Y_AXIS));
 
 		
-		peopleTextBox = createCardBox("People");
-		roomsTextBox = createCardBox("Rooms");
-		weaponsTextBox = createCardBox("Weapons");
+		
+
+
+	
+	private JPanel createMyCardsPanel() {
+		JPanel cardsPanel = new JPanel();
+		cardsPanel.setLayout(new BoxLayout(cardsPanel, BoxLayout.Y_AXIS));
+		currentPlayer = board.getCurrentPlayer();
+		
+		ArrayList<Card> playerDeck = currentPlayer.getHand();
+		
+		ArrayList<Card> personCards = new ArrayList<>();
+		ArrayList<Card> roomCards = new ArrayList<>();
+		ArrayList<Card> weaponCards = new ArrayList<>();
+		
+		for (Card card : playerDeck) {
+			switch(card.getType()) {
+			case PERSON:
+				personCards.add(card);
+				break;
+			case ROOM:
+				roomCards.add(card);
+				break;
+			case WEAPON:
+				weaponCards.add(card);
+				break;
+			}
+		}
+		
+		
+		String text = "";
+		
+		for (int i = 0; i < personCards.size(); i++) {
+			text = text + personCards.get(i).getName() + '\r'+'\n';
+
+		}
+		peopleTextBox = new JTextArea(text);
+		
+		text = "";
+		for (int i = 0; i < roomCards.size(); i++) {
+			text = text + roomCards.get(i).getName() + '\r'+'\n';
+
+		}
+		roomsTextBox = new JTextArea(text);
+		
+		text = "";
+		for (int i = 0; i < weaponCards.size(); i++) {
+			text = text + weaponCards.get(i).getName() + '\r'+'\n';
+
+		}
+		weaponsTextBox = new JTextArea(text);
+		
+		
+		TitledBorder title = BorderFactory.createTitledBorder("People");
+		title.setTitlePosition(TitledBorder.TOP);
+		peopleTextBox.setBorder(title);
+		peopleTextBox.setEditable(false);
+		
+		title = BorderFactory.createTitledBorder("Rooms");
+		title.setTitlePosition(TitledBorder.TOP);
+		roomsTextBox.setBorder(title);
+		roomsTextBox.setEditable(false);
+		
+		title = BorderFactory.createTitledBorder("Weapons");
+		title.setTitlePosition(TitledBorder.TOP);
+		weaponsTextBox.setBorder(title);
+		weaponsTextBox.setEditable(false);
 		
 		cardsPanel.add(peopleTextBox);
 		cardsPanel.add(roomsTextBox);
 		cardsPanel.add(weaponsTextBox);
 		
-		TitledBorder title = BorderFactory.createTitledBorder("My Cards");
-		title.setTitlePosition(TitledBorder.TOP);
-		cardsPanel.setBorder(title);
-		
-		
 		return cardsPanel;
-	}
-	
-	private JTextArea createCardBox(String label) {
-		JTextArea cardBox = new JTextArea();
-		
-		TitledBorder title = BorderFactory.createTitledBorder(label);
-		title.setTitlePosition(TitledBorder.TOP);
-		cardBox.setBorder(title);
-		
-		cardBox.setEditable(false);
-		
-		return cardBox;
 	}
 	
 	
@@ -530,50 +576,7 @@ public class ControlGUI extends JPanel{
 				startOfTurn = true;
 				board.gameRunning = true;
 				
-				currentPlayer = board.getCurrentPlayer();
 				
-				ArrayList<Card> playerDeck = currentPlayer.getHand();
-				
-				ArrayList<Card> personCards = new ArrayList<>();
-				ArrayList<Card> roomCards = new ArrayList<>();
-				ArrayList<Card> weaponCards = new ArrayList<>();
-				
-				for (Card card : playerDeck) {
-					switch(card.getType()) {
-					case PERSON:
-						personCards.add(card);
-						break;
-					case ROOM:
-						roomCards.add(card);
-						break;
-					case WEAPON:
-						weaponCards.add(card);
-						break;
-					}
-				}
-				
-				
-				String text = "";
-				
-				for (int i = 0; i < personCards.size(); i++) {
-					text = text + personCards.get(i).getName() + '\n';
-
-				}
-				peopleTextBox.setText(text);
-				
-				text = "";
-				for (int i = 0; i < roomCards.size(); i++) {
-					text = text + roomCards.get(i).getName() + '\n';
-
-				}
-				roomsTextBox.setText(text);
-				
-				text = "";
-				for (int i = 0; i < weaponCards.size(); i++) {
-					text = text + weaponCards.get(i).getName() + '\n';
-
-				}
-				weaponsTextBox.setText(text);
 				
 				
 				updateInfo();
@@ -704,6 +707,9 @@ public class ControlGUI extends JPanel{
 	}
 	
 	public static void displayModal() {
+		makeGuessDialog = new JFrame();
+		makeGuessDialog.setTitle("Make a Guess");
+		
 		JPanel newPanel = new JPanel();
 		makeGuessDialog.getContentPane().add(newPanel);
 		makeGuessDialog.pack();
@@ -774,7 +780,16 @@ public class ControlGUI extends JPanel{
 			}
 			else if (makeGuessSubmitButton.beenPressed()) {
 				//do submit stuff
-				Board.getInstance().handleSuggestion(Board.getInstance().getSolution(), Board.getInstance().getCurrentPlayer());
+				
+				Card roomCard = new Card(board.getLegend().get(board.getCellAt(currentPlayer.getRow(), currentPlayer.getColumn()).getInitial()), CardType.ROOM);
+				Card personCard = new Card((String) makeGuessPeople.getSelectedItem(), CardType.PERSON);
+				Card weaponCard = new Card((String) makeGuessWeapons.getSelectedItem(), CardType.WEAPON);
+				
+				Solution guess = new Solution(personCard, roomCard, weaponCard);
+				
+				
+				
+				Board.getInstance().handleSuggestion(guess, currentPlayer);
 				makeGuessDialog.setVisible(false);
 				makeGuessDialog.dispose();
 				break;

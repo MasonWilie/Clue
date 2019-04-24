@@ -64,7 +64,7 @@ public class Board extends JPanel{
 	private String cardConfigFile;
 
 	private Solution solution;
-	private static final int BOARD_RES = 500;
+	private static final int BOARD_RES = 640;
 
 	private boolean humanHasSelectedTarget;
 	private static int whichPersonWeOn;
@@ -638,6 +638,7 @@ public class Board extends JPanel{
 			
 			if (returnedCard != null) {
 				suggestion.disproven = true;
+				responseText = returnedCard.getName();
 				ControlGUI.responseTextBox.setText(responseText);
 				SwingUtilities.updateComponentTreeUI(ControlGUI.responseTextBox);
 				return returnedCard;
