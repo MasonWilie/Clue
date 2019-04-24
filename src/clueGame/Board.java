@@ -13,6 +13,8 @@ import java.util.Map;
 import java.util.Random;
 import java.util.Scanner;
 import java.util.Set;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JPanel;
 
@@ -65,6 +67,7 @@ public class Board extends JPanel{
 
 	private boolean humanHasSelectedTarget;
 	private static int whichPersonWeOn;
+
 	Mouse mouse;
 
 	private ArrayList<Player> people;
@@ -413,6 +416,9 @@ public class Board extends JPanel{
 		return chosenTarget;
 	}
 
+	public static int getWhichPersonWeOn() {
+		return whichPersonWeOn;
+	}
 
 	// Loads game players into the game from the players text file
 	public void loadPeopleConfig() throws FileNotFoundException, BadConfigFormatException{

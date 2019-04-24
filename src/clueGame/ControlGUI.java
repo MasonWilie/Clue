@@ -18,6 +18,7 @@ import java.util.concurrent.TimeUnit;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -70,8 +71,10 @@ public class ControlGUI extends JPanel{
 	
 	private ButtonListener nextPlayerButton;
 	private ButtonListener makeAccusationButton;
+	private static ButtonListener cancelButton;
+	private static ButtonListener submitButton;
 	
-	
+	private static final JDialog frame1 = new JDialog(frame, "Make a Guess", true);
 	
 	private static Board board;
 	
@@ -94,6 +97,8 @@ public class ControlGUI extends JPanel{
 		
 		nextPlayerButton = new ButtonListener();
 		makeAccusationButton = new ButtonListener();
+		cancelButton = new ButtonListener();
+		submitButton = new ButtonListener();
 		
 		cDialog = new CustomDialog();
 		
@@ -545,6 +550,14 @@ public class ControlGUI extends JPanel{
 			SwingUtilities.updateComponentTreeUI(frame);
 			
 		}
+		if (cancelButton.beenPressed()) {
+			frame1.dispose();
+		}
+		if (submitButton.beenPressed()) {
+			//do submit stuff
+			Board.getInstance().handleSuggestion(Board.getInstance().getSolution(), Board.getInstance().getCurrentPlayer());
+			frame1.dispose();
+		}
 		
 	}
 	
@@ -555,10 +568,45 @@ public class ControlGUI extends JPanel{
 	
 	public static void displayModal() {
 		JPanel newPanel = new JPanel();
-		final JDialog frame1 = new JDialog(frame, "faf", true);
 		frame1.getContentPane().add(newPanel);
 		frame1.pack();
 		frame1.setVisible(true);
+		
+		newPanel.setLayout(new GridLayout(4,2));
+		newPanel.add(new JLabel("Your room"));
+		newPanel.add(new JLabel("Person"));
+		newPanel.add(new JLabel("Weapon"));
+		JButton mySubmitButton = new JButton("Submit");
+		mySubmitButton.addActionListener(submitButton);
+		newPanel.add(new JButton("Submit"));
+		newPanel.add(new JLabel((Board.getInstance().getPeople().get(Board.getInstance().getWhichPersonWeOn()).getTarget().getLabel())));
+		String[] faf1 = {"Miss Scarlet", "Mr. Green", "Mrs. Peacock", "Colonel Mustard", "Mrs. White", "Professor Plum"};
+		newPanel.add(new JComboBox(faf1));
+		String[] faf2 = { "Candlestick", "Lead Pipe", "Rope", "Knife", "Revolver", "Wrench" };
+		newPanel.add(new JComboBox(faf2));
+		JButton myCancelButton = new JButton("Cancel");
+		myCancelButton.addActionListener(cancelButton);
+		newPanel.add(myCancelButton);
+		//now create the stuff in the grid places
+		
+//		JPanel cardsPanel = new JPanel();
+//		cardsPanel.setLayout(new BoxLayout(cardsPanel, BoxLayout.Y_AXIS));
+//
+//		
+//		peopleTextBox = createCardBox("People");
+//		roomsTextBox = createCardBox("Rooms");
+//		weaponsTextBox = createCardBox("Weapons");
+//		
+//		cardsPanel.add(peopleTextBox);
+//		cardsPanel.add(roomsTextBox);
+//		cardsPanel.add(weaponsTextBox);
+//		
+//		TitledBorder title = BorderFactory.createTitledBorder("My Cards");
+//		title.setTitlePosition(TitledBorder.TOP);
+//		cardsPanel.setBorder(title);
+//		
+//		
+//		return cardsPanel;
 	}
 	public static void main(String[] args) {
 		

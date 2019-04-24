@@ -36,7 +36,7 @@ public class Player {
 	protected Set<Card> weaponCards;
 	
 	private BoardCell target;
-	
+
 	protected ArrayList<Card> playerHand;
 	
 	private int dieRoll;
@@ -150,6 +150,10 @@ public class Player {
 
 	public void setColor(Color color) {
 		this.color = color;
+	}
+	
+	public BoardCell getTarget() {
+		return target;
 	}
 	
 	

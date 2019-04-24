@@ -24,7 +24,7 @@ public class BoardCell extends JPanel{
 	private int cellDim;
 	private boolean drawLabel = false;
 	private String label;
-	
+
 	public int getRow() { 
 		return row;
 	}
@@ -93,6 +93,10 @@ public class BoardCell extends JPanel{
 	
 	public void setDoorDirection(DoorDirection newDirection) {
 		direction = newDirection;
+	}
+	
+	public String getLabel() {
+		return label;
 	}
 	
 	
