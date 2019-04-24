@@ -73,8 +73,12 @@ public class ControlGUI extends JPanel{
 	private ButtonListener makeAccusationButton;
 	private static ButtonListener cancelButton;
 	private static ButtonListener submitButton;
+	private static ButtonListener accusationSubmitButton;
+	private static ButtonListener accusationCancelButton;
 	
 	private static final JDialog frame1 = new JDialog(frame, "Make a Guess", true);
+	private static final JDialog frame2 = new JDialog(frame, "Make an Accusation", true);
+
 	
 	private static Board board;
 	
@@ -100,6 +104,8 @@ public class ControlGUI extends JPanel{
 		makeAccusationButton = new ButtonListener();
 		cancelButton = new ButtonListener();
 		submitButton = new ButtonListener();
+		accusationSubmitButton = new ButtonListener();
+		accusationCancelButton = new ButtonListener();
 		
 		cDialog = new CustomDialog();
 		
@@ -550,6 +556,10 @@ public class ControlGUI extends JPanel{
 		}
 		if (makeAccusationButton.beenPressed()) {
 			System.out.println("Making accusation");
+			
+			//window pop-up and process accusation ----TODO
+			
+			
 		}
 		if (mouse.hasClicked()) {
 			if (currentPlayer instanceof HumanPlayer) board.movingTime(mouse.getClickRow(), mouse.getClickCol());
@@ -563,6 +573,23 @@ public class ControlGUI extends JPanel{
 			//do submit stuff
 			Board.getInstance().handleSuggestion(Board.getInstance().getSolution(), Board.getInstance().getCurrentPlayer());
 			frame1.dispose();
+		}
+		
+		if (accusationCancelButton.beenPressed()) {
+			frame2.dispose();
+		}
+		
+		if (accusationSubmitButton.beenPressed()) {
+			if (Board.getInstance().handleAccusation(Board.getInstance().getSolution(), Board.getInstance().getCurrentPlayer())) {
+				//GAME ENDS
+				System.out.println("you win");
+				frame2.dispose();
+				frame.dispose(); //closes the main frame i believe
+				return; //or something
+			} else {
+				System.out.println("wrong accusation guess");
+				frame2.dispose();
+			}
 		}
 		
 	}
