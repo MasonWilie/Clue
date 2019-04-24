@@ -17,6 +17,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 
 import java.awt.Color;
 import java.awt.Graphics;
@@ -67,8 +68,6 @@ public class Board extends JPanel{
 
 	private boolean humanHasSelectedTarget;
 	private static int whichPersonWeOn;
-
-	Mouse mouse;
 
 	private ArrayList<Player> people;
 	private Player currentPlayer;
@@ -404,13 +403,6 @@ public class Board extends JPanel{
 		this.humanHasSelectedTarget = humanHasSelectedTarget;
 	}
 	
-	public Mouse getMouse() {
-		return mouse;
-	}
-
-	public void setMouse(Mouse mouse) {
-		this.mouse = mouse;
-	}
 	
 	public BoardCell getChosenTarget() {
 		return chosenTarget;
@@ -602,8 +594,30 @@ public class Board extends JPanel{
 	}
 
 	public Card handleSuggestion(Solution suggestion, Player accuser) {
+		
+		
+		
+		for (Player person : people) {
+			person.addPrevGuess(suggestion);
+			if (person.getPlayerName().equals(suggestion.getPersonCard().getName())) {
+				person.move(accuser.getRow(), accuser.getColumn());
+			}
+		}
+		
+		
+		String guessText = suggestion.getPersonCard().getName() + " "
+				+ suggestion.getRoomCard().getName() + " "
+				+ suggestion.getWeaponCard().getName();
+		
+		ControlGUI.guessTextBox.setText(guessText);
+		SwingUtilities.updateComponentTreeUI(ControlGUI.guessTextBox);
+		
+		String responseText = "";
+		
 		if (suggestion.equals(solution)) {
 			suggestion.disproven = false;
+			ControlGUI.responseTextBox.setText(responseText);
+			SwingUtilities.updateComponentTreeUI(ControlGUI.responseTextBox);
 			return null;
 		}
 		
@@ -623,11 +637,15 @@ public class Board extends JPanel{
 			
 			if (returnedCard != null) {
 				suggestion.disproven = true;
+				ControlGUI.responseTextBox.setText(responseText);
+				SwingUtilities.updateComponentTreeUI(ControlGUI.responseTextBox);
 				return returnedCard;
 			} // If can disprove, return card
 			currentDisproverIndex++; // Go to next player
 		}
 	
+		ControlGUI.responseTextBox.setText(responseText);
+		SwingUtilities.updateComponentTreeUI(ControlGUI.responseTextBox);
 		suggestion.disproven = false;
 		return null;
 	}

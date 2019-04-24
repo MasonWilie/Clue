@@ -42,21 +42,16 @@ public class HumanPlayer extends Player{
 		
 		if (!inTargets) {
 			ControlGUI.handleErrors(ControlGUI.ErrorType.INVALID_TARGET);
-			
 			return false;
-		}else {
-			Board.getInstance().getCellAt(this.getRow(), this.getColumn()).setPlayer(null);
-			this.setRow(row);
-			this.setColumn(col);
+		} else {
+			this.move(row, col);
 			
 		}
 		
-		Board.getInstance().getCellAt(this.getRow(), this.getColumn()).setPlayer(this);
-		
-		if (Board.getInstance().getCellAt(this.getRow(), this.getColumn()).isRoom()) {
+		if (Board.getInstance().getChosenTarget().isRoom()) {
 			ControlGUI.displayModal();
-			
 		}
+
 		Board.getInstance().setHumanHasSelectedTarget(true);
 		return true;
 	}
