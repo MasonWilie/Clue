@@ -104,7 +104,7 @@ public class ComputerPlayer extends Player{
 	public void takeTurn() { // If the player is ready to make an accusation, make the accusation
 		if (suggestion != null && !suggestion.disproven) {
 			if (this.makeAccusation()) {
-				System.out.println("Damn I won");
+				ControlGUI.handleErrors(ControlGUI.ErrorType.COMPUTER_WON);
 				return;
 			}
 		}

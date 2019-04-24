@@ -80,6 +80,8 @@ public class ControlGUI extends JPanel{
 	private static ButtonListener accusationSubmitButton;
 	private static ButtonListener accusationCancelButton;
 	
+	private static boolean accusationMade;
+	
 
 	
 	
@@ -99,14 +101,19 @@ public class ControlGUI extends JPanel{
 	
 	private static Board board;
 	
-	private CustomDialog cDialog;
+	private static CustomDialog cDialog;
 	
 	private static Player currentPlayer;
 	
 	public enum ErrorType{
 		DOUBLE_MOVE,
 		NO_TARGET_SELECTED,
-		INVALID_TARGET
+		INVALID_TARGET,
+		ACCUSATION_NOT_ALLOWED,
+		WON,
+		WRONG_ACCUSATION,
+		DOUBLE_ACCUSATION,
+		COMPUTER_WON
 	}
 
 	
@@ -133,6 +140,7 @@ public class ControlGUI extends JPanel{
 		
 		makeGuessPeople = new JComboBox();
 		makeGuessWeapons  = new JComboBox();
+		makeGuessRooms = new JComboBox();
 		
 		cDialog = new CustomDialog();
 		
@@ -530,6 +538,25 @@ public class ControlGUI extends JPanel{
 		case INVALID_TARGET:
 			message = "Invalid target selection!";
 			break;
+		case ACCUSATION_NOT_ALLOWED:
+			message = "Only allowed to make accusation at BEGINNING of YOUR turn.";
+			break;
+		case WON:
+			message = "You won! Your accusation was correct!";
+			break;
+		case WRONG_ACCUSATION:
+			message = "This accusation was incorrect";
+			break;
+		case DOUBLE_ACCUSATION:
+			message = "You are only allowed to make on accusation per turn.";
+			break;
+		case COMPUTER_WON:
+			Solution solution = board.getSolution();
+			message = currentPlayer.getPlayerName() + "won the game! The cards were " +
+					solution.person.getName() + " in the " + solution.room.getName() + " with the " +
+					solution.weapon.getName() + ".";
+			break;
+					
 		default:
 			message = "Invalid error code";
 			break;
@@ -541,7 +568,7 @@ public class ControlGUI extends JPanel{
 	
 	private void updateInfo() {
 		
-		
+		accusationMade = false;
 		
 		currentPlayer = board.getCurrentPlayer();
 		whoseTurnTextBox.setText(currentPlayer.getPlayerName());
@@ -581,107 +608,125 @@ public class ControlGUI extends JPanel{
 			SwingUtilities.updateComponentTreeUI(frame);
 		}
 		
-		if (makeAccusationButton.beenPressed() && startOfTurn == true) {
-			System.out.println("Making accusation");
-			
-			//window pop-up and process accusation ----TODO
-			
-			JPanel newPanel = new JPanel();
-			makeAccusationDialog.getContentPane().add(newPanel);
-			makeAccusationDialog.pack();
-			makeAccusationDialog.setSize(350, 250);
-			
-			
-			newPanel.setLayout(new GridLayout(4,2));
-			
-			newPanel.add(new JLabel("Room"));
-			ArrayList<Card> theRooms = new ArrayList<>();
-			for (Card i : board.getDeck()) {
-				if (i.getType() == CardType.ROOM) {
-					theRooms.add(i);
-				}
-			}
-			String[] roomText = new String[theRooms.size()];
-			for (int j = 0; j < theRooms.size(); j++) {
-				roomText[j] = theRooms.get(j).getName();
-			}
-			
-			makeGuessRooms.removeAllItems();
-			for (String aRoom : roomText) {
-				makeGuessRooms.addItem(aRoom);
-			}
-			newPanel.add(makeGuessRooms);
-			
-			newPanel.add(new JLabel("Person"));
-			String[] peopleText = new String[board.getPeople().size()];
-			for (int i = 0; i < board.getPeople().size(); i++) {
-				peopleText[i] = board.getPeople().get(i).getPlayerName();
-			}
-			
-			makeGuessPeople.removeAllItems();
-			for (String person : peopleText) {
-				makeGuessPeople.addItem(person);
-			}
-			newPanel.add(makeGuessPeople);
-			
-			newPanel.add(new JLabel("Weapon"));
-			ArrayList<Card> weaponsCards = new ArrayList<>();
-			for (Card card : board.getOriginalDeck()) {
-				if (card.getType() == CardType.WEAPON) {
-					weaponsCards.add(card);
-				}
-			}
-			String[] weaponsText = new String[weaponsCards.size()];
-			for (int i = 0; i < weaponsCards.size(); i++) {
-				weaponsText[i] = weaponsCards.get(i).getName();
-			}
-			
-			makeGuessWeapons.removeAllItems();
-			for (String weapon : weaponsText) {
-				makeGuessWeapons.addItem(weapon);
-			}
-			
-			newPanel.add(makeGuessWeapons);
-			
-			makeAccusationSubmit = new JButton("Submit");
-			makeAccusationSubmit.addActionListener(accusationSubmitButton);
-			newPanel.add(makeAccusationSubmit);
-			
-			
-			makeGuessCancel = new JButton("Cancel");
-			makeGuessCancel.addActionListener(makeGuessCancelButton);
-			newPanel.add(makeGuessCancel);
-			
-			makeAccusationDialog.setVisible(true);
-			
-			while (true) {
-				try {
-					TimeUnit.MILLISECONDS.sleep(5);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				if (makeGuessCancelButton.beenPressed()) {
-					makeAccusationDialog.setVisible(false);
-					makeAccusationDialog.dispose();
-					break;
-				}
-				else if (accusationSubmitButton.beenPressed()) {
-					//do submit stuff
-					Board.getInstance().handleAccusation(Board.getInstance().getSolution(), Board.getInstance().getCurrentPlayer());
-					makeAccusationDialog.setVisible(false);
-					makeAccusationDialog.dispose();
-					break;
-				}
-			}
-		}
 		if (makeAccusationButton.beenPressed()) {
-			if (currentPlayer instanceof HumanPlayer && board.getHumanHasSelectedTarget()) {
+			if (currentPlayer instanceof HumanPlayer && !board.getHumanHasSelectedTarget() && !accusationMade) {
+				//window pop-up and process accusation ----TODO
 				
+				makeAccusationDialog = new JFrame();
+				
+				JPanel newPanel = new JPanel();
+				makeAccusationDialog.getContentPane().add(newPanel);
+				makeAccusationDialog.pack();
+				makeAccusationDialog.setSize(350, 250);
+				
+				
+				
+				
+				newPanel.setLayout(new GridLayout(4,2));
+				
+				newPanel.add(new JLabel("Room"));
+				ArrayList<Card> theRooms = new ArrayList<>();
+				for (Card i : board.getOriginalDeck()) {
+					if (i.getType() == CardType.ROOM) {
+						theRooms.add(i);
+					}
+				}
+				String[] roomText = new String[theRooms.size()];
+				for (int j = 0; j < theRooms.size(); j++) {
+					roomText[j] = theRooms.get(j).getName();
+				}
+				
+				makeGuessRooms.removeAllItems();
+				for (String aRoom : roomText) {
+					makeGuessRooms.addItem(aRoom);
+				}
+				newPanel.add(makeGuessRooms);
+				
+				newPanel.add(new JLabel("Person"));
+				String[] peopleText = new String[board.getPeople().size()];
+				for (int i = 0; i < board.getPeople().size(); i++) {
+					peopleText[i] = board.getPeople().get(i).getPlayerName();
+				}
+				
+				makeGuessPeople.removeAllItems();
+				for (String person : peopleText) {
+					makeGuessPeople.addItem(person);
+				}
+				newPanel.add(makeGuessPeople);
+				
+				newPanel.add(new JLabel("Weapon"));
+				ArrayList<Card> weaponsCards = new ArrayList<>();
+				for (Card card : board.getOriginalDeck()) {
+					if (card.getType() == CardType.WEAPON) {
+						weaponsCards.add(card);
+					}
+				}
+				String[] weaponsText = new String[weaponsCards.size()];
+				for (int i = 0; i < weaponsCards.size(); i++) {
+					weaponsText[i] = weaponsCards.get(i).getName();
+				}
+				
+				makeGuessWeapons.removeAllItems();
+				for (String weapon : weaponsText) {
+					makeGuessWeapons.addItem(weapon);
+				}
+				
+				newPanel.add(makeGuessWeapons);
+				
+				makeAccusationSubmit = new JButton("Submit");
+				makeAccusationSubmit.addActionListener(accusationSubmitButton);
+				newPanel.add(makeAccusationSubmit);
+				
+				
+				makeGuessCancel = new JButton("Cancel");
+				makeGuessCancel.addActionListener(makeGuessCancelButton);
+				newPanel.add(makeGuessCancel);
+				
+				makeAccusationDialog.setVisible(true);
+				
+				while (true) {
+					try {
+						TimeUnit.MILLISECONDS.sleep(5);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					if (makeGuessCancelButton.beenPressed()) {
+						makeAccusationDialog.setVisible(false);
+						makeAccusationDialog.dispose();
+						break;
+					}
+					else if (accusationSubmitButton.beenPressed()) {
+						//do submit stuff
+						
+						Card roomCard = new Card(board.getLegend().get(board.getCellAt(currentPlayer.getRow(), currentPlayer.getColumn()).getInitial()), CardType.ROOM);
+						Card personCard = new Card((String) makeGuessPeople.getSelectedItem(), CardType.PERSON);
+						Card weaponCard = new Card((String) makeGuessWeapons.getSelectedItem(), CardType.WEAPON);
+						
+						Solution guess = new Solution(personCard, roomCard, weaponCard);
+						
+						boolean won = Board.getInstance().handleAccusation(guess, currentPlayer);
+						
+						if (won) {
+							handleErrors(ErrorType.WON);
+						}else {
+							handleErrors(ErrorType.WRONG_ACCUSATION);
+						}
+						
+						makeAccusationDialog.setVisible(false);
+						makeAccusationDialog.dispose();
+						accusationMade = true;
+						break;
+					}
+				}
+			}else if (accusationMade){
+				handleErrors(ErrorType.DOUBLE_ACCUSATION);
+			}else{
+				handleErrors(ErrorType.ACCUSATION_NOT_ALLOWED);
 			}
-			
-			
 		}
+			
+			
 		if (mouse.hasClicked()) {
 			if (currentPlayer instanceof HumanPlayer) board.movingTime(mouse.getClickRow(), mouse.getClickCol());
 			SwingUtilities.updateComponentTreeUI(frame);

@@ -12,6 +12,7 @@ import org.junit.Test;
 
 import clueGame.Board;
 import clueGame.ComputerPlayer;
+import clueGame.ControlGUI;
 import clueGame.HumanPlayer;
 import clueGame.Player;
 import clueGame.Solution;
@@ -36,6 +37,8 @@ public class gameActionTests {
 		board = Board.getInstance();
 		board.setConfigFiles("Board_Layout.csv", "ClueRooms.txt", "players_test.txt", "cards.txt");		
 		board.initialize();
+		
+		
 	}
 
 	// Tests selecting a space to move to based on the targets
@@ -66,10 +69,9 @@ public class gameActionTests {
 		board.calcTargets(currentRow, currentCol, 6);
 		theTargets = board.getTargets();
 
-		for (int i = 0; i < 20; i++) {
-			BoardCell aTarget = cPlayer.chooseTarget(theTargets);
-			assertTrue(aTarget.isDoorway());
-		}
+		// Took doorway checking test out because we changed the way a computer selects targets.
+		// They now do not go back to the same door until they have been to another place.
+		
 	}
 
 	//test if a given set of 3 cards is the solution (which are 3 cards)

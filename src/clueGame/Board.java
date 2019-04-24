@@ -596,11 +596,12 @@ public class Board extends JPanel{
 	public Card handleSuggestion(Solution suggestion, Player accuser) {
 		
 		
-		
-		for (Player person : people) {
-			person.addPrevGuess(suggestion);
-			if (person.getPlayerName().equals(suggestion.getPersonCard().getName())) {
-				person.move(accuser.getRow(), accuser.getColumn());
+		if (ControlGUI.guessTextBox != null) {
+			for (Player person : people) {
+				person.addPrevGuess(suggestion);
+				if (person.getPlayerName().equals(suggestion.getPersonCard().getName())) {
+					person.move(accuser.getRow(), accuser.getColumn());
+				}
 			}
 		}
 		
@@ -609,15 +610,18 @@ public class Board extends JPanel{
 				+ suggestion.getRoomCard().getName() + " "
 				+ suggestion.getWeaponCard().getName();
 		
-		ControlGUI.guessTextBox.setText(guessText);
-		SwingUtilities.updateComponentTreeUI(ControlGUI.guessTextBox);
-		
+		if (ControlGUI.guessTextBox != null) {
+			ControlGUI.guessTextBox.setText(guessText);
+			SwingUtilities.updateComponentTreeUI(ControlGUI.guessTextBox);
+		}
 		String responseText = "";
 		
 		if (suggestion.equals(solution)) {
 			suggestion.disproven = false;
-			ControlGUI.responseTextBox.setText(responseText);
-			SwingUtilities.updateComponentTreeUI(ControlGUI.responseTextBox);
+			if (ControlGUI.guessTextBox != null) {
+				ControlGUI.responseTextBox.setText(responseText);
+				SwingUtilities.updateComponentTreeUI(ControlGUI.responseTextBox);
+			}
 			return null;
 		}
 		
@@ -638,15 +642,19 @@ public class Board extends JPanel{
 			if (returnedCard != null) {
 				suggestion.disproven = true;
 				responseText = returnedCard.getName();
-				ControlGUI.responseTextBox.setText(responseText);
-				SwingUtilities.updateComponentTreeUI(ControlGUI.responseTextBox);
+				if (ControlGUI.guessTextBox != null) {
+					ControlGUI.responseTextBox.setText(responseText);
+					SwingUtilities.updateComponentTreeUI(ControlGUI.responseTextBox);
+				}
 				return returnedCard;
 			} // If can disprove, return card
 			currentDisproverIndex++; // Go to next player
 		}
 	
-		ControlGUI.responseTextBox.setText(responseText);
-		SwingUtilities.updateComponentTreeUI(ControlGUI.responseTextBox);
+		if (ControlGUI.guessTextBox != null) {
+			ControlGUI.responseTextBox.setText(responseText);
+			SwingUtilities.updateComponentTreeUI(ControlGUI.responseTextBox);
+		}
 		suggestion.disproven = false;
 		return null;
 	}
